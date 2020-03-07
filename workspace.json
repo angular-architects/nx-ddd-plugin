@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "projects": {
+    "ddd": {
+      "root": "libs/ddd",
+      "sourceRoot": "libs/ddd/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/ddd/.eslintrc",
+            "tsConfig": [
+              "libs/ddd/tsconfig.lib.json",
+              "libs/ddd/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ddd/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ddd/jest.config.js",
+            "tsConfig": "libs/ddd/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/ddd",
+            "tsConfig": "libs/ddd/tsconfig.lib.json",
+            "packageJson": "libs/ddd/package.json",
+            "main": "libs/ddd/src/index.ts",
+            "assets": [
+              "libs/ddd/*.md",
+              {
+                "input": "./libs/ddd/src",
+                "glob": "**/*.*",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/ddd",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./libs/ddd",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "ddd-e2e": {
+      "projectType": "application",
+      "root": "apps\\ddd-e2e",
+      "sourceRoot": "apps\\ddd-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "ddd:build",
+            "npmPackageName": "@angular-architects/ddd",
+            "pluginOutputPath": "dist/libs/ddd",
+            "jestConfig": "apps/ddd-e2e/jest.config.js",
+            "tsSpecConfig": "apps/ddd-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/react": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/web": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/nx-plugin": {
+      "plugin": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "eslint"
+      }
+    }
+  }
+}

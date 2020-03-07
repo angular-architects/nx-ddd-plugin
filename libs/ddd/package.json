@@ -1,0 +1,6 @@
+{
+  "name": "@angular-architects/ddd",
+  "version": "0.0.7",
+  "main": "src/index.js",
+  "schematics": "./collection.json"
+}

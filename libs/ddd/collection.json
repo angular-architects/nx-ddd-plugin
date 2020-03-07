@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "name": "@angular-architects/ddd",
+  "version": "0.0.1",
+  "schematics": {
+    "domain": {
+      "factory": "./src/schematics/domain/index",
+      "schema": "./src/schematics/domain/schema.json",
+      "description": "adds a domain including a domain folder, domain lib, entries in nx.json, and linting rules in tslint.json"
+    },
+    "feature": {
+      "factory": "./src/schematics/feature/index",
+      "schema": "./src/schematics/feature/schema.json",
+      "description": "adds a feature lib to a domain"
+    }
+
+  }
+}

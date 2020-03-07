@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "domain-options",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Domain name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "addApp": {
+      "type": "boolean",
+      "description": "Add an app for the domain?",
+      "default": false
+    }
+  },
+  "required": ["name"]
+}
