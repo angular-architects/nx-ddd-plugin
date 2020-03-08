@@ -156,6 +156,13 @@ export default function(options: FeatureOptions): Rule {
     const appFolderName = strings.dasherize(appName);
     const appModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
 
+    if (options.app) {
+      const requiredAppModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
+      if (!host.exists(requiredAppModulePath)) {
+        throw new Error(`Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`);
+      }
+    }
+
     const domainTemplates = apply(url('./files/forDomain'), [
       filterTemplates(options),
       template({ ...strings, ...options, workspaceName }),
