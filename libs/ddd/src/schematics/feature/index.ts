@@ -172,7 +172,8 @@ export default function(options: FeatureOptions): Rule {
         name: `feature-${options.name}`,
         directory: options.domain,
         tags: `domain:${options.domain},type:feature`,
-        style: 'scss'
+        style: 'scss',
+        prefix: options.domain,
       }),
       addImport(featureModulePath, domainImportPath, domainModuleClassName),
       (!options.lazy && host.exists(appModulePath)) ? 

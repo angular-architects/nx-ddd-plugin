@@ -28,6 +28,7 @@ export default function(options: DomainOptions): Rule {
       directory: options.name,
       tags: `domain:${options.name},type:domain-logic`,
       style: 'scss',
+      prefix: options.name,
     }),
     updateLintingRules(options.name),
     mergeWith(templateSource),
