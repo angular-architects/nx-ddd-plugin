@@ -12,7 +12,7 @@ import {
 
 import { strings } from '@angular-devkit/core';
 import { DomainOptions } from './schema';
-import { updateLintingRules } from '../utils/update-linting-rules';
+import { addDomainToLintingRules } from '../utils/update-linting-rules';
 
 export default function(options: DomainOptions): Rule {
   const libFolder = strings.dasherize(options.name);
@@ -30,7 +30,7 @@ export default function(options: DomainOptions): Rule {
       style: 'scss',
       prefix: options.name,
     }),
-    updateLintingRules(options.name),
+    addDomainToLintingRules(options.name),
     mergeWith(templateSource),
     (!options.addApp) ? 
       noop() : 
