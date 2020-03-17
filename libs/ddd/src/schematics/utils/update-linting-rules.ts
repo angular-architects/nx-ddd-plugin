@@ -32,7 +32,7 @@ export function checkRuleExists(rules: object, context: SchematicContext) {
 
 export function addDomainToLintingRules(domainName: string): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const text = host.read('tslint.json').toString();
+    const text = host.read('tslint.json')?.toString();
     const rules = JSON.parse(text);
 
     if (!checkRuleExists(rules, context)) return;
