@@ -85,7 +85,7 @@ export function initLintingRules(): Rule {
     });
 
     depConst.push({
-      'sourceTag': 'domain-logic',
+      'sourceTag': 'type:domain-logic',
       'onlyDependOnLibsWithTags': ['type:util']
     });
 
