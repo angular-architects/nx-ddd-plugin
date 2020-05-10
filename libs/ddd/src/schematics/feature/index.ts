@@ -21,11 +21,11 @@ function readIntoSourceFile(host: Tree, modulePath: string): ts.SourceFile {
 }
 
 function addImport(
-  modulePath: string, 
-  ngModuleToImportPath: string, 
-  ngModuleToImportName: string, 
+  modulePath: string,
+  ngModuleToImportPath: string,
+  ngModuleToImportName: string,
   optional = false): Rule {
-  
+
     return (host: Tree) => {
 
       if (optional && !host.exists(modulePath)) {
@@ -35,9 +35,9 @@ function addImport(
       const source = readIntoSourceFile(host, modulePath);
 
       const changes = addImportToModule(
-                        source, 
-                        modulePath, 
-                        ngModuleToImportName, 
+                        source,
+                        modulePath,
+                        ngModuleToImportName,
                         ngModuleToImportPath)
 
       const declarationRecorder = host.beginUpdate(modulePath);
@@ -51,16 +51,16 @@ function addImport(
 }
 
 function addDeclaration(
-  modulePath: string, 
-  componentToImportPath: string, 
+  modulePath: string,
+  componentToImportPath: string,
   componentToImportName: string): Rule {
-  
+
     return (host: Tree) => {
 
       const source = readIntoSourceFile(host, modulePath);
 
       const changes = addDeclarationToModule(
-                        source, 
+                        source,
                         modulePath,
                         componentToImportName,
                         componentToImportPath);
@@ -76,16 +76,16 @@ function addDeclaration(
 }
 
 function addExport(
-  modulePath: string, 
-  componentToImportPath: string, 
+  modulePath: string,
+  componentToImportPath: string,
   componentToImportName: string): Rule {
-  
+
     return (host: Tree) => {
 
       const source = readIntoSourceFile(host, modulePath);
 
       const changes = addExportToModule(
-                        source, 
+                        source,
                         modulePath,
                         componentToImportName,
                         componentToImportPath);
@@ -103,7 +103,7 @@ function addExport(
 function addTsExport(filePath: string, filesToExport: string[]): Rule {
   return (host: Tree) => {
     let content = host.read(filePath) + '\n';
-    
+
     for(const file of filesToExport) {
       content += `export * from '${file}';\n`;
     }
@@ -131,16 +131,14 @@ export default function(options: FeatureOptions): Rule {
 
     const workspaceName = readWorkspaceName(host);
 
-    const domainName = strings.dasherize(options.domain);
-    const domainFolderName = domainName;
+    const domainFolderName = strings.dasherize(options.domain);
     const domainPath = `libs/${domainFolderName}/domain/src/lib`;
-    const domainModulePath = `${domainPath}/${domainFolderName}-domain.module.ts`;
     const domainModuleClassName = strings.classify(options.domain) + "DomainModule";
     const domainImportPath = `${workspaceName}/${domainFolderName}/domain`;
     const domainIndexPath = `libs/${domainFolderName}/domain/src/index.ts`;
 
     const featureName = strings.dasherize(options.name);
-    const featureFolderName = 'feature-' + featureName;
+    const featureFolderName = (options.prefix ? 'feature-' : '') + featureName;
     const featurePath = `libs/${domainFolderName}/${featureFolderName}/src/lib`;
     const featureModulePath = `${featurePath}/${domainFolderName}-${featureFolderName}.module.ts`;
     const featureModuleClassName = strings.classify(`${options.domain}-${featureFolderName}Module`);
@@ -148,7 +146,7 @@ export default function(options: FeatureOptions): Rule {
     const featureIndexPath = `libs/${domainFolderName}/${featureFolderName}/src/index.ts`;
 
     const entityName = options.entity ? strings.dasherize(options.entity) : '';
-    
+
     const featureComponentImportPath = `./${featureName}.component`;
     const featureComponentClassName = strings.classify(`${featureName}Component`);
 
@@ -183,14 +181,14 @@ export default function(options: FeatureOptions): Rule {
         prefix: options.domain,
       }),
       addImport(featureModulePath, domainImportPath, domainModuleClassName),
-      (!options.lazy && host.exists(appModulePath)) ? 
+      (!options.lazy && host.exists(appModulePath)) ?
         chain([
           addImport(appModulePath, featureImportPath, featureModuleClassName, true),
           addImport(appModulePath, '@angular/common/http', 'HttpClientModule', true)
         ]) :
         noop(),
       mergeWith(domainTemplates),
-      (options.entity) ? 
+      (options.entity) ?
         addTsExport(domainIndexPath, [
           `./lib/entities/${entityName}`,
           `./lib/infrastructure/${entityName}.data.service`

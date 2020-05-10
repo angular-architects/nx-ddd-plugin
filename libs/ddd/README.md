@@ -38,15 +38,16 @@ Add domains and features interactively:
 ```
 ng g @angular-architects/ddd:domain
 > ? What is the name of the domain? booking
-? Would you like to add an associated application? (y/N) No
+> ? Would you like to add an associated application? (y/N) No
 
 ng g @angular-architects/ddd:domain
 > ? What is the name of the domain? boarding
-? Would you like to add an associated application? (y/N) No
+> ? Would you like to add an associated application? (y/N) No
 
 ng g @angular-architects/ddd:feature
 > ? What is the name of the library? search
 > ? What is the name of the associated domain? booking
+> ? Would you like to add the "feature-" prefix? (Y/n) Yes
 > ? Is this feature lazy loaded? (y/N) No
 > [Optional] What is the associated application? (Leave blank if none) flight-app
 > [Optional] What is the name of the entity to create for this feature? (Leave blank if none) flight
@@ -54,6 +55,7 @@ ng g @angular-architects/ddd:feature
 ng g @angular-architects/ddd:feature
 > ? What is the name of the library? cancel
 > ? What is the name of the associated domain? booking
+> ? Would you like to add the "feature-" prefix? (Y/n) Yes
 > ? Is this feature lazy loaded? (y/N) No
 > [Optional] What is the associated application? (Leave blank if none) flight-app
 > [Optional] What is the name of the entity to create for this feature? (Leave blank if none)
@@ -61,6 +63,7 @@ ng g @angular-architects/ddd:feature
 ng g @angular-architects/ddd:feature
 > ? What is the name of the library? manage
 > ? What is the name of the associated domain? boarding
+> ? Would you like to add the "feature-" prefix? (Y/n) Yes
 > ? Is this feature lazy loaded? (y/N) No
 > [Optional] What is the associated application? (Leave blank if none) flight-app
 > [Optional] What is the name of the entity to create for this feature? (Leave blank if none)

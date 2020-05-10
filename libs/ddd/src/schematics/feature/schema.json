@@ -17,6 +17,12 @@
       "x-prompt": "What is the name of the associated domain?",
       "description": "Domain name"
     },
+    "prefix": {
+      "type": "boolean",
+      "description": "Apply the \"feature-\" prefix?",
+      "x-prompt": "Would you like to add the \"feature-\" prefix?",
+      "default": true
+    },
     "lazy": {
       "type": "boolean",
       "description": "Is this feature module lazy loaded?",
