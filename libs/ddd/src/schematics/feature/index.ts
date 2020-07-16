@@ -181,6 +181,8 @@ export default function(options: FeatureOptions): Rule {
         tags: `domain:${options.domain},type:feature`,
         style: 'scss',
         prefix: options.domain,
+        publishable: options.type === 'publishable',
+        buildable: options.type === 'buildable',
       }),
       addImport(featureModulePath, domainImportPath, domainModuleClassName),
       (!options.lazy && host.exists(appModulePath)) ? 

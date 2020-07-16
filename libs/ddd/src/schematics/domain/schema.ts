@@ -14,5 +14,9 @@ export interface DomainOptions {
    * Add an app for the domain?
    */
   addApp?: boolean;
+  /**
+   * A type to determine if and how to build the library.
+   */
+  type?: "internal" | "buildable" | "publishable";
   [k: string]: any;
 }

@@ -26,5 +26,9 @@ export interface FeatureOptions {
    * Optional entity to create for this feature
    */
   entity?: string;
+  /**
+   * A type to determine if and how to build the library.
+   */
+  type?: "internal" | "buildable" | "publishable";
   [k: string]: any;
 }

@@ -29,6 +29,8 @@ export default function(options: DomainOptions): Rule {
       tags: `domain:${options.name},type:domain-logic`,
       style: 'scss',
       prefix: options.name,
+      publishable: options.type === 'publishable',
+      buildable: options.type === 'buildable',
     }),
     addDomainToLintingRules(options.name),
     mergeWith(templateSource),
