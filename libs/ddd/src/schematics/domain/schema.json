@@ -15,6 +15,16 @@
       "type": "boolean",
       "description": "Add an app for the domain?",
       "default": false
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "internal",
+        "buildable",
+        "publishable"
+      ],
+      "description": "A type to determine if and how to build the library.",
+      "default": "publishable"
     }
   },
   "required": ["name"]

@@ -27,6 +27,16 @@
     "entity": {
       "type": "string",
       "description": "Optional entity to create for this feature"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "internal",
+        "buildable",
+        "publishable"
+      ],
+      "description": "A type to determine if and how to build the library.",
+      "default": "publishable"
     }
   },
   "required": ["name", "domain"]
