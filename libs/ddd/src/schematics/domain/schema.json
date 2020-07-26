@@ -24,7 +24,7 @@
         "publishable"
       ],
       "description": "A type to determine if and how to build the library.",
-      "default": "publishable"
+      "default": "buildable"
     }
   },
   "required": ["name"]
