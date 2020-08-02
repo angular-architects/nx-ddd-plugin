@@ -19,6 +19,10 @@ export interface UiOptions {
    */
   domain?: string;
   /**
+   * Subpath of the library beneath the domain or shared folder.
+   */
+  directory?: string;
+  /**
    * A type to determine if and how to build the library.
    */
   type?: "internal" | "buildable" | "publishable";

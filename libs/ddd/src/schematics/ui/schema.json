@@ -20,6 +20,10 @@
             "type": "string",
             "description": "Domain name, if the library belongs to a certain domain."
         },
+        "directory": {
+            "type": "string",
+            "description": "Subpath of the library beneath the domain or shared folder."
+        },
         "type": {
             "type": "string",
             "enum": [

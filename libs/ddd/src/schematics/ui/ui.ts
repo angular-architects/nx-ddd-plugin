@@ -2,7 +2,6 @@ import { strings } from '@angular-devkit/core';
 import { chain, externalSchematic, Rule } from '@angular-devkit/schematics';
 import { UiOptions } from './schema';
 
-
 function validateInputs(options: UiOptions): void {
   if (options.shared && options.domain) {
     throw new Error(`A UI library should either belong to a specific domain or be shared globally. 
@@ -21,17 +20,18 @@ export default function(options: UiOptions): Rule {
   validateInputs(options);
 
   const libName = strings.dasherize(options.name);
-  const libDir = options.shared ? "shared" : options.domain;
+  const domain = options.shared ? 'shared' : options.domain;
+  const libDir = options.directory ? `${domain}/${options.directory}` : domain;
 
   return chain([
     externalSchematic('@nrwl/angular', 'lib', {
       name: `ui-${libName}`,
       directory: libDir,
-      tags: `domain:${libDir},type:ui`,
+      tags: `domain:${domain},type:ui`,
       style: 'scss',
       prefix: options.name,
       publishable: options.type === 'publishable',
-      buildable: options.type === 'buildable',
+      buildable: options.type === 'buildable'
     })
   ]);
 }

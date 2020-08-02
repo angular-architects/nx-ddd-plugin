@@ -73,4 +73,33 @@ describe('ui', () => {
       );
     await expect(schematicFunc()).rejects.toThrowError();
   });
+
+  it('should be able to customize the directory of the library within the domain / shared folder', async () => {
+    const tree = await runSchematic<UiOptions>(
+      'ui',
+      { name: 'form-components', domain: 'customer', directory: 'forms' },
+      appTree
+    );
+
+    const workspaceJson = readJsonInTree(tree, '/workspace.json');
+    expect(workspaceJson.projects).toHaveProperty('customer-forms-ui-form-components');
+    expect(workspaceJson.projects['customer-forms-ui-form-components'].root).toEqual(
+      'libs/customer/forms/ui-form-components'
+    );
+  });
+
+  it('should keep correct tags with a customized directory', async () => {
+    const tree = await runSchematic<UiOptions>(
+      'ui',
+      { name: 'form-components', domain: 'customer', directory: 'forms' },
+      appTree
+    );
+
+    const nxJson = readJsonInTree<NxJson>(tree, '/nx.json');
+    expect(nxJson.projects).toEqual({
+      'customer-forms-ui-form-components': {
+        tags: ['domain:customer', 'type:ui']
+      }
+    });
+  });
 });
