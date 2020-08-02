@@ -29,26 +29,27 @@
   },
   "private": true,
   "dependencies": {
-    "@schematics/angular": "^9.0.5",
+    "@schematics/angular": "10.0.5",
     "json-schema-to-typescript": "^8.1.0"
   },
   "devDependencies": {
-    "@nrwl/nx-plugin": "9.0.4",
-    "@nrwl/workspace": "9.0.4",
+    "@nrwl/angular": "10.0.7",
+    "@nrwl/eslint-plugin-nx": "10.0.7",
+    "@nrwl/jest": "10.0.7",
+    "@nrwl/nx-plugin": "^10.0.7",
+    "@nrwl/workspace": "10.0.7",
+    "@types/jest": "25.1.4",
     "@types/node": "~8.9.4",
-    "dotenv": "6.2.0",
-    "eslint": "6.1.0",
-    "prettier": "1.18.2",
-    "ts-node": "~7.0.0",
-    "tslint": "~5.11.0",
-    "typescript": "~3.7.4",
-    "@nrwl/eslint-plugin-nx": "9.0.4",
-    "@typescript-eslint/parser": "2.19.2",
     "@typescript-eslint/eslint-plugin": "2.19.2",
+    "@typescript-eslint/parser": "2.19.2",
+    "dotenv": "6.2.0",
+    "eslint": "6.8.0",
     "eslint-config-prettier": "6.0.0",
-    "@nrwl/jest": "9.0.4",
-    "jest": "24.9.0",
-    "@types/jest": "24.9.1",
-    "ts-jest": "24.0.0"
+    "jest": "25.2.4",
+    "prettier": "2.0.4",
+    "ts-jest": "25.2.1",
+    "ts-node": "~7.0.0",
+    "tslint": "6.0.0",
+    "typescript": "3.9.7"
   }
 }

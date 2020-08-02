@@ -11,19 +11,17 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "libs/ddd/.eslintrc",
             "tsConfig": [
               "libs/ddd/tsconfig.lib.json",
               "libs/ddd/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/ddd/**"]
+            "exclude": ["**/node_modules/**", "!libs/ddd/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/ddd/jest.config.js",
-            "tsConfig": "libs/ddd/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
