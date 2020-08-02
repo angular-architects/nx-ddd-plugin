@@ -16,7 +16,11 @@
       "factory": "./src/schematics/feature/index",
       "schema": "./src/schematics/feature/schema.json",
       "description": "adds a feature lib to a domain"
+    },
+    "ui": {
+      "factory": "./src/schematics/ui/ui",
+      "schema": "./src/schematics/ui/schema.json",
+      "description": "adds a UI library to a domain or as a shared library"
     }
-
   }
 }
