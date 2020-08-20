@@ -23,7 +23,7 @@ Add this plugin to an Nx workspace:
 ng add @angular-architects/ddd
 ```
 
-Add domains and features:
+Add domains and features manually:
 
 ```
 ng g @angular-architects/ddd:domain booking
@@ -31,6 +31,42 @@ ng g @angular-architects/ddd:domain boarding
 ng g @angular-architects/ddd:feature search --domain booking --app flight-app --entity flight
 ng g @angular-architects/ddd:feature cancel --domain booking --app flight-app
 ng g @angular-architects/ddd:feature manage --domain boarding --app flight-app
+```
+
+Add domains and features interactively:
+
+```
+ng g @angular-architects/ddd:domain
+> ? What is the name of the domain? booking
+> ? Would you like to add an associated application? (y/N) No
+
+ng g @angular-architects/ddd:domain
+> ? What is the name of the domain? boarding
+> ? Would you like to add an associated application? (y/N) No
+
+ng g @angular-architects/ddd:feature
+> ? What is the name of the library? search
+> ? What is the name of the associated domain? booking
+> ? Would you like to add the "feature-" prefix? (Y/n) Yes
+> ? Is this feature lazy loaded? (y/N) No
+> [Optional] What is the associated application? (Leave blank if none) flight-app
+> [Optional] What is the name of the entity to create for this feature? (Leave blank if none) flight
+
+ng g @angular-architects/ddd:feature
+> ? What is the name of the library? cancel
+> ? What is the name of the associated domain? booking
+> ? Would you like to add the "feature-" prefix? (Y/n) Yes
+> ? Is this feature lazy loaded? (y/N) No
+> [Optional] What is the associated application? (Leave blank if none) flight-app
+> [Optional] What is the name of the entity to create for this feature? (Leave blank if none)
+
+ng g @angular-architects/ddd:feature
+> ? What is the name of the library? manage
+> ? What is the name of the associated domain? boarding
+> ? Would you like to add the "feature-" prefix? (Y/n) Yes
+> ? Is this feature lazy loaded? (y/N) No
+> [Optional] What is the associated application? (Leave blank if none) flight-app
+> [Optional] What is the name of the entity to create for this feature? (Leave blank if none)
 ```
 
 This example assumes that you have an app ``flight-app`` in place.

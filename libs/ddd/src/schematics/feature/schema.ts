@@ -15,13 +15,17 @@ export interface FeatureOptions {
    */
   domain: string;
   /**
-   * app name
+   * Apply the "feature-" prefix?
    */
-  app?: string;
+  prefix?: boolean;
   /**
    * Is this feature module lazy loaded?
    */
   lazy?: boolean;
+  /**
+   * app name
+   */
+  app?: string;
   /**
    * Optional entity to create for this feature
    */

@@ -6,6 +6,7 @@
     "name": {
       "type": "string",
       "description": "Domain name",
+      "x-prompt": "What is the name of the domain?",
       "$default": {
         "$source": "argv",
         "index": 0
@@ -14,6 +15,7 @@
     "addApp": {
       "type": "boolean",
       "description": "Add an app for the domain?",
+      "x-prompt": "Would you like to add an associated application?",
       "default": false
     },
     "type": {
