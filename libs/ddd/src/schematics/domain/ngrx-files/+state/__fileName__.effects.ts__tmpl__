@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import * as <%= className %>Actions from './<%= fileName %>.actions';
+
+@Injectable()
+export class <%= className %>Effects {
+  load<%= className %>$ = createEffect(() => this.actions$.pipe(
+  ofType(<%= className %>Actions.load<%= className %>),
+  switchMap((action)) =>
+    this.backend.load().pipe(
+      map((<%= propertyName %>) =>
+        <%= className =>Actions.load<%= className %>Success({ <%= propertyName => })
+      ),
+      catchError((error) =>
+        of(<%= className =>Actions.load<%= className %>Failure({ error }))
+      )
+    )
+  );
+
+ constructor(
+   private actions$: Actions,
+   private backend: <%= className %>DataService
+  ) { }
+}
