@@ -34,5 +34,9 @@ export interface FeatureOptions {
    * A type to determine if and how to build the library.
    */
   type?: "internal" | "buildable" | "publishable";
+  /**
+   * Add ngrx for the domain (entity required)
+   */
+  ngrx?: boolean;
   [k: string]: any;
 }
