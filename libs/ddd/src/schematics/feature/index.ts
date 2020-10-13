@@ -161,11 +161,17 @@ export default function(options: FeatureOptions): Rule {
       }
     }
 
-    const domainTemplates = apply(url('./files/forDomain'), [
-      filterTemplates(options),
-      template({ ...strings, ...options, workspaceName }),
-      move(domainPath)
-    ]);
+    const domainTemplates = options.ngrx
+      ? apply(url('./files/forDomainWithNgrx'), [
+          filterTemplates(options),
+          template({ ...strings, ...options, workspaceName }),
+          move(domainPath),
+        ])
+      : apply(url('./files/forDomain'), [
+          filterTemplates(options),
+          template({ ...strings, ...options, workspaceName }),
+          move(domainPath),
+        ]);
 
     const featureTemplates = apply(url('./files/forFeature'), [
       template({ ...strings, ...options, workspaceName }),
