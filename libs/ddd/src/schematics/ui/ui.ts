@@ -3,10 +3,10 @@ import {
   chain,
   externalSchematic,
   Rule,
-  Tree
+  Tree,
 } from '@angular-devkit/schematics';
 import { getNpmScope } from '@nrwl/workspace';
-import { validateInputs } from '../utils/lib-options';
+import { validateInputs } from '../utils';
 import { UiOptions } from './schema';
 
 export default function (options: UiOptions): Rule {

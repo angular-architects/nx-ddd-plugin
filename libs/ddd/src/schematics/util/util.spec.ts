@@ -60,7 +60,11 @@ describe('util', () => {
 
   it('should throw error if neither domain nor shared option is provided', async () => {
     const schematicFunc = async () =>
-      await runSchematic<UtilOptions>('util', { name: 'form-validation' }, appTree);
+      await runSchematic<UtilOptions>(
+        'util',
+        { name: 'form-validation' },
+        appTree
+      );
     await expect(schematicFunc()).rejects.toThrowError();
   });
 

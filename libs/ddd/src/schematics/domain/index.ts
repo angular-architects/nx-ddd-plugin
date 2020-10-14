@@ -12,7 +12,7 @@ import {
 
 import { strings } from '@angular-devkit/core';
 import { DomainOptions } from './schema';
-import { addDomainToLintingRules } from '../utils/update-linting-rules';
+import { addDomainToLintingRules } from '../rules';
 
 export default function (options: DomainOptions): Rule {
   const libFolder = strings.dasherize(options.name);
