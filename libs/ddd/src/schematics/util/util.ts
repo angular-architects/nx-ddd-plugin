@@ -7,13 +7,14 @@ import {
 } from '@angular-devkit/schematics';
 import { getNpmScope } from '@nrwl/workspace';
 import { validateInputs } from '../utils/lib-options';
-import { UiOptions } from './schema';
+import { UtilOptions } from './schema';
 
-export default function (options: UiOptions): Rule {
+
+export default function (options: UtilOptions): Rule {
   return (host: Tree) => {
     validateInputs(options);
 
-    const libName = `ui-${strings.dasherize(options.name)}`;
+    const libName = `util-${strings.dasherize(options.name)}`;
     const domain = options.shared ? 'shared' : options.domain;
     const libDirectory = options.directory
       ? `${domain}/${options.directory}`
@@ -31,7 +32,7 @@ export default function (options: UiOptions): Rule {
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
         name: libName,
-        tags: `domain:${domain},type:ui`,
+        tags: `domain:${domain},type:util`,
         style: 'scss',
         prefix: options.name,
         publishable: isPublishableLib,

@@ -21,6 +21,11 @@
       "factory": "./src/schematics/ui/ui",
       "schema": "./src/schematics/ui/schema.json",
       "description": "adds a UI library to a domain or as a shared library"
+    },
+    "util": {
+      "factory": "./src/schematics/util/util",
+      "schema": "./src/schematics/util/schema.json",
+      "description": "adds a utility library to a domain or as a shared library"
     }
   }
 }
