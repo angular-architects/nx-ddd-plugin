@@ -1,7 +1,6 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
 import { addExportToModule } from '@schematics/angular/utility/ast-utils';
-import { InsertChange } from '@schematics/angular/utility/change';
-import { readIntoSourceFile } from '../utils';
+import { insert, readIntoSourceFile } from '../utils';
 
 /**
  * addExport
@@ -17,19 +16,13 @@ export function addExport(
   return (host: Tree) => {
     const source = readIntoSourceFile(host, modulePath);
 
-    const changes = addExportToModule(
-      source,
-      modulePath,
-      componentToImportName,
-      componentToImportPath
-    );
-
-    const declarationRecorder = host.beginUpdate(modulePath);
-    for (const change of changes) {
-      if (change instanceof InsertChange) {
-        declarationRecorder.insertLeft(change.pos, change.toAdd);
-      }
-    }
-    host.commitUpdate(declarationRecorder);
+    insert(host, modulePath, [
+      ...addExportToModule(
+        source,
+        modulePath,
+        componentToImportName,
+        componentToImportPath
+      ),
+    ]);
   };
 }

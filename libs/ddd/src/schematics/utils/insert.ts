@@ -6,7 +6,11 @@
  */
 import { Tree } from '@angular-devkit/schematics';
 import { RemoveChange } from '@nrwl/workspace';
-import { Change, InsertChange } from '@schematics/angular/utility/change';
+import {
+  Change,
+  InsertChange,
+  NoopChange,
+} from '@schematics/angular/utility/change';
 
 /**
  * insert
@@ -20,7 +24,10 @@ export function insert(host: Tree, modulePath: string, changes: Change[]) {
   }
 
   // sort changes so that the highest pos goes first
-  const orderedChanges = changes.sort((a, b) => b.order - a.order);
+  // and filter out noop changes
+  const orderedChanges = changes
+    .sort((a, b) => b.order - a.order)
+    .filter((change) => !(change instanceof NoopChange));
 
   const recorder = host.beginUpdate(modulePath);
   for (const change of orderedChanges) {
