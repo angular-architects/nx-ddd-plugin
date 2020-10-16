@@ -5,7 +5,7 @@ import { readIntoSourceFile } from '../utils';
 
 /**
  * addImport
- * @param modulePath the path of the moudule the import is being included in
+ * @param modulePath the path of the module the import is being included in
  * @param ngModuleToImportPath the path of angular module that is being imported.
  * @param ngModuleToImportName the name of the angular module that is being imported.
  * @param optional whether or not optional

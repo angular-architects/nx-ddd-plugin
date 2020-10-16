@@ -18,6 +18,8 @@ import {
   addImport,
   addTsExport,
   filterTemplates,
+  addNgrxImportsToDomain,
+  addNgRxToPackageJson,
 } from '../rules';
 import { readWorkspaceName } from '../utils';
 
@@ -27,6 +29,7 @@ export default function (options: FeatureOptions): Rule {
 
     const domainFolderName = strings.dasherize(options.domain);
     const domainPath = `libs/${domainFolderName}/domain/src/lib`;
+    const domainModulePath = `${domainPath}/${domainFolderName}-domain.module.ts`;
     const domainModuleClassName =
       strings.classify(options.domain) + 'DomainModule';
     const domainImportPath = `${workspaceName}/${domainFolderName}/domain`;
@@ -62,22 +65,30 @@ export default function (options: FeatureOptions): Rule {
       }
     }
 
-    const domainTemplates = options.ngrx
-      ? apply(url('./files/forDomainWithNgrx'), [
-          filterTemplates(options),
-          template({ ...strings, ...options, workspaceName }),
-          move(domainPath),
-        ])
-      : apply(url('./files/forDomain'), [
-          filterTemplates(options),
-          template({ ...strings, ...options, workspaceName }),
-          move(domainPath),
-        ]);
+    const domainTemplates =
+      options.ngrx && options.entity
+        ? apply(url('./files/forDomainWithNgrx'), [
+            filterTemplates(options),
+            template({ ...strings, ...options, workspaceName }),
+            move(domainPath),
+          ])
+        : apply(url('./files/forDomain'), [
+            filterTemplates(options),
+            template({ ...strings, ...options, workspaceName }),
+            move(domainPath),
+          ]);
 
-    const featureTemplates = apply(url('./files/forFeature'), [
-      template({ ...strings, ...options, workspaceName }),
-      move(featurePath),
-    ]);
+    const featureTemplates =
+      options.ngrx && options.entity
+        ? apply(url('./files/forFeatureWithNgrx'), [
+            filterTemplates(options),
+            template({ ...strings, ...options, workspaceName }),
+            move(featurePath),
+          ])
+        : apply(url('./files/forFeature'), [
+            template({ ...strings, ...options, workspaceName }),
+            move(featurePath),
+          ]);
 
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
@@ -111,6 +122,15 @@ export default function (options: FeatureOptions): Rule {
         ? addTsExport(domainIndexPath, [
             `./lib/entities/${entityName}`,
             `./lib/infrastructure/${entityName}.data.service`,
+          ])
+        : noop(),
+      options.ngrx && options.entity && host.exists(domainModulePath)
+        ? chain([
+            addNgRxToPackageJson(),
+            addNgrxImportsToDomain(domainModulePath, entityName),
+            addTsExport(domainIndexPath, [
+              `./lib/+state/${entityName}/${entityName}.actions`,
+            ]),
           ])
         : noop(),
       addTsExport(domainIndexPath, [`./lib/application/${featureName}.facade`]),

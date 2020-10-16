@@ -5,3 +5,5 @@ export * from './add-import';
 export * from './add-ts-exports';
 export * from './filter-templates';
 export * from './init-linting-rules';
+export * from './add-ngrx-imports-to-domain';
+export * from './add-ngrx-to-package-json';
