@@ -15,7 +15,8 @@ export function addNgRxToPackageJson(): Rule {
     {
       '@ngrx/store': ngrxVersion,
       '@ngrx/effects': ngrxVersion,
-      '@ngrx/entity': ngrxVersion
+      '@ngrx/entity': ngrxVersion,
+      '@ngrx/store-devtools': ngrxVersion,
     },
     {}
   );

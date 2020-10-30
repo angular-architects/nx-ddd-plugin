@@ -18,6 +18,12 @@
       "x-prompt": "Would you like to add an associated application?",
       "default": false
     },
+    "ngrx": {
+      "type": "boolean",
+      "default": false,
+      "description": "Add ngrx for the associated app (addApp required)",
+      "x-prompt": "Would you like to add NgRx to your associated application?"
+    },
     "type": {
       "type": "string",
       "enum": ["internal", "buildable", "publishable"],

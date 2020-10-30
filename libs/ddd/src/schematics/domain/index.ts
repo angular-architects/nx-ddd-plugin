@@ -12,20 +12,23 @@ import {
 
 import { strings } from '@angular-devkit/core';
 import { DomainOptions } from './schema';
-import { addDomainToLintingRules } from '../rules';
+import {
+  addDomainToLintingRules,
+  addNgrxImportsToApp,
+  addNgRxToPackageJson,
+} from '../rules';
 
 export default function (options: DomainOptions): Rule {
   const libFolder = strings.dasherize(options.name);
 
-  const templateSource = options.ngrx
-    ? apply(url('./ngrx-files'), [
-        template({}),
-        move(`libs/${libFolder}/domain/src/lib`),
-      ])
-    : apply(url('./files'), [
-        template({}),
-        move(`libs/${libFolder}/domain/src/lib`),
-      ]);
+  const templateSource = apply(url('./files'), [
+    template({}),
+    move(`libs/${libFolder}/domain/src/lib`),
+  ]);
+
+  const appFolderName = strings.dasherize(options.name);
+  const appPath = `apps/${appFolderName}/src/app`;
+  const appModulePath = `${appPath}/app.module.ts`;
 
   return chain([
     externalSchematic('@nrwl/angular', 'lib', {
@@ -46,5 +49,18 @@ export default function (options: DomainOptions): Rule {
           tags: `domain:${options.name},type:app`,
           style: 'scss',
         }),
+    options.addApp && options.ngrx
+      ? chain([
+          externalSchematic('@ngrx/schematics', 'store', {
+            project: options.name,
+            root: true,
+            minimal: true,
+            module: 'app.module.ts',
+            name: 'state',
+          }),
+          addNgrxImportsToApp(appModulePath),
+          addNgRxToPackageJson(),
+        ])
+      : noop(),
   ]);
 }
