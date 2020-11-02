@@ -20,13 +20,11 @@
     "prefix": {
       "type": "boolean",
       "description": "Apply the \"feature-\" prefix?",
-      "x-prompt": "Would you like to add the \"feature-\" prefix?",
       "default": true
     },
     "lazy": {
       "type": "boolean",
       "description": "Is this feature module lazy loaded?",
-      "x-prompt": "Is this feature lazy loaded?",
       "default": false
     },
     "app": {
@@ -36,7 +34,6 @@
     },
     "entity": {
       "type": "string",
-      "x-prompt": "[Optional] What is the name of the entity to create for this feature? (Leave blank if none)",
       "description": "Optional entity to create for this feature"
     },
     "type": {
