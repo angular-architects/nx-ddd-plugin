@@ -13,7 +13,8 @@ The generated access restrictions prevent unwanted access between libraries resp
 - 🗺️ Generating domains with domain libraries including a facades, models, and data services
 - ⚙️ Generating feature libraries including a feature components using the facades
 - 🙅‍♂️ Adding linting rules for access restrictions between domains as proposed by Nrwl
-- 🙅‍♀️ Adding linting rules for access restrictions between layers as proposed by Nrwl
+- 🙅‍♀️ Adding linting rules for access restrictions between layers as proposed by Nrwl (supports tslint and eslint)
+- 🔥 Optionally generates skeleton for NGRX and integrates it into the DDD design (``--ngrx`` switch)
 
 ## Usage
 
@@ -26,48 +27,21 @@ ng add @angular-architects/ddd
 Add domains and features manually:
 
 ```
-ng g @angular-architects/ddd:domain booking
-ng g @angular-architects/ddd:domain boarding
-ng g @angular-architects/ddd:feature search --domain booking --app flight-app --entity flight
-ng g @angular-architects/ddd:feature cancel --domain booking --app flight-app
-ng g @angular-architects/ddd:feature manage --domain boarding --app flight-app
+ng g @angular-architects/ddd:domain booking --addApp
+ng g @angular-architects/ddd:domain boarding --addApp
+ng g @angular-architects/ddd:feature search --domain booking --entity flight
+ng g @angular-architects/ddd:feature cancel --domain booking
+ng g @angular-architects/ddd:feature manage --domain boarding
 ```
 
-Add domains and features interactively:
+For NGRX support, just add the ``--ngrx`` switch:
 
 ```
-ng g @angular-architects/ddd:domain
-> ? What is the name of the domain? booking
-> ? Would you like to add an associated application? (y/N) No
-
-ng g @angular-architects/ddd:domain
-> ? What is the name of the domain? boarding
-> ? Would you like to add an associated application? (y/N) No
-
-ng g @angular-architects/ddd:feature
-> ? What is the name of the library? search
-> ? What is the name of the associated domain? booking
-> ? Would you like to add the "feature-" prefix? (Y/n) Yes
-> ? Is this feature lazy loaded? (y/N) No
-> [Optional] What is the associated application? (Leave blank if none) flight-app
-> [Optional] What is the name of the entity to create for this feature? (Leave blank if none) flight
-
-ng g @angular-architects/ddd:feature
-> ? What is the name of the library? cancel
-> ? What is the name of the associated domain? booking
-> ? Would you like to add the "feature-" prefix? (Y/n) Yes
-> ? Is this feature lazy loaded? (y/N) No
-> [Optional] What is the associated application? (Leave blank if none) flight-app
-> [Optional] What is the name of the entity to create for this feature? (Leave blank if none)
-
-ng g @angular-architects/ddd:feature
-> ? What is the name of the library? manage
-> ? What is the name of the associated domain? boarding
-> ? Would you like to add the "feature-" prefix? (Y/n) Yes
-> ? Is this feature lazy loaded? (y/N) No
-> [Optional] What is the associated application? (Leave blank if none) flight-app
-> [Optional] What is the name of the entity to create for this feature? (Leave blank if none)
+ng g @angular-architects/ddd:domain booking --addApp --ngrx
+ng g @angular-architects/ddd:feature search --domain booking --entity flight --ngrx
+[...]
 ```
+
 
 This example assumes that you have an app ``flight-app`` in place.
 
@@ -121,5 +95,9 @@ see https://github.com/angular-architects/ddd-demo
 - [Nrwl's eBook about monorepos and best practices](https://go.nrwl.io/angular-enterprise-monorepo-patterns-new-book)
 - [Recording of session about this architecture](https://www.youtube.com/watch?v=94HFD391zkE&t=1s)
 - [Article series about DDD with Angular](https://www.softwarearchitekt.at/aktuelles/sustainable-angular-architectures-1/)
-- [Our eBook about this architecture](https://leanpub.com/enterprise-angular)
+- [Our eBook on Angular and architectures](https://leanpub.com/enterprise-angular)
 - [Thomas Burlison's article about facades in Angular](https://medium.com/@thomasburlesonIA/push-based-architectures-with-rxjs-81b327d7c32d)
+
+## More 
+- [Angular Architecture Workshop](https://www.angulararchitects.io/en/angular-workshops/advanced-angular-enterprise-architecture-incl-ivy/)
+- [Follow us on Twitter](https://twitter.com/ManfredSteyer)

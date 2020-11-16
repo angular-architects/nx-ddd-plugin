@@ -29,7 +29,6 @@
     },
     "app": {
       "type": "string",
-      "x-prompt": "[Optional] What is the associated application? (Leave blank if none)",
       "description": "app name"
     },
     "entity": {
@@ -38,13 +37,14 @@
     },
     "type": {
       "type": "string",
-      "enum": [
-        "internal",
-        "buildable",
-        "publishable"
-      ],
+      "enum": ["internal", "buildable", "publishable"],
       "description": "A type to determine if and how to build the library.",
       "default": "buildable"
+    },
+    "ngrx": {
+      "type": "boolean",
+      "default": false,
+      "description": "Add ngrx for the domain (entity required)"
     }
   },
   "required": ["name", "domain"]
