@@ -30,6 +30,12 @@ export default function (options: DomainOptions): Rule {
   const appPath = `apps/${appFolderName}/src/app`;
   const appModulePath = `${appPath}/app.module.ts`;
 
+  if (options.ngrx && !options.addApp) {
+    throw new Error(
+      `The 'ngrx' option may only be used when the 'addApp' option is used.`
+    )
+  }
+
   return chain([
     externalSchematic('@nrwl/angular', 'lib', {
       name: 'domain',

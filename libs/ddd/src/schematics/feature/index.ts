@@ -65,6 +65,12 @@ export default function (options: FeatureOptions): Rule {
       }
     }
 
+    if (options.ngrx && !options.entity) {
+      throw new Error(
+        `The 'ngrx' option may only be used when the 'entity' option is used.`
+      )
+    }
+
     const domainTemplates =
       options.ngrx && options.entity
         ? apply(url('./files/forDomainWithNgrx'), [
