@@ -15,6 +15,10 @@ export interface DomainOptions {
    */
   addApp?: boolean;
   /**
+   * Add ngrx for the associated app (addApp required)
+   */
+  ngrx?: boolean;
+  /**
    * A type to determine if and how to build the library.
    */
   type?: "internal" | "buildable" | "publishable";
