@@ -16,6 +16,10 @@ The generated access restrictions prevent unwanted access between libraries resp
 - 🙅‍♀️ Adding linting rules for access restrictions between layers as proposed by Nrwl (supports tslint and eslint)
 - 🔥 Optionally generates skeleton for NGRX and integrates it into the DDD design (``--ngrx`` switch)
 
+### Features Overview Video
+<a href="https://www.youtube.com/watch?v=39JLXMEE7Ds" target="_blank">![Screenshot of Overview Video](https://i.imgur.com/VlTRE80.png)</a>
+
+
 ## Usage
 
 Add this plugin to an Nx workspace:
