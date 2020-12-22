@@ -1,0 +1,11 @@
+{
+  "migrations": [
+    {
+      "version": "11.0.0-beta.4",
+      "description": "Rename ng-update into nx-migrate",
+      "factory": "./src/migrations/update-11-0-0/rename-ng-update-into-nx-migrate",
+      "package": "@nrwl/nx-plugin",
+      "name": "update-11.0.0"
+    }
+  ]
+}
