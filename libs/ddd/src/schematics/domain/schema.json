@@ -25,10 +25,16 @@
     },
     "type": {
       "type": "string",
-      "enum": ["internal", "buildable", "publishable"],
+      "enum": [
+        "internal",
+        "buildable",
+        "publishable"
+      ],
       "description": "A type to determine if and how to build the library.",
       "default": "buildable"
     }
   },
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }

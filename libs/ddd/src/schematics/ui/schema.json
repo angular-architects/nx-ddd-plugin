@@ -1,41 +1,41 @@
 {
-    "$schema": "http://json-schema.org/schema",
-    "id": "ui-options",
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string",
-            "description": "Name of the UI library",
-            "$default": {
-                "$source": "argv",
-                "index": 0
-            }
-        },
-        "shared": {
-            "type": "boolean",
-            "description": "Whether the library should be shared across all domains.",
-            "default": false
-        },
-        "domain": {
-            "type": "string",
-            "description": "Domain name, if the library belongs to a certain domain."
-        },
-        "directory": {
-            "type": "string",
-            "description": "Subpath of the library beneath the domain or shared folder."
-        },
-        "type": {
-            "type": "string",
-            "enum": [
-                "internal",
-                "buildable",
-                "publishable"
-            ],
-            "description": "A type to determine if and how to build the library.",
-            "default": "buildable"
-        }
+  "$schema": "http://json-schema.org/schema",
+  "id": "ui-options",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the UI library",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
     },
-    "required": [
-        "name"
-    ]
+    "shared": {
+      "type": "boolean",
+      "description": "Whether the library should be shared across all domains.",
+      "default": false
+    },
+    "domain": {
+      "type": "string",
+      "description": "Domain name, if the library belongs to a certain domain."
+    },
+    "directory": {
+      "type": "string",
+      "description": "Subpath of the library beneath the domain or shared folder."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "internal",
+        "buildable",
+        "publishable"
+      ],
+      "description": "A type to determine if and how to build the library.",
+      "default": "buildable"
+    }
+  },
+  "required": [
+    "name"
+  ]
 }

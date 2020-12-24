@@ -37,7 +37,11 @@
     },
     "type": {
       "type": "string",
-      "enum": ["internal", "buildable", "publishable"],
+      "enum": [
+        "internal",
+        "buildable",
+        "publishable"
+      ],
       "description": "A type to determine if and how to build the library.",
       "default": "buildable"
     },
@@ -47,5 +51,8 @@
       "description": "Add ngrx for the domain (entity required)"
     }
   },
-  "required": ["name", "domain"]
+  "required": [
+    "name",
+    "domain"
+  ]
 }
