@@ -1,6 +1,6 @@
 {
   "name": "angular-architects",
-  "version": "0.0.0",
+  "version": "11.0.0",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -27,7 +27,7 @@
     "help": "nx help",
     "workspace-generator": "nx workspace-generator"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@schematics/angular": "11.0.5",
     "json-schema-to-typescript": "^10.0.2"
