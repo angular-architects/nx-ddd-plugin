@@ -19,15 +19,16 @@ import {
 } from '../rules';
 
 export default function (options: DomainOptions): Rule {
-  const libName = strings.dasherize(options.name);
   const appName = strings.dasherize(options.name);
-  const libNameAndDirectory  = `${libName}/${options.libsDirectory}`;
-  const libFolderPath = `libs/${libNameAndDirectory}`;
-  const libLibFolder = `${libFolderPath}/domain/src/lib`;
-  const appNameAndDirectory = `${libName}/${options.appsDirectory}`;
+  const appNameAndDirectory = `${options.appsDirectory}/${appName}`;
   const appFolderPath = `apps/${appNameAndDirectory}`;
   const appModuleFolder = `${appFolderPath}/src/app`;
   const appModuleFilepath = `${appModuleFolder}/app.module.ts`;
+
+  const libName = strings.dasherize(options.name);
+  const libNameAndDirectory  = `${libName}/${options.libsDirectory}`;
+  const libFolderPath = `libs/${libNameAndDirectory}`;
+  const libLibFolder = `${libFolderPath}/domain/src/lib`;
 
   const templateSource = apply(url('./files'), [
     template({}),
@@ -43,7 +44,7 @@ export default function (options: DomainOptions): Rule {
   return chain([
     externalSchematic('@nrwl/angular', 'lib', {
       name: 'domain',
-      directory: appNameAndDirectory,
+      directory: libNameAndDirectory,
       tags: `domain:${libName},type:domain-logic`,
       style: 'scss',
       prefix: libName,
@@ -56,6 +57,7 @@ export default function (options: DomainOptions): Rule {
       ? noop()
       : externalSchematic('@nrwl/angular', 'app', {
           name: appName,
+          directory: options.appsDirectory,
           tags: `domain:${appName},type:app`,
           style: 'scss',
         }),
