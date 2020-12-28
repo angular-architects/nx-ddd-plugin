@@ -11,11 +11,11 @@ export interface DomainOptions {
    */
   name: string;
   /**
-   * Subpath of the domain for apps folder.
+   * Subpath of the domain within apps directory
    */
   appsDirectory?: string;
   /**
-   * Subpath of the domain for libs folder.
+   * Subpath of the domain within libs directory
    */
   libsDirectory?: string;
   /**
@@ -29,6 +29,6 @@ export interface DomainOptions {
   /**
    * A type to determine if and how to build the library.
    */
-  type?: 'internal' | 'buildable' | 'publishable';
+  type?: "internal" | "buildable" | "publishable";
   [k: string]: any;
 }

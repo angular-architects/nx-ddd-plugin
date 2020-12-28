@@ -23,11 +23,11 @@ export interface FeatureOptions {
    */
   lazy?: boolean;
   /**
-   * Subpath for the apps folder.
+   * Subpath within apps directory
    */
   appsDirectory?: string;
   /**
-   * Subpath for the libs folder.
+   * Subpath within libs directory
    */
   libsDirectory?: string;
   /**
@@ -41,7 +41,7 @@ export interface FeatureOptions {
   /**
    * A type to determine if and how to build the library.
    */
-  type?: 'internal' | 'buildable' | 'publishable';
+  type?: "internal" | "buildable" | "publishable";
   /**
    * Add ngrx for the domain (entity required)
    */
