@@ -6,7 +6,6 @@ export function checkRuleExists(
   rules: object,
   context: SchematicContext
 ) {
-
   if (!rules['rules']) {
     context.logger.info(`${filePath}: rules expected`);
     return false;

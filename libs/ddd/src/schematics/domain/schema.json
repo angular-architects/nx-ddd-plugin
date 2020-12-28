@@ -12,6 +12,14 @@
         "index": 0
       }
     },
+    "appsDirectory": {
+      "type": "string",
+      "description": "Subpath of the domain within apps directory"
+    },
+    "libsDirectory": {
+      "type": "string",
+      "description": "Subpath of the domain within libs directory"
+    },
     "addApp": {
       "type": "boolean",
       "description": "Add an app for the domain?",

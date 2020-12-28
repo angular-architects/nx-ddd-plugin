@@ -29,7 +29,9 @@ export function updateDepConst(
 
   if (rules['overrides']) {
     const overrides = rules['overrides'];
-    rules = overrides.find(e => e.rules && e.rules['@nrwl/nx/enforce-module-boundaries']);
+    rules = overrides.find(
+      (e) => e.rules && e.rules['@nrwl/nx/enforce-module-boundaries']
+    );
   }
 
   if (!checkRuleExists(filePath, rule, rules, context)) return;

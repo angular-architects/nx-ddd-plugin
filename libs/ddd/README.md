@@ -14,11 +14,11 @@ The generated access restrictions prevent unwanted access between libraries resp
 - ⚙️ Generating feature libraries including a feature components using the facades
 - 🙅‍♂️ Adding linting rules for access restrictions between domains as proposed by Nrwl
 - 🙅‍♀️ Adding linting rules for access restrictions between layers as proposed by Nrwl (supports tslint and eslint)
-- 🔥 Optionally generates skeleton for NGRX and integrates it into the DDD design (``--ngrx`` switch)
+- 🔥 Optionally generates skeleton for NGRX and integrates it into the DDD design (`--ngrx` switch)
 
 ### Features Overview Video
-<a href="https://www.youtube.com/watch?v=39JLXMEE7Ds" target="_blank">![Screenshot of Overview Video](https://i.imgur.com/VlTRE80.png)</a>
 
+<a href="https://www.youtube.com/watch?v=39JLXMEE7Ds" target="_blank">![Screenshot of Overview Video](https://i.imgur.com/VlTRE80.png)</a>
 
 ## Usage
 
@@ -38,7 +38,7 @@ ng g @angular-architects/ddd:feature cancel --domain booking
 ng g @angular-architects/ddd:feature manage --domain boarding
 ```
 
-For NGRX support, just add the ``--ngrx`` switch:
+For NGRX support, just add the `--ngrx` switch:
 
 ```
 ng g @angular-architects/ddd:domain booking --addApp --ngrx
@@ -46,8 +46,7 @@ ng g @angular-architects/ddd:feature search --domain booking --entity flight --n
 [...]
 ```
 
-
-This example assumes that you have an app ``flight-app`` in place.
+This example assumes that you have an app `flight-app` in place.
 
 These schematics also wire up the individual libs. To see the result, create a dependency graph:
 
@@ -57,7 +56,7 @@ npm run dep-graph
 
 ![dependency graph](https://github.com/angular-architects/nx-ddd-plugin/blob/master/libs/ddd/assets/ddd.png?raw=true)
 
-To see that the skeleton works end-to-end, call the generated feature component in your ``app.component.html``:
+To see that the skeleton works end-to-end, call the generated feature component in your `app.component.html`:
 
 ```html
 <booking-search></booking-search>
@@ -79,7 +78,7 @@ The domain layer is subdivided into three parts:
 
 ### Generated Structure for Domain Library
 
-- **application:** Contains application services. This is a DDD term for what we call facades in Angular nowadays. They orchestrate everything for a use case given so that a feature component only needs to communicate with one such facade. Also, it hides details for state management. While the generates facades just use a ``BehaviorSubject``, feel free to add a library like NGRX underneath. As such a modifications changes nothing from the component's perspective, you can use facades to introduce NGRX later on demand.
+- **application:** Contains application services. This is a DDD term for what we call facades in Angular nowadays. They orchestrate everything for a use case given so that a feature component only needs to communicate with one such facade. Also, it hides details for state management. While the generates facades just use a `BehaviorSubject`, feel free to add a library like NGRX underneath. As such a modifications changes nothing from the component's perspective, you can use facades to introduce NGRX later on demand.
 - **entities:** Client-side data model including logic operating on it (like validations).
 - **infrastructure:** Services for communicating with the backend.
 
@@ -102,6 +101,7 @@ see https://github.com/angular-architects/ddd-demo
 - [Our eBook on Angular and architectures](https://leanpub.com/enterprise-angular)
 - [Thomas Burlison's article about facades in Angular](https://medium.com/@thomasburlesonIA/push-based-architectures-with-rxjs-81b327d7c32d)
 
-## More 
+## More
+
 - [Angular Architecture Workshop](https://www.angulararchitects.io/en/angular-workshops/advanced-angular-enterprise-architecture-incl-ivy/)
 - [Follow us on Twitter](https://twitter.com/ManfredSteyer)
