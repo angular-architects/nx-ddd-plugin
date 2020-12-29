@@ -53,7 +53,7 @@ export default function (options: DomainOptions): Rule {
       publishable: options.type === 'publishable',
       buildable: options.type === 'buildable',
     }),
-    addDomainToLintingRules(libNameAndDirectoryDasherized),
+    addDomainToLintingRules(libName),
     mergeWith(templateSource),
     !options.addApp
       ? noop()
