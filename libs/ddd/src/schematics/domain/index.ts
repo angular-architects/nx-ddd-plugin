@@ -21,6 +21,7 @@ import {
 export default function (options: DomainOptions): Rule {
   const appName = strings.dasherize(options.name);
   const appNameAndDirectory = `${options.appsDirectory}/${appName}`;
+  const appNameAndDirectoryDasherized = strings.dasherize(appNameAndDirectory);
   const appFolderPath = `apps/${appNameAndDirectory}`;
   const appModuleFolder = `${appFolderPath}/src/app`;
   const appModuleFilepath = `${appModuleFolder}/app.module.ts`;
@@ -51,20 +52,20 @@ export default function (options: DomainOptions): Rule {
       publishable: options.type === 'publishable',
       buildable: options.type === 'buildable',
     }),
-    addDomainToLintingRules(appName),
+    addDomainToLintingRules(appNameAndDirectoryDasherized),
     mergeWith(templateSource),
     !options.addApp
       ? noop()
       : externalSchematic('@nrwl/angular', 'app', {
-          name: appName,
+          name: appNameAndDirectoryDasherized,
           directory: options.appsDirectory,
-          tags: `domain:${appName},type:app`,
+          tags: `domain:${appNameAndDirectoryDasherized},type:app`,
           style: 'scss',
         }),
     options.addApp && options.ngrx
       ? chain([
           externalSchematic('@ngrx/schematics', 'store', {
-            project: appName,
+            project: appNameAndDirectoryDasherized,
             root: true,
             minimal: true,
             module: 'app.module.ts',
