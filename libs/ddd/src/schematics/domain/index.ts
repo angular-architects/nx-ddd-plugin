@@ -58,9 +58,9 @@ export default function (options: DomainOptions): Rule {
     !options.addApp
       ? noop()
       : externalSchematic('@nrwl/angular', 'app', {
-          name: appName,
+          name: appNameAndDirectoryDasherized,
           directory: options.appsDirectory,
-          tags: `domain:${appName},type:app`,
+          tags: `domain:${appNameAndDirectoryDasherized},type:app`,
           style: 'scss',
         }),
     options.addApp && options.ngrx
