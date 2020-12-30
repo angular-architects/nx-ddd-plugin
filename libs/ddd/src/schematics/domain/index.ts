@@ -69,7 +69,7 @@ export default function (options: DomainOptions): Rule {
       ? noop()
       : externalSchematic('@nrwl/angular', 'app', {
           name: appName,
-          directory: options.directory,
+          directory: options.appDirectory,
           tags: `domain:${appName},type:app`,
           style: 'scss',
         }),
