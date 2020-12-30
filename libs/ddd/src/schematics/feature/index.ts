@@ -27,44 +27,75 @@ export default function (options: FeatureOptions): Rule {
   return (host: Tree) => {
     const workspaceName = readWorkspaceName(host);
 
-    const appsDirectory = options.appDirectory;
-    const libsDirectory = options.directory;
+    const featureName = strings.dasherize(options.name)
+      ? strings.dasherize(options.name)
+      : '';
+    const featureDirectory = options.directory ? options.directory : '';
+    const featurePrefix = options.prefix ? options.prefix : '';
+    const domainName = strings.dasherize(options.domain)
+      ? strings.dasherize(options.domain)
+      : '';
+    const domainDirectory = options.domainDirectory
+      ? options.domainDirectory
+      : '';
+    const appName = strings.dasherize(options.app)
+      ? strings.dasherize(options.app)
+      : '';
+    const appDirectory = options.appDirectory ? options.appDirectory : '';
 
-    const domainName = strings.dasherize(options.domain);
-    const domainNameAndDirectory = `${domainName}/${libsDirectory}`;
+    const featureDirectoryAndName = featureDirectory
+      ? `${featureDirectory}/${featureName}`
+      : featureName;
+    const featureDirectoryAndNameDasherized = `${featureDirectoryAndName}`
+      .split('/')
+      .join('-');
+
+    const domainNameAndDirectory = `${domainName}/${domainDirectory}`;
+    const domainNameAndDirectoryDasherized = `${domainNameAndDirectory}`
+      .split('/')
+      .join('-');
+
+    const appDirectoryAndName = appDirectory
+      ? `${appDirectory}/${appName}`
+      : appName;
+
+    const appDirectoryAndNameDasherized = `${appDirectoryAndName}`
+      .split('/')
+      .join('-');
+
     const domainNameAndDirectoryPath = `libs/${domainNameAndDirectory}`;
     const domainFolderPath = `${domainNameAndDirectoryPath}/domain`;
-    const domainLibFolder = `${domainFolderPath}/src/lib`;
-    const domainModuleFilepath = `${domainLibFolder}/${domainName}-domain.module.ts`;
+    const domainLibFolderPath = `${domainFolderPath}/src/lib`;
+    const domainModuleFilepath = `${domainLibFolderPath}/${domainName}-domain.module.ts`;
     const domainModuleClassName =
-      strings.classify(domainNameAndDirectory) + 'DomainModule';
+      strings.classify(domainNameAndDirectoryDasherized) + 'DomainModule';
     const domainImportPath = `${workspaceName}/${domainNameAndDirectory}/domain`;
     const domainIndexPath = `${domainFolderPath}/src/index.ts`;
 
-    const featurePrefix = options.prefix;
-    const featureName = strings.dasherize(options.name);
-    const featureFolderName = (featurePrefix ? 'feature-' : '') + featureName;
-    const featurePath = `${domainNameAndDirectoryPath}/${featureFolderName}/src/lib`;
-    const featureModulePath = `${featurePath}/${domainName}-${featureFolderName}.module.ts`;
+    const featureFolderName = (featurePrefix ? 'feature-' : '') + featureDirectoryAndNameDasherized;
+    const featureDirectoryAndFolderName = featureDirectory
+      ? `${featureDirectory}/${featureFolderName}`
+      : featureFolderName;
+
+    const featureLibFolderPath = `${domainNameAndDirectoryPath}/${featureDirectoryAndFolderName}/src/lib`;
+    const featureModuleFilepath = `${featureLibFolderPath}/${domainName}-${featureFolderName}.module.ts`;
     const featureModuleClassName = strings.classify(
-      `${domainNameAndDirectory}-${featureFolderName}Module`
+      `${domainNameAndDirectoryDasherized}-${featureFolderName}Module`
     );
     const featureImportPath = `${workspaceName}/${domainNameAndDirectory}/${featureFolderName}`;
     const featureIndexPath = `${domainNameAndDirectoryPath}/${featureFolderName}/src/index.ts`;
 
     const entityName = options.entity ? strings.dasherize(options.entity) : '';
 
-    const featureComponentImportPath = `./${featureName}.component`;
+    const featureComponentImportPath = `./${featureDirectoryAndNameDasherized}.component`;
     const featureComponentClassName = strings.classify(
-      `${featureName}Component`
+      `${featureDirectoryAndNameDasherized}Component`
     );
 
-    const appName = options.app || domainName;
-    const appFolderName = strings.dasherize(appName);
-    const appModulePath = `apps/${appFolderName}/${appsDirectory}/src/app/app.module.ts`;
+    const appModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
 
     if (options.app) {
-      const requiredAppModulePath = `apps/${appFolderName}/${appsDirectory}/src/app/app.module.ts`;
+      const requiredAppModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
       if (!host.exists(requiredAppModulePath)) {
         throw new Error(
           `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
@@ -83,12 +114,12 @@ export default function (options: FeatureOptions): Rule {
         ? apply(url('./files/forDomainWithNgrx'), [
             filterTemplates(options),
             template({ ...strings, ...options, workspaceName }),
-            move(domainLibFolder),
+            move(domainLibFolderPath),
           ])
         : apply(url('./files/forDomain'), [
             filterTemplates(options),
             template({ ...strings, ...options, workspaceName }),
-            move(domainLibFolder),
+            move(domainLibFolderPath),
           ]);
 
     const featureTemplates =
@@ -96,24 +127,24 @@ export default function (options: FeatureOptions): Rule {
         ? apply(url('./files/forFeatureWithNgrx'), [
             filterTemplates(options),
             template({ ...strings, ...options, workspaceName }),
-            move(featurePath),
+            move(featureLibFolderPath),
           ])
         : apply(url('./files/forFeature'), [
             template({ ...strings, ...options, workspaceName }),
-            move(featurePath),
+            move(featureLibFolderPath),
           ]);
 
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
-        name: `feature-${featureName}`,
+        name: `feature-${featureDirectoryAndNameDasherized}`,
         directory: domainNameAndDirectory,
         tags: `domain:${domainName},type:feature`,
         style: 'scss',
-        prefix: domainNameAndDirectory,
+        prefix: domainNameAndDirectoryDasherized,
         publishable: options.type === 'publishable',
         buildable: options.type === 'buildable',
       }),
-      addImport(featureModulePath, domainImportPath, domainModuleClassName),
+      addImport(featureModuleFilepath, domainImportPath, domainModuleClassName),
       !options.lazy && host.exists(appModulePath)
         ? chain([
             addImport(
@@ -146,16 +177,16 @@ export default function (options: FeatureOptions): Rule {
             ]),
           ])
         : noop(),
-      addTsExport(domainIndexPath, [`./lib/application/${featureName}.facade`]),
+      addTsExport(domainIndexPath, [`./lib/application/${featureDirectoryAndNameDasherized}.facade`]),
       mergeWith(featureTemplates),
-      addTsExport(featureIndexPath, [`./lib/${featureName}.component`]),
+      addTsExport(featureIndexPath, [`./lib/${featureDirectoryAndNameDasherized}.component`]),
       addDeclaration(
-        featureModulePath,
+        featureModuleFilepath,
         featureComponentImportPath,
         featureComponentClassName
       ),
       addExport(
-        featureModulePath,
+        featureModuleFilepath,
         featureComponentImportPath,
         featureComponentClassName
       ),

@@ -11,21 +11,21 @@ export interface FeatureOptions {
    */
   name: string;
   /**
-   * Domain name
+   * Subpath within libs directory
    */
-  domain: string;
+  directory?: string;
   /**
    * Apply the "feature-" prefix?
    */
   prefix?: boolean;
   /**
-   * Is this feature module lazy loaded?
+   * Domain name
    */
-  lazy?: boolean;
+  domain: string;
   /**
-   * Subpath within libs directory
+   * Subpath within apps directory
    */
-  directory?: string;
+  domainDirectory?: string;
   /**
    * app name
    */
@@ -35,13 +35,17 @@ export interface FeatureOptions {
    */
   appDirectory?: string;
   /**
+   * Is this feature module lazy loaded?
+   */
+  lazy?: boolean;
+  /**
    * Optional entity to create for this feature
    */
   entity?: string;
   /**
    * A type to determine if and how to build the library.
    */
-  type?: "internal" | "buildable" | "publishable";
+  type?: 'internal' | 'buildable' | 'publishable';
   /**
    * Add ngrx for the domain (entity required)
    */
