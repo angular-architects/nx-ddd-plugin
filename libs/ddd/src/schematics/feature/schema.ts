@@ -23,17 +23,17 @@ export interface FeatureOptions {
    */
   lazy?: boolean;
   /**
-   * Subpath within apps directory
-   */
-  appsDirectory?: string;
-  /**
    * Subpath within libs directory
    */
-  libsDirectory?: string;
+  directory?: string;
   /**
    * app name
    */
   app?: string;
+  /**
+   * Subpath within apps directory
+   */
+  appDirectory?: string;
   /**
    * Optional entity to create for this feature
    */

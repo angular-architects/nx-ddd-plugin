@@ -27,11 +27,11 @@
       "description": "Is this feature module lazy loaded?",
       "default": false
     },
-    "appsDirectory": {
+    "appDirectory": {
       "type": "string",
       "description": "Subpath within apps directory"
     },
-    "libsDirectory": {
+    "directory": {
       "type": "string",
       "description": "Subpath within libs directory"
     },

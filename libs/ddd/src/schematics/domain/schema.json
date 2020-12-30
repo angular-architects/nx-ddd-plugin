@@ -12,11 +12,11 @@
         "index": 0
       }
     },
-    "appsDirectory": {
+    "appDirectory": {
       "type": "string",
       "description": "Subpath of the domain within apps directory"
     },
-    "libsDirectory": {
+    "directory": {
       "type": "string",
       "description": "Subpath of the domain within libs directory"
     },

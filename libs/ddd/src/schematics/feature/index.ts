@@ -27,8 +27,8 @@ export default function (options: FeatureOptions): Rule {
   return (host: Tree) => {
     const workspaceName = readWorkspaceName(host);
 
-    const appsDirectory = options.appsDirectory;
-    const libsDirectory = options.libsDirectory;
+    const appsDirectory = options.appDirectory;
+    const libsDirectory = options.directory;
 
     const domainName = strings.dasherize(options.domain);
     const domainNameAndDirectory = `${domainName}/${libsDirectory}`;

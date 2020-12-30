@@ -20,14 +20,14 @@ import {
 
 export default function (options: DomainOptions): Rule {
   const appName = strings.dasherize(options.name);
-  const appNameAndDirectory = `${options.appsDirectory}/${appName}`;
+  const appNameAndDirectory = `${options.appDirectory}/${appName}`;
   const appNameAndDirectoryDasherized = strings.dasherize(appNameAndDirectory).split('/').join('-');
   const appFolderPath = `apps/${appNameAndDirectory}`;
   const appModuleFolder = `${appFolderPath}/src/app`;
   const appModuleFilepath = `${appModuleFolder}/app.module.ts`;
 
   const libName = strings.dasherize(options.name);
-  const libNameAndDirectory  = `${libName}/${options.libsDirectory}`;
+  const libNameAndDirectory  = `${libName}/${options.directory}`;
   const libNameAndDirectoryDasherized = strings.dasherize(libNameAndDirectory).split('/').join('-');
   const libFolderPath = `libs/${libNameAndDirectory}`;
   const libLibFolder = `${libFolderPath}/domain/src/lib`;
@@ -59,7 +59,7 @@ export default function (options: DomainOptions): Rule {
       ? noop()
       : externalSchematic('@nrwl/angular', 'app', {
           name: appName,
-          directory: options.appsDirectory,
+          directory: options.directory,
           tags: `domain:${appName},type:app`,
           style: 'scss',
         }),
