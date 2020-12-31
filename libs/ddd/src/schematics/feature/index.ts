@@ -70,23 +70,13 @@ export default function (options: FeatureOptions): Rule {
       ? `${featureDirectory}/${featureFolderName}`
       : featureFolderName;
 
-    console.log(
-      'featureDirectoryAndFolderName       ',
-      featureDirectoryAndFolderName
-    );
-
     const featureDirectoryAndFolderNameDasherized = `${featureDirectoryAndFolderName}`
       .split('/')
       .join('-');
 
-    console.log(
-      'featureDirectoryAndFolderNameDasherized       ',
-      featureDirectoryAndFolderNameDasherized
-    );
 
     const featureLibFolderPath = `${domainNameAndDirectoryPath}/${featureDirectoryAndFolderName}/src/lib`;
     const featureModuleFilepath = `${featureLibFolderPath}/${domainNameAndDirectoryDasherized}-${featureDirectoryAndFolderNameDasherized}.module.ts`;
-    console.log('featureModuleFilepath         ', featureModuleFilepath);
     const featureModuleClassName = strings.classify(
       `${domainNameAndDirectoryDasherized}-${featureFolderName}Module`
     );
