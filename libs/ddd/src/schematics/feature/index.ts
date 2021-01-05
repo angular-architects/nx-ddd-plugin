@@ -208,7 +208,7 @@ export default function (options: FeatureOptions): Rule {
           ])
         : noop(),
       addTsExport(domainIndexPath, [
-        `./lib/application/${featureDirectoryAndNameDasherized}.facade`,
+        `./lib/application/${entityName}.facade`, //featureDirectoryAndNameDasherized
       ]),
       mergeWith(featureTemplates),
       addTsExport(featureIndexPath, [
