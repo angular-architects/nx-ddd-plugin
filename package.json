@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "commit": "git-cz",
     "nx": "nx",
     "start": "nx serve",
     "build": "nx build ddd",
@@ -42,6 +43,8 @@
     "@types/node": "~8.9.4",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
+    "commitizen": "^4.2.2",
+    "cz-customizable": "^6.3.0",
     "dotenv": "6.2.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.0.0",
@@ -51,5 +54,10 @@
     "ts-node": "~7.0.0",
     "tslint": "6.0.0",
     "typescript": "3.9.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    }
   }
 }
