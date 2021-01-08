@@ -8,14 +8,16 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/ddd/tsconfig.lib.json",
-              "libs/ddd/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/ddd/**/*"]
+            "lintFilePatterns": [
+              "libs/ddd/**/*.ts",
+              "libs/ddd/**/*.spec.ts",
+              "libs/ddd/**/*.spec.tsx",
+              "libs/ddd/**/*.spec.js",
+              "libs/ddd/**/*.spec.jsx",
+              "libs/ddd/**/*.d.ts"
+            ]
           }
         },
         "test": {
@@ -23,7 +25,10 @@
           "options": {
             "jestConfig": "libs/ddd/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/ddd"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -50,7 +55,10 @@
                 "output": "."
               }
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
