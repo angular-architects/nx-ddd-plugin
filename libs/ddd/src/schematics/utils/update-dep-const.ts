@@ -13,9 +13,15 @@ export function updateDepConst(
     if (host.exists('.eslintrc.json')) {
       filePath = '.eslintrc.json';
       rule = '@nrwl/nx/enforce-module-boundaries';
+      context.logger.info(
+        'Found .eslintrc.json'
+      );
     } else if (host.exists('.eslintrc')) {
       filePath = '.eslintrc';
       rule = '@nrwl/nx/enforce-module-boundaries';
+      context.logger.info(
+        'Did not find .eslintrc.json but found .eslintrc'
+      );
     } else {
       context.logger.info(
         'Cannot add linting rules: linting config file does not exist'
