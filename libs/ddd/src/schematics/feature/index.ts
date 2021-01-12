@@ -127,6 +127,9 @@ export default function (options: FeatureOptions): Rule {
       );
     }
 
+    let updatedEntityNameOptions = Object.assign({},options);
+    updatedEntityNameOptions.entity = featureDirectoryAndNameDasherized;
+
     const domainTemplates =
       options.ngrx && entityName
         ? apply(url('./files/forDomainWithNgrx'), [
@@ -184,21 +187,21 @@ export default function (options: FeatureOptions): Rule {
       mergeWith(domainTemplates),
       entityName
         ? addTsExport(domainIndexPath, [
-            `./lib/entities/${entityName}`,
-            `./lib/infrastructure/${entityName}.data.service`,
+            `./lib/entities/${featureDirectoryAndNameDasherized}`,
+            `./lib/infrastructure/${featureDirectoryAndNameDasherized}.data.service`,
           ])
         : noop(),
       options.ngrx && entityName && host.exists(domainModuleFilepath)
         ? chain([
             addNgRxToPackageJson(),
-            addNgrxImportsToDomain(domainModuleFilepath, entityName),
+            addNgrxImportsToDomain(domainModuleFilepath, featureDirectoryAndNameDasherized),
             addTsExport(domainIndexPath, [
-              `./lib/+state/${entityName}/${entityName}.actions`,
+              `./lib/+state/${featureDirectoryAndNameDasherized}/${featureDirectoryAndNameDasherized}.actions`,
             ]),
           ])
         : noop(),
       addTsExport(domainIndexPath, [
-        `./lib/application/${entityName}.facade`, //featureDirectoryAndNameDasherized
+        `./lib/application/${featureDirectoryAndNameDasherized}.facade`, //featureDirectoryAndNameDasherized
       ]),
       mergeWith(featureTemplates),
       addTsExport(featureIndexPath, [
