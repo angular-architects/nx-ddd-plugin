@@ -133,8 +133,8 @@ export default function (options: FeatureOptions): Rule {
     const domainTemplates =
       options.ngrx && entityName
         ? apply(url('./files/forDomainWithNgrx'), [
-            filterTemplates(options),
-            template({ ...strings, ...options, workspaceName }),
+            filterTemplates(updatedEntityNameOptions),
+            template({ ...strings, ...updatedEntityNameOptions, workspaceName }),
             move(domainLibFolderPath),
           ])
         : apply(url('./files/forDomain'), [
