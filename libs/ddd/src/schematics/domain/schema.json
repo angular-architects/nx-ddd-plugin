@@ -5,7 +5,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Domain name",
+      "description": "Grouping name for the Domain",
       "x-prompt": "What is the name of the domain?",
       "$default": {
         "$source": "argv",
@@ -14,7 +14,7 @@
     },
     "appDirectory": {
       "type": "string",
-      "description": "Subpath of the domain within apps directory"
+      "description": "Grouping folder within the apps directory"
     },
     "directory": {
       "type": "string",

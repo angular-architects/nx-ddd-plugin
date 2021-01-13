@@ -7,7 +7,7 @@
 
 export interface DomainOptions {
   /**
-   * Domain name
+   * Grouping name for the Domain
    */
   name: string;
   /**
