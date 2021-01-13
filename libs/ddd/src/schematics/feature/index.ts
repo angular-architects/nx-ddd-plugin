@@ -47,7 +47,9 @@ export default function (options: FeatureOptions): Rule {
     const featureDirectoryAndNameDasherized = `${featureDirectoryAndName}`
       .split('/')
       .join('-');
-    const domainNameAndDirectory = `${domainName}/${domainDirectory}`;
+    const domainNameAndDirectory = domainDirectory
+    ? `${domainName}/${domainDirectory}`
+    : `${domainName}`;
     const domainNameAndDirectoryDasherized = `${domainNameAndDirectory}`
       .split('/')
       .join('-');
