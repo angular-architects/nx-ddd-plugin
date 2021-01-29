@@ -17,17 +17,19 @@ import {
   addNgrxImportsToApp,
   addNgRxToPackageJson,
 } from '../rules';
+import { readNxWorkspaceLayout } from '../utils';
 
 export default function (options: DomainOptions): Rule {
   const libFolder = strings.dasherize(options.name);
+  const { libsDir, appsDir } = readNxWorkspaceLayout();
 
   const templateSource = apply(url('./files'), [
     template({}),
-    move(`libs/${libFolder}/domain/src/lib`),
+    move(`${libsDir}/${libFolder}/domain/src/lib`),
   ]);
 
   const appFolderName = strings.dasherize(options.name);
-  const appPath = `apps/${appFolderName}/src/app`;
+  const appPath = `${appsDir}/${appFolderName}/src/app`;
   const appModulePath = `${appPath}/app.module.ts`;
 
   if (options.ngrx && !options.addApp) {

@@ -1,3 +1,4 @@
+export * from './read-workspace-layout';
 export * from './read-into-source-file';
 export * from './check-rule-exists';
 export * from './read-workspace-name';
