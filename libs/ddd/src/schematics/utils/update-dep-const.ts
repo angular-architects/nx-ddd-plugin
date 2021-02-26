@@ -25,8 +25,8 @@ export function updateDepConst(
   }
 
   const text = host.read(filePath).toString();
-  let rules = JSON.parse(text);
-
+  const json = JSON.parse(text);
+  let rules = json;
   if (rules['overrides']) {
     const overrides = rules['overrides'];
     rules = overrides.find(e => e.rules && e.rules['@nrwl/nx/enforce-module-boundaries']);
@@ -37,6 +37,6 @@ export function updateDepConst(
   const depConst = rules['rules'][rule][1]['depConstraints'] as Array<object>;
   update(depConst);
 
-  const newText = JSON.stringify(rules, undefined, 2);
+  const newText = JSON.stringify(json, undefined, 2);
   host.overwrite(filePath, newText);
 }
