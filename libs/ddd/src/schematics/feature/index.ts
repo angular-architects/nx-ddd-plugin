@@ -21,29 +21,31 @@ import {
   addNgrxImportsToDomain,
   addNgRxToPackageJson,
 } from '../rules';
-import { readWorkspaceName } from '../utils';
+import { readWorkspaceName, readWorkspaceLayout } from '../utils';
 
 export default function (options: FeatureOptions): Rule {
   return (host: Tree) => {
     const workspaceName = readWorkspaceName(host);
+    const workspaceLayout = readWorkspaceLayout(host);
 
+    const { libsDir, appsDir } = workspaceLayout;
     const domainFolderName = strings.dasherize(options.domain);
-    const domainPath = `libs/${domainFolderName}/domain/src/lib`;
+    const domainPath = `${libsDir}/${domainFolderName}/domain/src/lib`;
     const domainModulePath = `${domainPath}/${domainFolderName}-domain.module.ts`;
     const domainModuleClassName =
       strings.classify(options.domain) + 'DomainModule';
     const domainImportPath = `${workspaceName}/${domainFolderName}/domain`;
-    const domainIndexPath = `libs/${domainFolderName}/domain/src/index.ts`;
+    const domainIndexPath = `${libsDir}/${domainFolderName}/domain/src/index.ts`;
 
     const featureName = strings.dasherize(options.name);
     const featureFolderName = (options.prefix ? 'feature-' : '') + featureName;
-    const featurePath = `libs/${domainFolderName}/${featureFolderName}/src/lib`;
+    const featurePath = `${libsDir}/${domainFolderName}/${featureFolderName}/src/lib`;
     const featureModulePath = `${featurePath}/${domainFolderName}-${featureFolderName}.module.ts`;
     const featureModuleClassName = strings.classify(
       `${options.domain}-${featureFolderName}Module`
     );
     const featureImportPath = `${workspaceName}/${domainFolderName}/${featureFolderName}`;
-    const featureIndexPath = `libs/${domainFolderName}/${featureFolderName}/src/index.ts`;
+    const featureIndexPath = `${libsDir}/${domainFolderName}/${featureFolderName}/src/index.ts`;
 
     const entityName = options.entity ? strings.dasherize(options.entity) : '';
 
@@ -54,10 +56,10 @@ export default function (options: FeatureOptions): Rule {
 
     const appName = options.app || options.domain;
     const appFolderName = strings.dasherize(appName);
-    const appModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
+    const appModulePath = `${appsDir}/${appFolderName}/src/app/app.module.ts`;
 
     if (options.app) {
-      const requiredAppModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
+      const requiredAppModulePath = `${appsDir}/${appFolderName}/src/app/app.module.ts`;
       if (!host.exists(requiredAppModulePath)) {
         throw new Error(
           `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
