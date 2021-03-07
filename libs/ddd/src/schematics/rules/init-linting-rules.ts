@@ -36,7 +36,7 @@ export function initLintingRules(): Rule {
 
       depConst.push({
         sourceTag: 'type:api',
-        onlyDependOnLibsWithTags: ['type:ui', 'type:domain-logic', 'type:util'],
+        onlyDependOnLibsWithTags: ['type:api', 'type:ui', 'type:domain-logic', 'type:util'],
       });
 
       depConst.push({
