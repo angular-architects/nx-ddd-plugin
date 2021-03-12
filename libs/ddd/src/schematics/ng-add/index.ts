@@ -3,6 +3,7 @@ import {
   Rule
 } from '@angular-devkit/schematics';
 import { addDepsToPackageJson } from '@nrwl/workspace';
+
 import { initLintingRules } from '../rules';
 import { NGRX_VERSION } from '../utils';
 
