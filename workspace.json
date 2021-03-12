@@ -8,14 +8,16 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/ddd/tsconfig.lib.json",
-              "libs/ddd/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/ddd/**/*"]
+            "lintFilePatterns": [
+              "libs/ddd/**/*.ts",
+              "libs/ddd/**/*.spec.ts",
+              "libs/ddd/**/*.spec.tsx",
+              "libs/ddd/**/*.spec.js",
+              "libs/ddd/**/*.spec.jsx",
+              "libs/ddd/**/*.d.ts"
+            ]
           }
         },
         "test": {
@@ -49,7 +51,8 @@
                 "glob": "builders.json",
                 "output": "."
               }
-            ]
+            ],
+            "srcRootForCompilationRoot": "libs/ddd"
           }
         }
       }
@@ -65,8 +68,7 @@
             "target": "ddd:build",
             "npmPackageName": "@angular-architects/ddd",
             "pluginOutputPath": "dist/libs/ddd",
-            "jestConfig": "apps/ddd-e2e/jest.config.js",
-            "tsSpecConfig": "apps/ddd-e2e/tsconfig.spec.json"
+            "jestConfig": "apps/ddd-e2e/jest.config.js"
           }
         }
       }

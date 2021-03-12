@@ -5,12 +5,20 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Domain name",
+      "description": "Grouping name for the Domain",
       "x-prompt": "What is the name of the domain?",
       "$default": {
         "$source": "argv",
         "index": 0
       }
+    },
+    "appDirectory": {
+      "type": "string",
+      "description": "Grouping folder within the apps directory"
+    },
+    "directory": {
+      "type": "string",
+      "description": "Subpath of the domain within libs directory"
     },
     "addApp": {
       "type": "boolean",

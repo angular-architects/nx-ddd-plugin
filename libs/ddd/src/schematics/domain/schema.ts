@@ -7,13 +7,21 @@
 
 export interface DomainOptions {
   /**
-   * Domain name
+   * Grouping name for the Domain
    */
   name: string;
+  /**
+   * Subpath of the domain within libs directory
+   */
+  directory?: string;
   /**
    * Add an app for the domain?
    */
   addApp?: boolean;
+  /**
+   * Subpath of the domain within apps directory
+   */
+  appDirectory?: string;
   /**
    * Add ngrx for the associated app (addApp required)
    */
@@ -21,6 +29,6 @@ export interface DomainOptions {
   /**
    * A type to determine if and how to build the library.
    */
-  type?: "internal" | "buildable" | "publishable";
+  type?: 'internal' | 'buildable' | 'publishable';
   [k: string]: any;
 }

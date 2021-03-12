@@ -19,52 +19,70 @@ import {
 } from '../rules';
 
 export default function (options: DomainOptions): Rule {
-  const libFolder = strings.dasherize(options.name);
+  const appName = strings.dasherize(options.name);
+  const appNameAndDirectory = options.appDirectory
+    ? `${options.appDirectory}/${appName}`
+    : appName;
+  const appNameAndDirectoryDasherized = strings
+    .dasherize(appNameAndDirectory)
+    .split('/')
+    .join('-');
+  const appFolderPath = `apps/${appNameAndDirectory}`;
+  const appModuleFolder = `${appFolderPath}/src/app`;
+  const appModuleFilepath = `${appModuleFolder}/app.module.ts`;
+
+  const libName = strings.dasherize(options.name);
+  const libNameAndDirectory = options.directory
+    ? `${libName}/${options.directory}`
+    : libName;
+  const libNameAndDirectoryDasherized = strings
+    .dasherize(libNameAndDirectory)
+    .split('/')
+    .join('-');
+  const libFolderPath = `libs/${libNameAndDirectory}`;
+  const libLibFolder = `${libFolderPath}/domain/src/lib`;
 
   const templateSource = apply(url('./files'), [
     template({}),
-    move(`libs/${libFolder}/domain/src/lib`),
+    move(`${libLibFolder}`),
   ]);
-
-  const appFolderName = strings.dasherize(options.name);
-  const appPath = `apps/${appFolderName}/src/app`;
-  const appModulePath = `${appPath}/app.module.ts`;
 
   if (options.ngrx && !options.addApp) {
     throw new Error(
       `The 'ngrx' option may only be used when the 'addApp' option is used.`
-    )
+    );
   }
 
   return chain([
     externalSchematic('@nrwl/angular', 'lib', {
       name: 'domain',
-      directory: options.name,
-      tags: `domain:${options.name},type:domain-logic`,
+      directory: libNameAndDirectory,
+      tags: `domain:${libName},type:domain-logic`,
       style: 'scss',
-      prefix: options.name,
+      prefix: libName,
       publishable: options.type === 'publishable',
       buildable: options.type === 'buildable',
     }),
-    addDomainToLintingRules(options.name),
+    addDomainToLintingRules(libName),
     mergeWith(templateSource),
     !options.addApp
       ? noop()
       : externalSchematic('@nrwl/angular', 'app', {
-          name: options.name,
-          tags: `domain:${options.name},type:app`,
+          name: appName,
+          directory: options.appDirectory,
+          tags: `domain:${appName},type:app`,
           style: 'scss',
         }),
     options.addApp && options.ngrx
       ? chain([
           externalSchematic('@ngrx/schematics', 'store', {
-            project: options.name,
+            project: appNameAndDirectoryDasherized,
             root: true,
             minimal: true,
             module: 'app.module.ts',
             name: 'state',
           }),
-          addNgrxImportsToApp(appModulePath),
+          addNgrxImportsToApp(appModuleFilepath),
           addNgRxToPackageJson(),
         ])
       : noop(),
