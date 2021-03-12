@@ -73,8 +73,7 @@
             "target": "ddd:build",
             "npmPackageName": "@angular-architects/ddd",
             "pluginOutputPath": "dist/libs/ddd",
-            "jestConfig": "apps/ddd-e2e/jest.config.js",
-            "tsSpecConfig": "apps/ddd-e2e/tsconfig.spec.json"
+            "jestConfig": "apps/ddd-e2e/jest.config.js"
           }
         }
       }

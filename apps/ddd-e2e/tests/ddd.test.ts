@@ -3,10 +3,10 @@ import {
   ensureNxProject,
   readJson,
   runNxCommandAsync,
-  uniq
+  uniq,
 } from '@nrwl/nx-plugin/testing';
 describe('ddd e2e', () => {
-  it('should create ddd', async done => {
+  it('should create ddd', async (done) => {
     const plugin = uniq('ddd');
     ensureNxProject('@angular-architects/ddd', 'dist/libs/ddd');
     await runNxCommandAsync(`generate @angular-architects/ddd:ddd ${plugin}`);
@@ -18,7 +18,7 @@ describe('ddd e2e', () => {
   });
 
   describe('--directory', () => {
-    it('should create src in the specified directory', async done => {
+    it('should create src in the specified directory', async (done) => {
       const plugin = uniq('ddd');
       ensureNxProject('@angular-architects/ddd', 'dist/libs/ddd');
       await runNxCommandAsync(
@@ -32,7 +32,7 @@ describe('ddd e2e', () => {
   });
 
   describe('--tags', () => {
-    it('should add tags to nx.json', async done => {
+    it('should add tags to nx.json', async (done) => {
       const plugin = uniq('ddd');
       ensureNxProject('@angular-architects/ddd', 'dist/libs/ddd');
       await runNxCommandAsync(

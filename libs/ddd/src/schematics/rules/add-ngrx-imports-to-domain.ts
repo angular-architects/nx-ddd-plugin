@@ -8,7 +8,7 @@ import { readIntoSourceFile, insert } from '../utils';
 
 /**
  * addNgrxImportsToDomain
- * @param modulePath the path of the moudule the import is being included in
+ * @param modulePath the path of the module the import is being included in
  * @param entityName the name of the entity
  */
 export function addNgrxImportsToDomain(
