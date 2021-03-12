@@ -25,6 +25,11 @@ import { readWorkspaceName } from '../utils';
 
 export default function (options: FeatureOptions): Rule {
   return (host: Tree) => {
+
+    if (!options.app) {
+      options.app = options.domain;
+    }
+
     const workspaceName = readWorkspaceName(host);
     const featureName = strings.dasherize(options.name)
       ? strings.dasherize(options.name)
@@ -48,8 +53,8 @@ export default function (options: FeatureOptions): Rule {
       .split('/')
       .join('-');
     const domainNameAndDirectory = domainDirectory
-    ? `${domainName}/${domainDirectory}`
-    : `${domainName}`;
+      ? `${domainName}/${domainDirectory}`
+      : `${domainName}`;
     const domainNameAndDirectoryDasherized = `${domainNameAndDirectory}`
       .split('/')
       .join('-');
@@ -90,37 +95,12 @@ export default function (options: FeatureOptions): Rule {
       `${featureDirectoryAndNameDasherized}Component`
     );
     const appModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
-    /*
-    console.log("featureDirectoryAndName", featureDirectoryAndName);
-    console.log("featureDirectoryAndNameDasherized", featureDirectoryAndNameDasherized);
-    console.log("domainNameAndDirectory", domainNameAndDirectory);
-    console.log("domainNameAndDirectoryDasherized", domainNameAndDirectoryDasherized);
-    console.log("appDirectoryAndName", appDirectoryAndName);
-    console.log("domainNameAndDirectoryPath", domainNameAndDirectoryPath);
-    console.log("domainFolderPath", domainFolderPath);
-    console.log("domainLibFolderPath", domainLibFolderPath);
-    console.log("domainModuleFilepath", domainModuleFilepath);
-    console.log("domainModuleClassName", domainModuleClassName);
-    console.log("domainImportPath", domainImportPath);
-    console.log("domainIndexPath", domainIndexPath);
-    console.log("featureFolderName", featureFolderName);
-    console.log("featureDirectoryAndFolderName", featureDirectoryAndFolderName);
-    console.log("featureLibFolderPath", featureLibFolderPath);
-    console.log("featureModuleFilepath", featureModuleFilepath);
-    console.log("featureModuleClassName", featureModuleClassName);
-    console.log("featureImportPath", featureImportPath);
-    console.log("featureIndexPath", featureIndexPath);
-    console.log("entityName", entityName);
-    console.log("featureComponentImportPath", featureComponentImportPath);
-    console.log("featureComponentClassName", featureComponentClassName);
-    */
-    if (options.app) {
-      const requiredAppModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
-      if (!host.exists(requiredAppModulePath)) {
-        throw new Error(
-          `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
-        );
-      }
+
+    const requiredAppModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
+    if (!host.exists(requiredAppModulePath)) {
+      throw new Error(
+        `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
+      );
     }
 
     if (options.ngrx && !entityName) {
@@ -129,33 +109,33 @@ export default function (options: FeatureOptions): Rule {
       );
     }
 
-    let updatedEntityNameOptions = Object.assign({},options);
-    updatedEntityNameOptions.entity = featureDirectoryAndNameDasherized;
+    let updatedEntityNameOptions = Object.assign({}, options);
+    // updatedEntityNameOptions.entity = featureDirectoryAndNameDasherized;
 
     const domainTemplates =
       options.ngrx && entityName
         ? apply(url('./files/forDomainWithNgrx'), [
-            filterTemplates(updatedEntityNameOptions),
-            template({ ...strings, ...updatedEntityNameOptions, workspaceName }),
-            move(domainLibFolderPath),
-          ])
+          filterTemplates(updatedEntityNameOptions),
+          template({ ...strings, ...updatedEntityNameOptions, workspaceName }),
+          move(domainLibFolderPath),
+        ])
         : apply(url('./files/forDomain'), [
-            filterTemplates(options),
-            template({ ...strings, ...options, workspaceName }),
-            move(domainLibFolderPath),
-          ]);
+          filterTemplates(options),
+          template({ ...strings, ...options, workspaceName }),
+          move(domainLibFolderPath),
+        ]);
 
     const featureTemplates =
       options.ngrx && entityName
         ? apply(url('./files/forFeatureWithNgrx'), [
-            filterTemplates(options),
-            template({ ...strings, ...options, workspaceName }),
-            move(featureLibFolderPath),
-          ])
+          filterTemplates(options),
+          template({ ...strings, ...options, workspaceName }),
+          move(featureLibFolderPath),
+        ])
         : apply(url('./files/forFeature'), [
-            template({ ...strings, ...options, workspaceName }),
-            move(featureLibFolderPath),
-          ]);
+          template({ ...strings, ...options, workspaceName }),
+          move(featureLibFolderPath),
+        ]);
 
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
@@ -168,39 +148,40 @@ export default function (options: FeatureOptions): Rule {
         prefix: domainNameAndDirectoryDasherized,
         publishable: options.type === 'publishable',
         buildable: options.type === 'buildable',
+        importPath: options.importPath
       }),
       addImport(featureModuleFilepath, domainImportPath, domainModuleClassName),
       !options.lazy && host.exists(appModulePath)
         ? chain([
-            addImport(
-              appModulePath,
-              featureImportPath,
-              featureModuleClassName,
-              true
-            ),
-            addImport(
-              appModulePath,
-              '@angular/common/http',
-              'HttpClientModule',
-              true
-            ),
-          ])
+          addImport(
+            appModulePath,
+            featureImportPath,
+            featureModuleClassName,
+            true
+          ),
+          addImport(
+            appModulePath,
+            '@angular/common/http',
+            'HttpClientModule',
+            true
+          ),
+        ])
         : noop(),
       mergeWith(domainTemplates),
       entityName
         ? addTsExport(domainIndexPath, [
-            `./lib/entities/${featureDirectoryAndNameDasherized}`,
-            `./lib/infrastructure/${featureDirectoryAndNameDasherized}.data.service`,
-          ])
+          `./lib/entities/${entityName}`,
+          `./lib/infrastructure/${entityName}.data.service`,
+        ])
         : noop(),
       options.ngrx && entityName && host.exists(domainModuleFilepath)
         ? chain([
-            addNgRxToPackageJson(),
-            addNgrxImportsToDomain(domainModuleFilepath, featureDirectoryAndNameDasherized),
-            addTsExport(domainIndexPath, [
-              `./lib/+state/${featureDirectoryAndNameDasherized}/${featureDirectoryAndNameDasherized}.actions`,
-            ]),
-          ])
+          addNgRxToPackageJson(),
+          addNgrxImportsToDomain(domainModuleFilepath, entityName),
+          addTsExport(domainIndexPath, [
+            `./lib/+state/${entityName}/${entityName}.actions`,
+          ]),
+        ])
         : noop(),
       addTsExport(domainIndexPath, [
         `./lib/application/${featureDirectoryAndNameDasherized}.facade`, //featureDirectoryAndNameDasherized

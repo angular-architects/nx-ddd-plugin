@@ -11,6 +11,10 @@ export interface DomainOptions {
    */
   name: string;
   /**
+   * Grouping folder within the apps directory
+   */
+  appDirectory?: string;
+  /**
    * Subpath of the domain within libs directory
    */
   directory?: string;
@@ -19,16 +23,16 @@ export interface DomainOptions {
    */
   addApp?: boolean;
   /**
-   * Subpath of the domain within apps directory
-   */
-  appDirectory?: string;
-  /**
    * Add ngrx for the associated app (addApp required)
    */
   ngrx?: boolean;
   /**
    * A type to determine if and how to build the library.
    */
-  type?: 'internal' | 'buildable' | 'publishable';
+  type?: "internal" | "buildable" | "publishable";
+  /**
+   * For publishable libs: Official package name used in import statements
+   */
+  importPath?: string;
   [k: string]: any;
 }

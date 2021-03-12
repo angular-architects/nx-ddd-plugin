@@ -24,9 +24,7 @@ export default function (options: UiOptions): Rule {
       new RegExp('/', 'g'),
       '-'
     );
-    const importPath = isPublishableLib
-      ? `@${npmScope}/${projectName}`
-      : undefined;
+
 
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
@@ -37,7 +35,7 @@ export default function (options: UiOptions): Rule {
         publishable: isPublishableLib,
         buildable: options.type === 'buildable',
         directory: libDirectory,
-        importPath,
+        importPath: options.importPath
       }),
     ]);
   };

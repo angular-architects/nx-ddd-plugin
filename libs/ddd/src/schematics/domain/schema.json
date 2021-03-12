@@ -36,7 +36,11 @@
       "enum": ["internal", "buildable", "publishable"],
       "description": "A type to determine if and how to build the library.",
       "default": "buildable"
-    }
+    },
+    "importPath": {
+      "type": "string",
+      "description": "For publishable libs: Official package name used in import statements"
+    } 
   },
   "required": ["name"]
 }

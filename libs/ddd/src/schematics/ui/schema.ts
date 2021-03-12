@@ -23,8 +23,12 @@ export interface UiOptions {
    */
   directory?: string;
   /**
+   * For publishable libs: Official package name used in import statements
+   */
+  importPath?: string;
+  /**
    * A type to determine if and how to build the library.
    */
-  type?: 'internal' | 'buildable' | 'publishable';
+  type?: "internal" | "buildable" | "publishable";
   [k: string]: any;
 }

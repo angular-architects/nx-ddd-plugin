@@ -24,6 +24,10 @@
       "type": "string",
       "description": "Subpath of the library beneath the domain or shared folder."
     },
+    "importPath": {
+      "type": "string",
+      "description": "For publishable libs: Official package name used in import statements"
+    },     
     "type": {
       "type": "string",
       "enum": ["internal", "buildable", "publishable"],

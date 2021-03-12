@@ -23,7 +23,7 @@ export interface FeatureOptions {
    */
   domain: string;
   /**
-   * Subpath within apps directory
+   * Domain name
    */
   domainDirectory?: string;
   /**
@@ -31,7 +31,7 @@ export interface FeatureOptions {
    */
   app?: string;
   /**
-   * Subpath within apps directory
+   * Subpath within app directory
    */
   appDirectory?: string;
   /**
@@ -45,7 +45,11 @@ export interface FeatureOptions {
   /**
    * A type to determine if and how to build the library.
    */
-  type?: 'internal' | 'buildable' | 'publishable';
+  type?: "internal" | "buildable" | "publishable";
+  /**
+   * For publishable libs: Official package name used in import statements
+   */
+  importPath?: string;
   /**
    * Add ngrx for the domain (entity required)
    */

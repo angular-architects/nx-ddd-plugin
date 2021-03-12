@@ -35,11 +35,16 @@
             "packageJson": "libs/ddd/package.json",
             "main": "libs/ddd/src/index.ts",
             "assets": [
+              {
+                "input": "./libs/ddd",
+                "glob": "**/*.*",
+                "output": "./libs/ddd"
+              },
               "libs/ddd/*.md",
               {
                 "input": "./libs/ddd/src",
                 "glob": "**/*.*",
-                "output": "./src"
+                "output": "./libs/ddd/src"
               },
               {
                 "input": "./libs/ddd",
@@ -51,8 +56,7 @@
                 "glob": "builders.json",
                 "output": "."
               }
-            ],
-            "srcRootForCompilationRoot": "libs/ddd"
+            ]
           }
         }
       }

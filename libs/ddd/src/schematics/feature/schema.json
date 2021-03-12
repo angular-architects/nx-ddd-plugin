@@ -28,7 +28,6 @@
     },
     "domainDirectory": {
       "type": "string",
-      "x-prompt": "Subpath within domain directory",
       "description": "Domain name"
     },
     "app": {
@@ -54,6 +53,10 @@
       "description": "A type to determine if and how to build the library.",
       "default": "buildable"
     },
+    "importPath": {
+      "type": "string",
+      "description": "For publishable libs: Official package name used in import statements"
+    }, 
     "ngrx": {
       "type": "boolean",
       "default": false,

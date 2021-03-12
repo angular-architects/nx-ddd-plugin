@@ -62,6 +62,7 @@ export default function (options: DomainOptions): Rule {
       prefix: libName,
       publishable: options.type === 'publishable',
       buildable: options.type === 'buildable',
+      importPath: options.importPath
     }),
     addDomainToLintingRules(libName),
     mergeWith(templateSource),

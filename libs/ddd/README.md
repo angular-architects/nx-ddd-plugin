@@ -41,8 +41,8 @@ ng g @angular-architects/ddd:feature manage --domain boarding
 For NGRX support, just add the `--ngrx` switch:
 
 ```
-ng g @angular-architects/ddd:domain booking --addApp --ngrx
-ng g @angular-architects/ddd:feature search --domain booking --entity flight --ngrx
+ng g @angular-architects/ddd:domain luggage --addApp --ngrx
+ng g @angular-architects/ddd:feature checkin --domain luggage --entity luggage-list --ngrx
 [...]
 ```
 
