@@ -33,7 +33,7 @@ export default function (options: DomainOptions): Rule {
 
   const libName = strings.dasherize(options.name);
   const libNameAndDirectory = options.directory
-    ? `${libName}/${options.directory}`
+    ? `${options.directory}/${libName}`
     : libName;
   const libNameAndDirectoryDasherized = strings
     .dasherize(libNameAndDirectory)
