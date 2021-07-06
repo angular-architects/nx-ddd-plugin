@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "domain-options",
+  "$id": "domain-options",
   "type": "object",
   "properties": {
     "name": {

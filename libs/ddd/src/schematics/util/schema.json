@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "util-options",
+  "$id": "util-options",
   "type": "object",
   "properties": {
     "name": {
