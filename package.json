@@ -30,11 +30,11 @@
   },
   "private": true,
   "dependencies": {
-    "@schematics/angular": "10.1.7",
-    "@nrwl/schematics": "8.12.11",
-    "json-schema-to-typescript": "^8.1.0"
+    "@schematics/angular": "^12.0.0",
+    "@nrwl/schematics": "^12.0.0"
   },
   "devDependencies": {
+    "json-schema-to-typescript": "^8.1.0",
     "@nrwl/angular": "11.0.20",
     "@nrwl/cli": "11.0.20",
     "@nrwl/eslint-plugin-nx": "11.0.20",

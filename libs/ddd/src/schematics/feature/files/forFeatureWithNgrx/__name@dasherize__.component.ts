@@ -21,7 +21,7 @@ export class <%=classify(name)%>Component implements OnInit {
     }
 
     load(): void {
-        this.<%=camelize(name)%>Facade.dispatch(load<%=classify(entity)%>());
+        this.<%=camelize(name)%>Facade.load();
     }
 <% } else { %>
     ngOnInit() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 
-import { select, Store, Action } from '@ngrx/store';
-
+import { load<%=classify(entity)%> } from '../+state/<%= dasherize(entity) %>/<%= dasherize(entity) %>.actions';
 import * as from<%= classify(entity) %> from '../+state/<%= dasherize(entity) %>/<%= dasherize(entity) %>.reducer';
 import * as <%= classify(entity) %>Selectors from '../+state/<%= dasherize(entity) %>/<%= dasherize(entity) %>.selectors';
 
@@ -13,7 +13,7 @@ export class <%= classify(name) %>Facade {
 
   constructor(private store: Store<from<%= classify(entity) %>.<%= classify(entity) %>PartialState>) { }
 
-  dispatch(action: Action) {
-    this.store.dispatch(action);
+  load(): void {
+    this.store.dispatch(load<%=classify(entity)%>());
   }
 }

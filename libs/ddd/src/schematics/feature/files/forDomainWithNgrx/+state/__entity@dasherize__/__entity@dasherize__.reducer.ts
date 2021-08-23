@@ -4,7 +4,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as <%= classify(entity) %>Actions from './<%= dasherize(entity) %>.actions';
 import { <%= classify(entity) %> } from '../../entities/<%= dasherize(entity) %>';
 
-export const <%= classify(entity).toUpperCase() %>_FEATURE_KEY = '<%= camelize(entity) %>';
+export const <%= classify(entity).toUpperCase() %>_FEATURE_KEY = '<%=camelize(domain)%>-<%= camelize(entity) %>';
 
 export interface State extends EntityState<<%= classify(entity) %>> {
   selectedId ?: string | number;          // which <%= classify(entity) %> record has been selected
