@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { <%=classify(name)%>Facade, load<%=classify(entity)%> } from '<%=workspaceName%>/<%=dasherize(domain)%>/domain';
+import { <%=classify(name)%>Facade, load<%=classify(entity)%> } from '<%=workspaceName%>/<%=dasherize(domain)%><%- domainDirectory ? '/' + domainDirectory : '' %>/domain';
 
 @Component({
   selector: '<%=dasherize(domain)%>-<%=dasherize(name)%>',
