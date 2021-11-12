@@ -5,7 +5,9 @@
   "schematics": {
     "ng-add": {
       "factory": "./libs/ddd/src/schematics/ng-add/index",
-      "description": "adds initial access restrictions to linting rules"
+      "description": "adds initial access restrictions to linting rules",
+      "aliases": ["init"],
+      "schema": "./libs/ddd/src/schematics/ng-add/schema.json"
     },
     "domain": {
       "factory": "./libs/ddd/src/schematics/domain/index",
