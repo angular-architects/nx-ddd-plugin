@@ -1,14 +1,13 @@
 {
+  "root": "e2e/ddd-e2e",
   "projectType": "application",
-  "root": "apps\\ddd-e2e",
-  "sourceRoot": "apps\\ddd-e2e/src",
+  "sourceRoot": "e2e/ddd-e2e/src",
   "targets": {
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
         "target": "ddd:build",
-        "outputPath": "dist/libs/ddd",
-        "jestConfig": "apps/ddd-e2e/jest.config.js"
+        "jestConfig": "e2e/ddd-e2e/jest.config.js"
       }
     }
   },

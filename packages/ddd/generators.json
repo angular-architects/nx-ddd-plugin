@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "ddd",
+  "version": "0.0.1",
+  "generators": {
+    "ddd": {
+      "factory": "./src/generators/ddd/generator",
+      "schema": "./src/generators/ddd/schema.json",
+      "description": "ddd generator"
+    }
+  }
+}

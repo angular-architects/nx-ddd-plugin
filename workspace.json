@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "ddd": "libs/ddd",
-    "ddd-e2e": "apps/ddd-e2e"
+    "ddd-e2e": "apps/ddd-e2e",
+    "dddv2": "packages/ddd",
+    "dddv2-e2e": "e2e/ddd-e2e"
   }
 }

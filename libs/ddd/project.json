@@ -29,7 +29,6 @@
     "build": {
       "executor": "@nrwl/node:package",
       "options": {
-        "outputPath": "dist/libs/ddd",
         "tsConfig": "libs/ddd/tsconfig.lib.json",
         "packageJson": "libs/ddd/package.json",
         "main": "libs/ddd/src/index.ts",

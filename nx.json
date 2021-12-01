@@ -1,14 +1,16 @@
 {
   "npmScope": "angular-architects",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  },
   "implicitDependencies": {
-    "workspace.json": "*",
     "package.json": {
       "dependencies": "*",
       "devDependencies": "*"
     },
-    "tslint.json": "*",
-    "nx.json": "*",
-    "tsconfig.base.json": "*",
     ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
@@ -19,9 +21,7 @@
       }
     }
   },
-  "affected": {
-    "defaultBase": "master"
-  },
+
   "targetDependencies": {
     "build": [
       {
@@ -30,8 +30,9 @@
       }
     ]
   },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
+  "workspaceLayout": {
+    "appsDir": "e2e",
+    "libsDir": "packages"
   },
   "generators": {
     "@nrwl/workspace": {

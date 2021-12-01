@@ -35,9 +35,13 @@
     }
   },
   "dependencies": {
-    "@schematics/angular": "^12.0.0"
+    "@schematics/angular": "^12.0.0",
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@nrwl/devkit": "13.1.4",
+    "@nrwl/linter": "13.1.4",
+    "@nrwl/node": "13.1.4",
     "@nrwl/angular": "13.1.4",
     "@nrwl/cli": "13.1.4",
     "@nrwl/eslint-plugin-nx": "13.1.4",
