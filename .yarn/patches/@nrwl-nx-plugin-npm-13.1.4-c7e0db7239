@@ -1,0 +1,13 @@
+diff --git a/src/utils/testing-utils/nx-project.js b/src/utils/testing-utils/nx-project.js
+index 2eeabe33defda0bae009e8b09b7865a4e165c2af..d9c55a01f70b84e15e224274cdd3de8703787002 100644
+--- a/src/utils/testing-utils/nx-project.js
++++ b/src/utils/testing-utils/nx-project.js
+@@ -10,7 +10,7 @@ const paths_1 = require("./paths");
+ const utils_1 = require("./utils");
+ function runNxNewCommand(args, silent) {
+     const localTmpDir = path_1.dirname(paths_1.tmpProjPath());
+-    return child_process_1.execSync(`node ${require.resolve('@nrwl/tao')} new proj --nx-workspace-root=${localTmpDir} --no-interactive --skip-install --collection=@nrwl/workspace --npmScope=proj --preset=empty ${args || ''}`, Object.assign({ cwd: localTmpDir }, (silent && false ? { stdio: ['ignore', 'ignore', 'ignore'] } : {})));
++    return child_process_1.execSync(`node ${require.resolve('@nrwl/tao')} new proj --nx-workspace-root=${localTmpDir} --packageManager=yarn --no-interactive --skip-install --collection=@nrwl/workspace --npmScope=proj --preset=empty ${args || ''}`, Object.assign({ cwd: localTmpDir }, (silent && false ? { stdio: ['ignore', 'ignore', 'ignore'] } : {})));
+ }
+ function patchPackageJsonForPlugin(npmPackageName, distPath) {
+     const path = paths_1.tmpProjPath('package.json');

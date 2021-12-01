@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@angular-architects/ddd": ["libs/ddd/src/index.ts"]
+      "@angular-architects/ddd": ["packages/ddd/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
