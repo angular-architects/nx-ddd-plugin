@@ -1264,6 +1264,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/nx-plugin@patch:@nrwl/nx-plugin@npm:13.1.4#.yarn/patches/@nrwl-nx-plugin-npm-13.1.4-c7e0db7239::locator=angular-architects%40workspace%3A.":
+  version: 13.1.4
+  resolution: "@nrwl/nx-plugin@patch:@nrwl/nx-plugin@npm%3A13.1.4#.yarn/patches/@nrwl-nx-plugin-npm-13.1.4-c7e0db7239::version=13.1.4&hash=8244c4&locator=angular-architects%40workspace%3A."
+  dependencies:
+    "@nrwl/devkit": 13.1.4
+    "@nrwl/jest": 13.1.4
+    "@nrwl/linter": 13.1.4
+    "@nrwl/node": 13.1.4
+    fs-extra: ^9.1.0
+    rxjs: ^6.5.4
+    tslib: ^2.0.0
+    yargs: 15.4.1
+  checksum: 3539187d718965aafc345c442a49ae3f05f053be9109ef7bfe6982a1056c4748617bd1b73f4b3e976ac9ec562a2a12713d17153117ab7f3515c09976dc7804bc
+  languageName: node
+  linkType: hard
+
 "@nrwl/storybook@npm:13.1.4":
   version: 13.1.4
   resolution: "@nrwl/storybook@npm:13.1.4"
@@ -1319,6 +1335,27 @@ __metadata:
   bin:
     tao: index.js
   checksum: 57603c4e17d7f3a82bc0c2d4a8ac729346c9e0284a9ea5253c26b702caac12b5392194019747faaf34bd66599487c68120b5285369b89c223ade9bdf4828ddd7
+  languageName: node
+  linkType: hard
+
+"@nrwl/tao@patch:@nrwl/tao@npm:13.1.4#.yarn/patches/@nrwl-tao-npm-13.1.4-4a2d4662fa::locator=angular-architects%40workspace%3A.":
+  version: 13.1.4
+  resolution: "@nrwl/tao@patch:@nrwl/tao@npm%3A13.1.4#.yarn/patches/@nrwl-tao-npm-13.1.4-4a2d4662fa::version=13.1.4&hash=4e8e0a&locator=angular-architects%40workspace%3A."
+  dependencies:
+    chalk: 4.1.0
+    enquirer: ~2.3.6
+    fs-extra: ^9.1.0
+    jsonc-parser: 3.0.0
+    nx: 13.1.4
+    rxjs: ^6.5.4
+    rxjs-for-await: 0.0.2
+    semver: 7.3.4
+    tmp: ~0.2.1
+    tslib: ^2.0.0
+    yargs-parser: 20.0.0
+  bin:
+    tao: index.js
+  checksum: 24f2d882966ffbcaabb5b93144a0d3e6217131848416f9975204153e5661e1151b5ed5da3bf9a55b9f1e638464f51acb83db49bcfdcd5121342e47ad891ae06a
   languageName: node
   linkType: hard
 
