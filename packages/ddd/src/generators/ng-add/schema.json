@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "feature-options",
+  "type": "object",
+  "properties": {}
+}

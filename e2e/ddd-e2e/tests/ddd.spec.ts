@@ -40,3 +40,11 @@ describe('ddd e2e', () => {
     }, 120000);
   });
 });
+/*
+      const nxJson = readJson('nx.json');
+      expect(nxJson.projects[plugin].tags).toEqual(['e2etag', 'e2ePackage']);
+      done();
+    });
+  });
+});
+*/

@@ -1,3 +1,3 @@
 # @angular-architects/ddd -- DDD Plugin for Nx
 
-see [libs/ddd/readme.md](libs/ddd/README.md)
+see [packages/ddd/readme.md](packages/ddd/README.md)

@@ -7,6 +7,32 @@
       "factory": "./src/generators/ddd/generator",
       "schema": "./src/generators/ddd/schema.json",
       "description": "ddd generator"
+    },
+    "ng-add": {
+      "factory": "./packages/ddd/src/generators/ng-add/index",
+      "description": "adds initial access restrictions to linting rules",
+      "aliases": ["init"],
+      "schema": "./packages/ddd/src/generators/ng-add/schema.json"
+    },
+    "domain": {
+      "factory": "./packages/ddd/src/generators/domain/index",
+      "schema": "./packages/ddd/src/generators/domain/schema.json",
+      "description": "adds a domain including a domain folder, domain lib, entries in nx.json, and linting rules in tslint.json"
+    },
+    "feature": {
+      "factory": "./packages/ddd/src/generators/feature/index",
+      "schema": "./packages/ddd/src/generators/feature/schema.json",
+      "description": "adds a feature lib to a domain"
+    },
+    "ui": {
+      "factory": "./packages/ddd/src/generators/ui/ui",
+      "schema": "./packages/ddd/src/generators/ui/schema.json",
+      "description": "adds a UI library to a domain or as a shared library"
+    },
+    "util": {
+      "factory": "./packages/ddd/src/generators/util/util",
+      "schema": "./packages/ddd/src/generators/util/schema.json",
+      "description": "adds a utility library to a domain or as a shared library"
     }
   }
 }
