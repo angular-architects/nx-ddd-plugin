@@ -18,7 +18,8 @@
               "libs/ddd/**/*.spec.jsx",
               "libs/ddd/**/*.d.ts"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -26,9 +27,7 @@
             "jestConfig": "libs/ddd/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/ddd"
-          ]
+          "outputs": ["coverage/libs/ddd"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -62,7 +61,8 @@
             ]
           }
         }
-      }
+      },
+      "tags": []
     },
     "ddd-e2e": {
       "projectType": "application",
@@ -78,63 +78,9 @@
             "jestConfig": "apps/ddd-e2e/jest.config.js"
           }
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/react": {
-      "application": {
-        "linter": "eslint"
       },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/next": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/web": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nx-plugin": {
-      "plugin": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "eslint"
-      }
+      "tags": [],
+      "implicitDependencies": ["ddd"]
     }
   }
 }
