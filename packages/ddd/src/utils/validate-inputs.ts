@@ -1,6 +1,6 @@
-import { UiOptions } from '../generators/ui/schema';
+import { Schema } from '../generators/ui/schema';
 
-export function validateInputs(options: UiOptions): void {
+export function validateInputs(options: Schema): void {
   if (options.shared && options.domain) {
     throw new Error(`A UI library should either belong to a specific domain or be shared globally.
       If you want to share a UI library across multiple specific domains,

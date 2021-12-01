@@ -11,14 +11,14 @@ import {
 } from '@angular-devkit/schematics';
 
 import { strings } from '@angular-devkit/core';
-import { DomainOptions } from './schema';
+import { Schema } from './schema';
 import {
   addDomainToLintingRules,
   addNgrxImportsToApp,
   addNgRxToPackageJson,
 } from '../rules';
 
-export default function (options: DomainOptions): Rule {
+export default function (options: Schema): Rule {
   const appName = strings.dasherize(options.name);
   const appNameAndDirectory = options.appDirectory
     ? `${options.appDirectory}/${appName}`

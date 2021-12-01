@@ -7,9 +7,9 @@ import {
 } from '@angular-devkit/schematics';
 // import { getNpmScope } from '@nrwl/workspace';
 import { validateInputs } from '../../utils';
-import { UtilOptions } from './schema';
+import { Schema } from './schema';
 
-export default function (options: UtilOptions): Rule {
+export default function (options: Schema): Rule {
   return (host: Tree) => {
     validateInputs(options);
 

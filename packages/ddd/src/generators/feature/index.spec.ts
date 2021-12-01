@@ -28,7 +28,7 @@ describe('feature', () => {
 
   /**
   it('should ........', async () => {
-    const tree = await runSchematic<UiOptions>(
+    const tree = await runSchematic<Schema>(
       'ui',
       { name: 'form-components', shared: true },
       appTree

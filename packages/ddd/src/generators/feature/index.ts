@@ -10,7 +10,7 @@ import {
   mergeWith,
   noop,
 } from '@angular-devkit/schematics';
-import { FeatureOptions } from './schema';
+import { Schema } from './schema';
 import { strings } from '@angular-devkit/core';
 import {
   addDeclaration,
@@ -23,7 +23,7 @@ import {
 } from '../rules';
 import { readWorkspaceName } from '../../utils';
 
-export default function (options: FeatureOptions): Rule {
+export default function (options: Schema): Rule {
   return (host: Tree) => {
     if (!options.app) {
       options.app = options.domain;

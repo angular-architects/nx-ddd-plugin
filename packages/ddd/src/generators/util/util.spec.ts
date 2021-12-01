@@ -3,7 +3,7 @@ import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import { readWorkspaceJson, readJsonInTree } from '@nrwl/workspace';
 import { createEmptyWorkspace } from '@nrwl/workspace/testing';
 import { join } from 'path';
-import { UtilOptions } from './schema';
+import { Schema } from './schema';
 
 describe('util', () => {
   let appTree: Tree;
@@ -29,7 +29,7 @@ describe('util', () => {
   });
 
   it('should add correct tags if util lib is shared', async () => {
-    const tree = await runSchematic<UtilOptions>(
+    const tree = await runSchematic<Schema>(
       'util',
       { name: 'form-validation', shared: true },
       appTree
@@ -44,7 +44,7 @@ describe('util', () => {
   });
 
   it('should add correct tags if util lib belongs to a domain', async () => {
-    const tree = await runSchematic<UtilOptions>(
+    const tree = await runSchematic<Schema>(
       'util',
       { name: 'form-validation', domain: 'customer' },
       appTree
@@ -60,17 +60,13 @@ describe('util', () => {
 
   it('should throw error if neither domain nor shared option is provided', async () => {
     const schematicFunc = async () =>
-      await runSchematic<UtilOptions>(
-        'util',
-        { name: 'form-validation' },
-        appTree
-      );
+      await runSchematic<Schema>('util', { name: 'form-validation' }, appTree);
     await expect(schematicFunc()).rejects.toThrowError();
   });
 
   it('should throw error if domain and shared option is provided', async () => {
     const schematicFunc = async () =>
-      await runSchematic<UtilOptions>(
+      await runSchematic<Schema>(
         'util',
         { name: 'form-validation', domain: 'customer', shared: true },
         appTree
@@ -79,7 +75,7 @@ describe('util', () => {
   });
 
   it('should be able to customize the directory of the library within the domain / shared folder', async () => {
-    const tree = await runSchematic<UtilOptions>(
+    const tree = await runSchematic<Schema>(
       'util',
       { name: 'form-validation', domain: 'customer', directory: 'forms' },
       appTree
@@ -95,7 +91,7 @@ describe('util', () => {
   });
 
   it('should keep correct tags with a customized directory', async () => {
-    const tree = await runSchematic<UtilOptions>(
+    const tree = await runSchematic<Schema>(
       'util',
       { name: 'form-validation', domain: 'customer', directory: 'forms' },
       appTree
@@ -110,7 +106,7 @@ describe('util', () => {
   });
 
   it('should add valid import path to publishable lib', async () => {
-    const tree = await runSchematic<UtilOptions>(
+    const tree = await runSchematic<Schema>(
       'util',
       { name: 'form-validation', shared: true, type: 'publishable' },
       appTree
@@ -129,7 +125,7 @@ describe('util', () => {
   });
 
   it('should add valid import path to publishable lib with customized directory', async () => {
-    const tree = await runSchematic<UtilOptions>(
+    const tree = await runSchematic<Schema>(
       'util',
       {
         name: 'form-validation',
