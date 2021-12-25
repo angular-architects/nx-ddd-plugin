@@ -25,7 +25,6 @@ export default function (options: UiOptions): Rule {
       '-'
     );
 
-
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
         name: libName,

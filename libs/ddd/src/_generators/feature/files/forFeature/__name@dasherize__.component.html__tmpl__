@@ -1,0 +1,10 @@
+<h1><%=domain%>-<%=name%></h1>
+<% if(entity) { %>
+<table class="table">
+  <tr *ngFor="let <%=camelize(entity)%> of <%=camelize(entity)%>List$ | async">
+    <td>{{<%=camelize(entity)%>.id}}</td>
+    <td>{{<%=camelize(entity)%>.name}}</td>
+    <td>{{<%=camelize(entity)%>.description}}</td>
+  </tr>
+</table>
+<% } %>
