@@ -1,5 +1,5 @@
 import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
-import { updateDepConst } from '../utils';
+import { updateDepConst } from '../utils/update-dep-const';
 
 /**
  * initLintingRules

@@ -22,7 +22,14 @@ The generated access restrictions prevent unwanted access between libraries resp
 
 ## Usage
 
-Add this plugin to an Nx workspace:
+Add this plugin to a Nx workspace:
+
+```
+npm i @angular-architects/ddd
+ng g @angular-architects/ddd:init
+```
+
+Instead, you can also use ng add, however, Nx currently emits a warning when using ng add:
 
 ```
 ng add @angular-architects/ddd

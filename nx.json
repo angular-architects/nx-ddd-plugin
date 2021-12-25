@@ -11,15 +11,6 @@
     "tsconfig.base.json": "*",
     ".eslintrc.json": "*"
   },
-  "projects": {
-    "ddd": {
-      "tags": []
-    },
-    "ddd-e2e": {
-      "tags": [],
-      "implicitDependencies": ["ddd"]
-    }
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",

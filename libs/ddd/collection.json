@@ -1,32 +1,37 @@
 {
-  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "name": "@angular-architects/ddd",
   "version": "0.0.1",
   "schematics": {
     "ng-add": {
-      "factory": "./libs/ddd/src/schematics/ng-add/index",
+      "factory": "./src/schematics/ng-add/index",
       "description": "adds initial access restrictions to linting rules",
-      "aliases": ["init"],
-      "schema": "./libs/ddd/src/schematics/ng-add/schema.json"
+      "schema": "./src/schematics/ng-add/schema.json"
+    }
+  },
+  "generators": {
+    "init": {
+      "factory": "./src/generators/init/index",
+      "description": "adds initial access restrictions to linting rules",
+      "schema": "./src/generators/init/schema.json"
     },
     "domain": {
-      "factory": "./libs/ddd/src/schematics/domain/index",
-      "schema": "./libs/ddd/src/schematics/domain/schema.json",
-      "description": "adds a domain including a domain folder, domain lib, entries in nx.json, and linting rules in tslint.json"
+      "factory": "./src/generators/domain/index",
+      "schema": "./src/generators/domain/schema.json",
+      "description": "domain generator"
     },
     "feature": {
-      "factory": "./libs/ddd/src/schematics/feature/index",
-      "schema": "./libs/ddd/src/schematics/feature/schema.json",
+      "factory": "./src/generators/feature/index",
+      "schema": "./src/generators/feature/schema.json",
       "description": "adds a feature lib to a domain"
     },
     "ui": {
-      "factory": "./libs/ddd/src/schematics/ui/ui",
-      "schema": "./libs/ddd/src/schematics/ui/schema.json",
+      "factory": "./src/generators/ui/index",
+      "schema": "./src/generators/ui/schema.json",
       "description": "adds a UI library to a domain or as a shared library"
     },
     "util": {
-      "factory": "./libs/ddd/src/schematics/util/util",
-      "schema": "./libs/ddd/src/schematics/util/schema.json",
+      "factory": "./src/generators/util/index",
+      "schema": "./src/generators/util/schema.json",
       "description": "adds a utility library to a domain or as a shared library"
     }
   }

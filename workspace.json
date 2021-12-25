@@ -38,25 +38,20 @@
             "packageJson": "libs/ddd/package.json",
             "main": "libs/ddd/src/index.ts",
             "assets": [
-              {
-                "input": "./libs/ddd",
-                "glob": "**/*.*",
-                "output": "./libs/ddd"
-              },
               "libs/ddd/*.md",
               {
                 "input": "./libs/ddd/src",
-                "glob": "**/*.*",
-                "output": "./libs/ddd/src"
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/ddd/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
               },
               {
                 "input": "./libs/ddd",
                 "glob": "collection.json",
-                "output": "."
-              },
-              {
-                "input": "./libs/ddd",
-                "glob": "builders.json",
                 "output": "."
               }
             ]
