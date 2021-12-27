@@ -73,7 +73,6 @@ export default async function (tree: Tree, options: DomainOptions) {
       name: appName,
       directory: options.appDirectory,
       tags: `domain:${appName},type:app`,
-      style: 'scss',
     });
   }
 
