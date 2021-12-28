@@ -29,6 +29,11 @@
       "schema": "./src/generators/ui/schema.json",
       "description": "adds a UI library to a domain or as a shared library"
     },
+    "api": {
+      "factory": "./src/generators/api/index",
+      "schema": "./src/generators/api/schema.json",
+      "description": "adds a API library to a domain or as a shared library"
+    },    
     "util": {
       "factory": "./src/generators/util/index",
       "schema": "./src/generators/util/schema.json",

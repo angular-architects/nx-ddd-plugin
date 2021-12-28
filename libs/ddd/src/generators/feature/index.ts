@@ -80,7 +80,7 @@ export default async function (tree: Tree, options: FeatureOptions) {
   const appModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
 
   const requiredAppModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
-  if (!tree.exists(requiredAppModulePath)) {
+  if (!options.noApp && !tree.exists(requiredAppModulePath)) {
     throw new Error(
       `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
     );
@@ -112,7 +112,7 @@ export default async function (tree: Tree, options: FeatureOptions) {
     importPath: domainImportPath
   });
 
-  if (!options.lazy && tree.exists(appModulePath)) {
+  if (!options.noApp && !options.lazy && tree.exists(appModulePath)) {
     addImportToNgModule(tree, {
       filePath: appModulePath,
       importClassName: featureModuleClassName,

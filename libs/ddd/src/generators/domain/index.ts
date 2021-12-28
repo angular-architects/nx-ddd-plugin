@@ -10,7 +10,7 @@ import * as ts from 'typescript';
 import { NGRX_VERSION } from '../utils/ngrx-version';
 
 export default async function (tree: Tree, options: DomainOptions) {
-  
+
   const appName = strings.dasherize(options.name);
   const appNameAndDirectory = options.appDirectory
     ? `${options.appDirectory}/${appName}`
@@ -34,11 +34,11 @@ export default async function (tree: Tree, options: DomainOptions) {
   const libFolderPath = `libs/${libNameAndDirectory}`;
   const libLibFolder = `${libFolderPath}/domain/src/lib`;
 
-  if (options.ngrx && !options.addApp) {
-    throw new Error(
-      `The 'ngrx' option may only be used when the 'addApp' option is used.`
-    );
-  }
+  // if (options.ngrx && !options.addApp) {
+  //   throw new Error(
+  //     `The 'ngrx' option may only be used when the 'addApp' option is used.`
+  //   );
+  // }
 
   await libraryGenerator(tree, {
     name: 'domain',
@@ -79,7 +79,7 @@ export default async function (tree: Tree, options: DomainOptions) {
 
   if (options.addApp && options.ngrx) {
     const generateStore = wrapAngularDevkitSchematic('@ngrx/schematics', 'store');
-    
+
     await generateStore(tree, {
       project: appNameAndDirectoryDasherized,
       root: true,
@@ -87,16 +87,15 @@ export default async function (tree: Tree, options: DomainOptions) {
       module: 'app.module.ts',
       name: 'state',
     });
-
+  
     addNgrxImportsToApp(tree, appModuleFilepath);
     addNgrxDependencies(tree);
-
-    await formatFiles(tree);
-    return () => {
-      installPackagesTask(tree);
-    };
-  
   }
+
+  await formatFiles(tree);
+  return () => {
+    installPackagesTask(tree);
+  };
 
 }
 

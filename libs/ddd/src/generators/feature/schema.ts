@@ -27,6 +27,10 @@ export interface FeatureOptions {
    */
   domainDirectory?: string;
   /**
+   * Don't connect this feature lib to an app
+   */
+  noApp?: boolean;
+  /**
    * app name
    */
   app?: string;
