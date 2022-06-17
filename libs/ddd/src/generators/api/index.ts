@@ -24,7 +24,8 @@ export default async function (tree: Tree, options: ApiOptions) {
     publishable: isPublishableLib,
     buildable: options.type === 'buildable',
     directory: libDirectory,
-    importPath: options.importPath
+    importPath: options.importPath,
+    skipModule: options.standalone,
   });
 
   console.info(`\nHINT: Don\'t forget to extend the rules in your .eslintrc to allow selected domains to access this API.\nFor this, add the tag domain:${domain}/${libName} to the respective domains' rule sets.\n `);

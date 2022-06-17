@@ -33,7 +33,12 @@
       "type": "string",
       "enum": ["internal", "buildable", "publishable"],
       "description": "A type to determine if and how to build the library.",
-      "default": "buildable"
+      "default": "internal"
+    },
+    "standalone": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use standalone components?"
     }
   },
   "required": ["name"]
