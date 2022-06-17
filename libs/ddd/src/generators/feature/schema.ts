@@ -58,5 +58,8 @@ export interface FeatureOptions {
    * Add ngrx for the domain (entity required)
    */
   ngrx?: boolean;
+
+  standalone: boolean;
+
   [k: string]: any;
 }

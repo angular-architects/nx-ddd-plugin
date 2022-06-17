@@ -44,7 +44,7 @@
     },
     "standalone": {
       "type": "boolean",
-      "default": true,
+      "default": false,
       "description": "Use standalone components?"
     }
 

@@ -52,7 +52,7 @@
       "type": "string",
       "enum": ["internal", "buildable", "publishable"],
       "description": "A type to determine if and how to build the library.",
-      "default": "buildable"
+      "default": "internal"
     },
     "importPath": {
       "type": "string",
@@ -67,6 +67,11 @@
       "type": "boolean",
       "default": false,
       "description": "Don't connect the feature lib to an app"
+    },
+    "standalone": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use standalone components?"
     }
   },
   "required": ["name", "domain"]

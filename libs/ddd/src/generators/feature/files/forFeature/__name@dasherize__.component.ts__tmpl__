@@ -1,8 +1,11 @@
-import { Component, OnInit} from '@angular/core';
-import { <%=classify(name)%>Facade } from '<%=workspaceName%>/<%=dasherize(domain)%><%- domainDirectory ? '/' + domainDirectory : '' %>/domain';
+import { Component, OnInit } from '@angular/core'; <% if (standalone) { %>
+import { CommonModule } from '@angular/common';
+<% } %>import { <%=classify(name)%>Facade } from '<%=workspaceName%>/<%=dasherize(domain)%><%- domainDirectory ? '/' + domainDirectory : '' %>/domain';
 
-@Component({
-  selector: '<%=dasherize(domain)%>-<%=dasherize(name)%>',
+@Component({ <% if (standalone) { %>
+  standalone: true,
+  imports: [CommonModule],
+  <% } %>selector: '<%=dasherize(domain)%>-<%=dasherize(name)%>',
   templateUrl: './<%=dasherize(name)%>.component.html',
   styleUrls: ['./<%=dasherize(name)%>.component.scss']
 })

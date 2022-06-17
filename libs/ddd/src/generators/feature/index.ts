@@ -1,15 +1,23 @@
-import { Tree, formatFiles, installPackagesTask, generateFiles, joinPathFragments } from '@nrwl/devkit';
+import {
+  Tree,
+  formatFiles,
+  installPackagesTask,
+  generateFiles,
+  joinPathFragments,
+} from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/angular/generators';
 import { FeatureOptions } from './schema';
 import { strings } from '@angular-devkit/core';
 import { addTsExport } from '../utils/add-ts-exports';
-import { addDeclarationWithExportToNgModule, addImportToNgModule } from '../utils/addToNgModule';
+import {
+  addDeclarationWithExportToNgModule,
+  addImportToNgModule,
+} from '../utils/addToNgModule';
 import { addNgrxImportsToDomain } from '../utils/add-ngrx-imports-to-domain';
 import { fileContains } from '../utils/fileContains';
 import { getWorkspaceScope } from '../utils/get-workspace-scope';
 
 export default async function (tree: Tree, options: FeatureOptions) {
-
   options.app ??= options.domain;
   options.domainDirectory ??= '';
   options.entity ??= '';
@@ -61,9 +69,8 @@ export default async function (tree: Tree, options: FeatureOptions) {
     ? `${featureDirectory}/${featureFolderName}`
     : featureFolderName;
 
-  const featureDirectoryAndFolderNameDasherized = `${featureDirectoryAndFolderName}`
-    .split('/')
-    .join('-');
+  const featureDirectoryAndFolderNameDasherized =
+    `${featureDirectoryAndFolderName}`.split('/').join('-');
 
   const featureLibFolderPath = `${domainNameAndDirectoryPath}/${featureDirectoryAndFolderName}/src/lib`;
   const featureModuleFilepath = `${featureLibFolderPath}/${domainNameAndDirectoryDasherized}-${featureDirectoryAndFolderNameDasherized}.module.ts`;
@@ -79,10 +86,10 @@ export default async function (tree: Tree, options: FeatureOptions) {
   );
   const appModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
 
-  const requiredAppModulePath = `apps/${appDirectoryAndName}/src/app/app.module.ts`;
-  if (!options.noApp && !tree.exists(requiredAppModulePath)) {
+  const requiredAppCompPath = `apps/${appDirectoryAndName}/src/app/app.component.ts`;
+  if (!options.noApp && !tree.exists(requiredAppCompPath)) {
     throw new Error(
-      `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
+      `Specified app ${options.app} does not exist: ${requiredAppCompPath} expected!`
     );
   }
 
@@ -91,8 +98,6 @@ export default async function (tree: Tree, options: FeatureOptions) {
       `The 'ngrx' option may only be used when the 'entity' option is used.`
     );
   }
-
-  // let updatedEntityNameOptions = Object.assign({}, options);
 
   await libraryGenerator(tree, {
     name: featureFolderName,
@@ -103,30 +108,20 @@ export default async function (tree: Tree, options: FeatureOptions) {
     prefix: domainNameAndDirectoryDasherized,
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
-    importPath: options.importPath
+    importPath: options.importPath,
+    skipModule: options.standalone,
   });
 
-  addImportToNgModule(tree, {
-    filePath: featureModuleFilepath,
-    importClassName: domainModuleClassName,
-    importPath: domainImportPath
-  });
-
-  if (!options.noApp && !options.lazy && tree.exists(appModulePath)) {
-    addImportToNgModule(tree, {
-      filePath: appModulePath,
-      importClassName: featureModuleClassName,
-      importPath: featureImportPath
+  if (!options.standalone) {
+    wireUpNgModules(tree, {
+      featureModuleFilepath,
+      domainModuleClassName,
+      domainImportPath,
+      options,
+      appModulePath,
+      featureModuleClassName,
+      featureImportPath,
     });
-
-    const contains = fileContains(tree, appModulePath, 'HttpClientModule');
-    if (!contains) {
-      addImportToNgModule(tree, {
-        filePath: appModulePath,
-        importClassName: 'HttpClientModule',
-        importPath: '@angular/common/http'
-      });
-    }
   }
 
   generate(tree, {
@@ -134,14 +129,14 @@ export default async function (tree: Tree, options: FeatureOptions) {
     entityName,
     domainLibFolderPath,
     workspaceName,
-    featureLibFolderPath
+    featureLibFolderPath,
   });
 
   if (entityName) {
     addTsExport(tree, domainIndexPath, [
       `./lib/entities/${entityName}`,
       `./lib/infrastructure/${entityName}.data.service`,
-    ])
+    ]);
   }
 
   if (options.ngrx && entityName && tree.exists(domainModuleFilepath)) {
@@ -159,11 +154,13 @@ export default async function (tree: Tree, options: FeatureOptions) {
     `./lib/${featureDirectoryAndNameDasherized}.component`,
   ]);
 
-  addDeclarationWithExportToNgModule(tree, {
-    filePath: featureModuleFilepath,
-    importClassName: featureComponentClassName,
-    importPath: featureComponentImportPath
-  });
+  if (!options.standalone) {
+    addDeclarationWithExportToNgModule(tree, {
+      filePath: featureModuleFilepath,
+      importClassName: featureComponentClassName,
+      importPath: featureComponentImportPath,
+    });
+  }
 
   await formatFiles(tree);
   return () => {
@@ -171,7 +168,66 @@ export default async function (tree: Tree, options: FeatureOptions) {
   };
 }
 
-function generate(tree: Tree, { options, entityName, domainLibFolderPath, workspaceName, featureLibFolderPath }: { options: FeatureOptions; entityName: string; domainLibFolderPath: string; workspaceName: string; featureLibFolderPath: string; }) {
+function wireUpNgModules(
+  tree: Tree,
+  {
+    featureModuleFilepath,
+    domainModuleClassName,
+    domainImportPath,
+    options,
+    appModulePath,
+    featureModuleClassName,
+    featureImportPath,
+  }: {
+    featureModuleFilepath: string;
+    domainModuleClassName: string;
+    domainImportPath: string;
+    options: FeatureOptions;
+    appModulePath: string;
+    featureModuleClassName: string;
+    featureImportPath: string;
+  }
+) {
+  addImportToNgModule(tree, {
+    filePath: featureModuleFilepath,
+    importClassName: domainModuleClassName,
+    importPath: domainImportPath,
+  });
+
+  if (!options.noApp && !options.lazy && tree.exists(appModulePath)) {
+    addImportToNgModule(tree, {
+      filePath: appModulePath,
+      importClassName: featureModuleClassName,
+      importPath: featureImportPath,
+    });
+
+    const contains = fileContains(tree, appModulePath, 'HttpClientModule');
+    if (!contains) {
+      addImportToNgModule(tree, {
+        filePath: appModulePath,
+        importClassName: 'HttpClientModule',
+        importPath: '@angular/common/http',
+      });
+    }
+  }
+}
+
+function generate(
+  tree: Tree,
+  {
+    options,
+    entityName,
+    domainLibFolderPath,
+    workspaceName,
+    featureLibFolderPath,
+  }: {
+    options: FeatureOptions;
+    entityName: string;
+    domainLibFolderPath: string;
+    workspaceName: string;
+    featureLibFolderPath: string;
+  }
+) {
   const tmpl = '';
   const params = {
     ...strings,
@@ -182,7 +238,7 @@ function generate(tree: Tree, { options, entityName, domainLibFolderPath, worksp
     entityName,
     domainLibFolderPath,
     featureLibFolderPath,
-    tmpl
+    tmpl,
   };
 
   if (options.ngrx && entityName) {
@@ -192,16 +248,14 @@ function generate(tree: Tree, { options, entityName, domainLibFolderPath, worksp
       domainLibFolderPath,
       params
     );
-  }
-  else if (!options.ngrx && entityName) {
+  } else if (!options.ngrx && entityName) {
     generateFiles(
       tree,
       joinPathFragments(__dirname, './files/forDomain'),
       domainLibFolderPath,
       params
     );
-  }
-  else if (!options.ngrx && !entityName) {
+  } else if (!options.ngrx && !entityName) {
     generateFiles(
       tree,
       joinPathFragments(__dirname, './files/forDomain/application'),
@@ -217,8 +271,7 @@ function generate(tree: Tree, { options, entityName, domainLibFolderPath, worksp
       featureLibFolderPath,
       params
     );
-  }
-  else if (!options.ngrx) {
+  } else if (!options.ngrx) {
     generateFiles(
       tree,
       joinPathFragments(__dirname, './files/forFeature'),
