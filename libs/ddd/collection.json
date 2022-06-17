@@ -1,0 +1,43 @@
+{
+  "name": "@angular-architects/ddd",
+  "version": "0.0.1",
+  "schematics": {
+    "ng-add": {
+      "factory": "./src/schematics/ng-add/index",
+      "description": "adds initial access restrictions to linting rules",
+      "schema": "./src/schematics/ng-add/schema.json"
+    }
+  },
+  "generators": {
+    "init": {
+      "factory": "./src/generators/init/index",
+      "description": "adds initial access restrictions to linting rules",
+      "schema": "./src/generators/init/schema.json"
+    },
+    "domain": {
+      "factory": "./src/generators/domain/index",
+      "schema": "./src/generators/domain/schema.json",
+      "description": "domain generator"
+    },
+    "feature": {
+      "factory": "./src/generators/feature/index",
+      "schema": "./src/generators/feature/schema.json",
+      "description": "adds a feature lib to a domain"
+    },
+    "ui": {
+      "factory": "./src/generators/ui/index",
+      "schema": "./src/generators/ui/schema.json",
+      "description": "adds a UI library to a domain or as a shared library"
+    },
+    "api": {
+      "factory": "./src/generators/api/index",
+      "schema": "./src/generators/api/schema.json",
+      "description": "adds a API library to a domain or as a shared library"
+    },    
+    "util": {
+      "factory": "./src/generators/util/index",
+      "schema": "./src/generators/util/schema.json",
+      "description": "adds a utility library to a domain or as a shared library"
+    }
+  }
+}

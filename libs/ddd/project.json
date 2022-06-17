@@ -1,0 +1,60 @@
+{
+  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "libs/ddd/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/ddd",
+        "main": "libs/ddd/src/index.ts",
+        "tsConfig": "libs/ddd/tsconfig.lib.json",
+        "assets": [
+          "libs/ddd/*.md",
+          {
+            "input": "./libs/ddd/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/ddd/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/ddd",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/ddd",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/ddd/**/*.ts",
+          "libs/ddd/generators.json",
+          "libs/ddd/executors.json",
+          "libs/ddd/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ddd"],
+      "options": {
+        "jestConfig": "libs/ddd/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
