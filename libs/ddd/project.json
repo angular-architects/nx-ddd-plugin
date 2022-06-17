@@ -29,6 +29,11 @@
           },
           {
             "input": "./libs/ddd",
+            "glob": "collection.json",
+            "output": "."
+          },          
+          {
+            "input": "./libs/ddd",
             "glob": "executors.json",
             "output": "."
           }

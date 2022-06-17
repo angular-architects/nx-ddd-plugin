@@ -26,6 +26,7 @@
     "@nrwl/angular": "14.3.6",
     "@nrwl/nx-plugin": "^14.3.6",
     "@nrwl/schematics": "^8.12.11",
+    "@phenomnomnominal/tsquery": "^5.0.0",
     "@swc/helpers": "~0.3.3",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",
