@@ -9,7 +9,7 @@ import { insertNgModuleImport } from '@nrwl/angular/src/generators/utils';
 import * as ts from 'typescript';
 import { NGRX_VERSION } from '../utils/ngrx-version';
 
-function convertToStandaloneApp (tree: Tree, options: { name: string, srcRoot: string, npmScope: string}) {
+function convertToStandaloneApp (tree: Tree, options: { name: string, srcRoot: string, npmScope: string, ngrx: boolean}) {
   // const mainPath = joinPathFragments(options.srcRoot, 'main.ts');
   // const appComponentPath = joinPathFragments(options.srcRoot, 'app/app.component.ts');
   const appModulePath = joinPathFragments(options.srcRoot, 'app/app.module.ts');
@@ -24,6 +24,7 @@ function convertToStandaloneApp (tree: Tree, options: { name: string, srcRoot: s
     joinPathFragments(__dirname, './files/standalone-app'),
     options.srcRoot,
     {
+      ngrx: options.ngrx,
       npmScope: names(options.npmScope).fileName,
       ...names(options.name),
       tmpl: '',
@@ -57,6 +58,7 @@ export default async function (tree: Tree, options: DomainOptions) {
     .join('-');
   const libFolderPath = `libs/${libNameAndDirectory}`;
   const libLibFolder = `${libFolderPath}/domain/src/lib`;
+  const libSrcFolder = `${libFolderPath}/domain/src`;
 
   // if (options.ngrx && !options.addApp) {
   //   throw new Error(
@@ -106,12 +108,17 @@ export default async function (tree: Tree, options: DomainOptions) {
   if (options.addApp && options.standalone) {
     convertToStandaloneApp(tree, {
       name: options.name,
+      ngrx: options.ngrx || false,
       srcRoot: appSrcFolder,
       npmScope: wsConfig.npmScope
     });
   }
 
   if (options.addApp && options.ngrx) {
+    addNgrxDependencies(tree);
+  }
+
+  if (!options.standalone && options.addApp && options.ngrx) {
     const generateStore = wrapAngularDevkitSchematic('@ngrx/schematics', 'store');
 
     await generateStore(tree, {
@@ -121,9 +128,20 @@ export default async function (tree: Tree, options: DomainOptions) {
       module: 'app.module.ts',
       name: 'state',
     });
-  
+
     addNgrxImportsToApp(tree, appModuleFilepath);
-    addNgrxDependencies(tree);
+  }
+
+  if (options.ngrx && options.standalone) {
+    generateFiles(tree,
+      joinPathFragments(__dirname, './files/standalone-lib'),
+      libSrcFolder,
+      {
+        ...options,
+        ...names(options.name),
+        tmpl: ''
+      }
+    )
   }
 
   await formatFiles(tree);

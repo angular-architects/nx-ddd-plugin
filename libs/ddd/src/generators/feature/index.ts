@@ -4,6 +4,7 @@ import {
   installPackagesTask,
   generateFiles,
   joinPathFragments,
+  names,
 } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/angular/generators';
 import { FeatureOptions } from './schema';
@@ -12,6 +13,7 @@ import { addTsExport } from '../utils/add-ts-exports';
 import {
   addDeclarationWithExportToNgModule,
   addImportToNgModule,
+  addImportToTsModule,
 } from '../utils/addToNgModule';
 import { addNgrxImportsToDomain } from '../utils/add-ngrx-imports-to-domain';
 import { fileContains } from '../utils/fileContains';
@@ -162,10 +164,48 @@ export default async function (tree: Tree, options: FeatureOptions) {
     });
   }
 
+  if (options.standalone && options.ngrx) {
+    updateProviders(tree, {
+      domainLibFolderPath,
+      entity: options.entity
+    });
+  }
+
   await formatFiles(tree);
   return () => {
     installPackagesTask(tree);
   };
+}
+
+function updateProviders(tree: Tree, options: { entity: string, domainLibFolderPath: string }) {
+  const entityNames = names(options.entity);
+
+  addImportToTsModule(tree, {
+    filePath: `${options.domainLibFolderPath}/providers.ts`,
+    importClassName: `${entityNames.className}Effects`,
+    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.effects`
+  });
+
+  addImportToTsModule(tree, {
+    filePath: `${options.domainLibFolderPath}/providers.ts`,
+    importClassName: `${entityNames.constantName}_FEATURE_KEY`,
+    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`
+  });
+
+  addImportToTsModule(tree, {
+    filePath: `${options.domainLibFolderPath}/providers.ts`,
+    importClassName: `reducer`,
+    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`
+  });
+
+  const providersToAdd = `
+    importProvidersFrom(StoreModule.forFeature(${entityNames.constantName}_FEATURE_KEY, reducer)),
+    importProvidersFrom(EffectsModule.forFeature([${entityNames.className}Effects])),
+]`;
+
+  const providers = tree.read(`${options.domainLibFolderPath}/providers.ts`, 'utf-8');
+  const updated = providers.replace(']', providersToAdd);
+  tree.write(`${options.domainLibFolderPath}/providers.ts`, updated);
 }
 
 function wireUpNgModules(
