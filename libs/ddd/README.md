@@ -33,7 +33,7 @@ ng g @angular-architects/ddd:init
 Instead, you can also use ng add, however, Nx currently emits a warning when using ng add:
 
 ```
-ng add @angular-architects/ddd
+nx add @angular-architects/ddd
 ```
 
 Add domains and features manually:
