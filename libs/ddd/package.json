@@ -9,7 +9,7 @@
     "url": "https://github.com/angular-architects/nx-ddd-plugin"
   },
   "dependencies": {
-    "@ngrx/schematics":"^13.0.0"
+    "@ngrx/schematics":"^14.3.0"
   },
   "peerDependencies": {
     "@nrwl/angular": ">=14.0.0"
