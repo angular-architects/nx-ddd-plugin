@@ -1,8 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "init",
   "type": "object",
-  "properties": {
-  }
+  "properties": {}
 }

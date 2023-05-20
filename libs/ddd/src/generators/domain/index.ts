@@ -1,26 +1,43 @@
-import { Tree, formatFiles, readWorkspaceConfiguration, installPackagesTask, generateFiles, joinPathFragments, readProjectConfiguration, addDependenciesToPackageJson, names } from '@nrwl/devkit';
-import { libraryGenerator, applicationGenerator } from '@nrwl/angular/generators';
+import {
+  Tree,
+  formatFiles,
+  readWorkspaceConfiguration,
+  installPackagesTask,
+  generateFiles,
+  joinPathFragments,
+  readProjectConfiguration,
+  addDependenciesToPackageJson,
+  names,
+} from '@nx/devkit';
+import { libraryGenerator, applicationGenerator } from '@nx/angular/generators';
 import { strings } from '@angular-devkit/core';
 import { DomainOptions } from './schema';
 import { updateDepConst } from '../utils/update-dep-const';
-import { wrapAngularDevkitSchematic } from '@nrwl/devkit/ngcli-adapter';
-import { insertImport } from '@nrwl/workspace/src/utilities/ast-utils';
-import { insertNgModuleImport } from '@nrwl/angular/src/generators/utils';
+import { wrapAngularDevkitSchematic } from '@nx/devkit/ngcli-adapter';
+import { insertImport } from '@nx/js';
+import { insertNgModuleImport } from '@nx/angular/src/generators/utils';
 import * as ts from 'typescript';
 import { NGRX_VERSION } from '../utils/ngrx-version';
 
-function convertToStandaloneApp (tree: Tree, options: { name: string, srcRoot: string, npmScope: string, ngrx: boolean}) {
+function convertToStandaloneApp(
+  tree: Tree,
+  options: { name: string; srcRoot: string; npmScope: string; ngrx: boolean }
+) {
   // const mainPath = joinPathFragments(options.srcRoot, 'main.ts');
   // const appComponentPath = joinPathFragments(options.srcRoot, 'app/app.component.ts');
   const appModulePath = joinPathFragments(options.srcRoot, 'app/app.module.ts');
-  const welcomePath = joinPathFragments(options.srcRoot, 'app/nx-welcome.component.ts');
+  const welcomePath = joinPathFragments(
+    options.srcRoot,
+    'app/nx-welcome.component.ts'
+  );
 
   // tree.delete(mainPath);
   // tree.delete(appComponentPath);
   tree.delete(appModulePath);
   tree.delete(welcomePath);
 
-  generateFiles(tree,
+  generateFiles(
+    tree,
     joinPathFragments(__dirname, './files/standalone-app'),
     options.srcRoot,
     {
@@ -30,11 +47,9 @@ function convertToStandaloneApp (tree: Tree, options: { name: string, srcRoot: s
       tmpl: '',
     }
   );
-
 }
 
 export default async function (tree: Tree, options: DomainOptions) {
-
   const appName = strings.dasherize(options.name);
   const appNameAndDirectory = options.appDirectory
     ? `${options.appDirectory}/${appName}`
@@ -74,7 +89,7 @@ export default async function (tree: Tree, options: DomainOptions) {
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
     importPath: options.importPath,
-    skipModule: options.standalone
+    skipModule: options.standalone,
   });
 
   updateDepConst(tree, (depConst) => {
@@ -110,7 +125,7 @@ export default async function (tree: Tree, options: DomainOptions) {
       name: options.name,
       ngrx: options.ngrx || false,
       srcRoot: appSrcFolder,
-      npmScope: wsConfig.npmScope
+      npmScope: wsConfig.npmScope,
     });
   }
 
@@ -119,7 +134,10 @@ export default async function (tree: Tree, options: DomainOptions) {
   }
 
   if (!options.standalone && options.addApp && options.ngrx) {
-    const generateStore = wrapAngularDevkitSchematic('@ngrx/schematics', 'store');
+    const generateStore = wrapAngularDevkitSchematic(
+      '@ngrx/schematics',
+      'store'
+    );
 
     await generateStore(tree, {
       project: appNameAndDirectoryDasherized,
@@ -133,31 +151,35 @@ export default async function (tree: Tree, options: DomainOptions) {
   }
 
   if (options.ngrx && options.standalone) {
-    generateFiles(tree,
+    generateFiles(
+      tree,
       joinPathFragments(__dirname, './files/standalone-lib'),
       libSrcFolder,
       {
         ...options,
         ...names(options.name),
-        tmpl: ''
+        tmpl: '',
       }
-    )
+    );
   }
 
   await formatFiles(tree);
   return () => {
     installPackagesTask(tree);
   };
-
 }
 
 function addNgrxDependencies(tree: Tree) {
-  addDependenciesToPackageJson(tree, {
-    '@ngrx/store': NGRX_VERSION,
-    '@ngrx/effects': NGRX_VERSION,
-    '@ngrx/entity': NGRX_VERSION,
-    '@ngrx/store-devtools': NGRX_VERSION,
-  }, {});
+  addDependenciesToPackageJson(
+    tree,
+    {
+      '@ngrx/store': NGRX_VERSION,
+      '@ngrx/effects': NGRX_VERSION,
+      '@ngrx/entity': NGRX_VERSION,
+      '@ngrx/store-devtools': NGRX_VERSION,
+    },
+    {}
+  );
 }
 
 function addNgrxImportsToApp(tree: Tree, appModuleFilepath: string) {
@@ -175,9 +197,8 @@ function addNgrxImportsToApp(tree: Tree, appModuleFilepath: string) {
     sourceFile,
     appModuleFilepath,
     'EffectsModule',
-    '@ngrx/effects');
+    '@ngrx/effects'
+  );
 
   insertNgModuleImport(tree, appModuleFilepath, 'EffectsModule.forRoot()');
-
 }
-

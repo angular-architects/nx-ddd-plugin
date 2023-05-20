@@ -1,6 +1,5 @@
-import { importProvidersFrom } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
 
 export function provide<%=className%>Domain() {
     return [

@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 import { checkRuleExists } from './check-rule-exists';
 
 export function updateDepConst(
@@ -12,15 +12,11 @@ export function updateDepConst(
     if (host.exists('.eslintrc.json')) {
       filePath = '.eslintrc.json';
       rule = '@nrwl/nx/enforce-module-boundaries';
-      console.info(
-        'Found .eslintrc.json'
-      );
+      console.info('Found .eslintrc.json');
     } else if (host.exists('.eslintrc')) {
       filePath = '.eslintrc';
       rule = '@nrwl/nx/enforce-module-boundaries';
-      console.info(
-        'Did not find .eslintrc.json but found .eslintrc'
-      );
+      console.info('Did not find .eslintrc.json but found .eslintrc');
     } else {
       console.info(
         'Cannot add linting rules: linting config file does not exist'

@@ -1,5 +1,5 @@
-import { Tree, formatFiles } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/angular/generators';
+import { Tree, formatFiles } from '@nx/devkit';
+import { libraryGenerator } from '@nx/angular/generators';
 import { UiOptions } from './schema';
 import { strings } from '@angular-devkit/core';
 import { validateInputs } from '../utils/validate-inputs';
@@ -13,7 +13,7 @@ export default async function (tree: Tree, options: UiOptions) {
     ? `${domain}/${options.directory}`
     : domain;
   const isPublishableLib = options.type === 'publishable';
-  
+
   await libraryGenerator(tree, {
     name: libName,
     tags: `domain:${domain},type:ui`,

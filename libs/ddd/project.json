@@ -1,10 +1,11 @@
 {
+  "name": "ddd",
   "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
   "sourceRoot": "libs/ddd/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/ddd",
@@ -31,7 +32,7 @@
             "input": "./libs/ddd",
             "glob": "collection.json",
             "output": "."
-          },          
+          },
           {
             "input": "./libs/ddd",
             "glob": "executors.json",
@@ -41,7 +42,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
@@ -53,8 +54,8 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ddd"],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/ddd"],
       "options": {
         "jestConfig": "libs/ddd/jest.config.ts",
         "passWithNoTests": true

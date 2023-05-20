@@ -1,4 +1,6 @@
 {
+  "name": "demo-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/demo-app/src",
   "prefix": "ddd-plugin",
@@ -68,14 +70,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": ["apps/demo-app/**/*.ts", "apps/demo-app/**/*.html"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/demo-app"],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/demo-app"],
       "options": {
         "jestConfig": "apps/demo-app/jest.config.ts",
         "passWithNoTests": true

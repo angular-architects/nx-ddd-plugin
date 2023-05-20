@@ -1,11 +1,9 @@
-import { Tree, formatFiles, installPackagesTask } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/workspace/generators';
+import { Tree, formatFiles, installPackagesTask } from '@nx/devkit';
+import { libraryGenerator } from '@nx/js';
 import { updateDepConst } from '../utils/update-dep-const';
 
 export default async function (tree: Tree, schema: any) {
-
   updateDepConst(tree, (depConst) => {
-
     const jokerIndex = depConst.findIndex(
       (entry) =>
         entry['sourceTag'] &&
@@ -56,5 +54,4 @@ export default async function (tree: Tree, schema: any) {
       onlyDependOnLibsWithTags: ['domain:shared'],
     });
   });
-
 }

@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "feature",
   "type": "object",
   "properties": {
@@ -50,14 +49,18 @@
     },
     "type": {
       "type": "string",
-      "enum": ["internal", "buildable", "publishable"],
+      "enum": [
+        "internal",
+        "buildable",
+        "publishable"
+      ],
       "description": "A type to determine if and how to build the library.",
       "default": "internal"
     },
     "importPath": {
       "type": "string",
       "description": "For publishable libs: Official package name used in import statements"
-    }, 
+    },
     "ngrx": {
       "type": "boolean",
       "default": false,
@@ -74,5 +77,8 @@
       "description": "Use standalone components?"
     }
   },
-  "required": ["name", "domain"]
+  "required": [
+    "name",
+    "domain"
+  ]
 }

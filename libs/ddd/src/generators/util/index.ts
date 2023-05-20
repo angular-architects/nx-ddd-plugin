@@ -1,5 +1,5 @@
-import { Tree, formatFiles } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/angular/generators';
+import { Tree, formatFiles } from '@nx/devkit';
+import { libraryGenerator } from '@nx/angular/generators';
 import { UtilOptions } from './schema';
 import { strings } from '@angular-devkit/core';
 import { validateInputs } from '../utils/validate-inputs';
@@ -23,8 +23,7 @@ export default async function (tree: Tree, options: UtilOptions) {
     directory: libDirectory,
     importPath: options.importPath,
     skipModule: options.standalone,
-  })
-  
-  await formatFiles(tree);
+  });
 
+  await formatFiles(tree);
 }

@@ -5,8 +5,8 @@ import {
   generateFiles,
   joinPathFragments,
   names,
-} from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/angular/generators';
+} from '@nx/devkit';
+import { libraryGenerator } from '@nx/angular/generators';
 import { FeatureOptions } from './schema';
 import { strings } from '@angular-devkit/core';
 import { addTsExport } from '../utils/add-ts-exports';
@@ -167,7 +167,7 @@ export default async function (tree: Tree, options: FeatureOptions) {
   if (options.standalone && options.ngrx) {
     updateProviders(tree, {
       domainLibFolderPath,
-      entity: options.entity
+      entity: options.entity,
     });
   }
 
@@ -177,34 +177,40 @@ export default async function (tree: Tree, options: FeatureOptions) {
   };
 }
 
-function updateProviders(tree: Tree, options: { entity: string, domainLibFolderPath: string }) {
+function updateProviders(
+  tree: Tree,
+  options: { entity: string; domainLibFolderPath: string }
+) {
   const entityNames = names(options.entity);
 
   addImportToTsModule(tree, {
     filePath: `${options.domainLibFolderPath}/providers.ts`,
     importClassName: `${entityNames.className}Effects`,
-    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.effects`
+    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.effects`,
   });
 
   addImportToTsModule(tree, {
     filePath: `${options.domainLibFolderPath}/providers.ts`,
     importClassName: `${entityNames.constantName}_FEATURE_KEY`,
-    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`
+    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`,
   });
 
   addImportToTsModule(tree, {
     filePath: `${options.domainLibFolderPath}/providers.ts`,
     importClassName: `reducer`,
-    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`
+    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`,
   });
 
   const providersToAdd = `
-    importProvidersFrom(StoreModule.forFeature(${entityNames.constantName}_FEATURE_KEY, reducer)),
-    importProvidersFrom(EffectsModule.forFeature([${entityNames.className}Effects])),
-]`;
+    provideState(${entityNames.constantName}_FEATURE_KEY, reducer),
+    provideEffects([${entityNames.className}Effects]),
+];`;
 
-  const providers = tree.read(`${options.domainLibFolderPath}/providers.ts`, 'utf-8');
-  const updated = providers.replace(']', providersToAdd);
+  const providers = tree.read(
+    `${options.domainLibFolderPath}/providers.ts`,
+    'utf-8'
+  );
+  const updated = providers.replace('];', providersToAdd);
   tree.write(`${options.domainLibFolderPath}/providers.ts`, updated);
 }
 
