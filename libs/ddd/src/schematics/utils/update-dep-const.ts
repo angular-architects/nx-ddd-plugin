@@ -12,13 +12,13 @@ export function updateDepConst(
   if (!host.exists('tslint.json')) {
     if (host.exists('.eslintrc.json')) {
       filePath = '.eslintrc.json';
-      rule = '@nrwl/nx/enforce-module-boundaries';
+      rule = '@nx/enforce-module-boundaries';
       context.logger.info(
         'Found .eslintrc.json'
       );
     } else if (host.exists('.eslintrc')) {
       filePath = '.eslintrc';
-      rule = '@nrwl/nx/enforce-module-boundaries';
+      rule = '@nx/enforce-module-boundaries';
       context.logger.info(
         'Did not find .eslintrc.json but found .eslintrc'
       );
@@ -36,7 +36,7 @@ export function updateDepConst(
   if (rules['overrides']) {
     const overrides = rules['overrides'];
     rules = overrides.find(
-      (e) => e.rules && e.rules['@nrwl/nx/enforce-module-boundaries']
+      (e) => e.rules && e.rules['@nx/enforce-module-boundaries']
     );
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "@angular-architects/ddd",
-  "version": "3.0.0",
+  "version": "3.1.1",
   "license": "MIT",
   "author": "Manfred Steyer",
   "description": "Nx plugin for structuring a monorepo with domains and layers",
@@ -9,10 +9,10 @@
     "url": "https://github.com/angular-architects/nx-ddd-plugin"
   },
   "dependencies": {
-    "@ngrx/schematics": "^13.0.0"
+    "@ngrx/schematics": "^16.0.0"
   },
   "peerDependencies": {
-    "@nx/angular": ">=14.0.0"
+    "@nx/angular": ">=16.0.0"
   },
   "main": "src/index.js",
   "schematics": "./collection.json",

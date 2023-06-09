@@ -111,7 +111,7 @@ export default async function (tree: Tree, options: FeatureOptions) {
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
     importPath: options.importPath,
-    skipModule: options.standalone,
+    standalone: options.standalone,
   });
 
   if (!options.standalone) {

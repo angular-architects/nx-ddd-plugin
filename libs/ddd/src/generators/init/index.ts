@@ -1,5 +1,4 @@
-import { Tree, formatFiles, installPackagesTask } from '@nx/devkit';
-import { libraryGenerator } from '@nx/js';
+import { Tree } from '@nx/devkit';
 import { updateDepConst } from '../utils/update-dep-const';
 
 export default async function (tree: Tree, schema: any) {

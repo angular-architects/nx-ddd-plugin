@@ -89,7 +89,7 @@ export default async function (tree: Tree, options: DomainOptions) {
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
     importPath: options.importPath,
-    skipModule: options.standalone,
+    standalone: options.standalone,
   });
 
   updateDepConst(tree, (depConst) => {
@@ -116,6 +116,7 @@ export default async function (tree: Tree, options: DomainOptions) {
       directory: options.appDirectory,
       tags: `domain:${appName},type:app`,
       style: 'scss',
+      standalone: options.standalone
     });
   }
 

@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 <% if (ngrx) { %>
 import { provideEffects } from '@ngrx/effects';
@@ -8,18 +8,13 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provide<%=className%>Domain } from '@<%=npmScope%>/<%=fileName%>/domain';
 <% } %>
 import { AppComponent } from './app/app.component';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
-}
 
 bootstrapApplication(AppComponent,{
   providers: [
     importProvidersFrom(HttpClientModule), <% if (ngrx) { %>
     provideStore(),
     provideEffects([]),
-    ... (!environment.production) ? [provideStoreDevtools()] : [], 
+    ... (isDevMode()) ? [provideStoreDevtools()] : [], 
     provide<%=className%>Domain() <% } %>
   ]
 });

@@ -22,7 +22,7 @@ export default async function (tree: Tree, options: UiOptions) {
     buildable: options.type === 'buildable',
     directory: libDirectory,
     importPath: options.importPath,
-    skipModule: options.standalone,
+    standalone: options.standalone,
   });
   await formatFiles(tree);
 }

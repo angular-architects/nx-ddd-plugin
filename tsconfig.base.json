@@ -15,7 +15,20 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@angular-architects/ddd": ["libs/ddd/src/index.ts"]
+      "@angular-architects/checkin/domain": [
+        "libs/checkin/domain/src/index.ts"
+      ],
+      "@angular-architects/checkin/feature-manage": [
+        "libs/checkin/feature-manage/src/index.ts"
+      ],
+      "@angular-architects/ddd": ["libs/ddd/src/index.ts"],
+      "@angular-architects/feature/domain": [
+        "libs/feature/domain/src/index.ts"
+      ],
+      "@angular-architects/miles/domain": ["libs/miles/domain/src/index.ts"],
+      "@angular-architects/miles/feature-manage": [
+        "libs/miles/feature-manage/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

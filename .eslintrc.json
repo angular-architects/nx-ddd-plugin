@@ -93,6 +93,18 @@
               {
                 "sourceTag": "domain:boarding",
                 "onlyDependOnLibsWithTags": ["domain:boarding", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:checkin",
+                "onlyDependOnLibsWithTags": ["domain:checkin", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:feature",
+                "onlyDependOnLibsWithTags": ["domain:feature", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:miles",
+                "onlyDependOnLibsWithTags": ["domain:miles", "domain:shared"]
               }
             ]
           }

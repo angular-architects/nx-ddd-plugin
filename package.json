@@ -23,13 +23,13 @@
     "@ngrx/store": "16.0.0",
     "@ngrx/store-devtools": "16.0.0",
     "@nrwl/schematics": "^8.12.11",
+    "@nx/angular": "16.2.1",
     "@nx/plugin": "16.2.1",
     "@phenomnomnominal/tsquery": "^5.0.1",
     "@swc/helpers": "0.5.1",
     "rxjs": "7.8.1",
     "tslib": "^2.5.2",
-    "zone.js": "~0.13.0",
-    "@nx/angular": "16.2.1"
+    "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.0.2",
@@ -48,6 +48,7 @@
     "@nx/jest": "16.2.1",
     "@nx/js": "16.2.1",
     "@nx/linter": "16.2.1",
+    "@nx/web": "16.2.1",
     "@nx/workspace": "16.2.1",
     "@schematics/angular": "16.0.2",
     "@swc-node/register": "^1.6.5",
@@ -73,4 +74,3 @@
     "typescript": "5.0.4"
   }
 }
-
