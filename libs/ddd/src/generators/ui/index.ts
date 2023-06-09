@@ -1,10 +1,13 @@
-import { Tree, formatFiles } from '@nx/devkit';
-import { libraryGenerator } from '@nx/angular/generators';
-import { UiOptions } from './schema';
 import { strings } from '@angular-devkit/core';
+import { libraryGenerator } from '@nx/angular/generators';
+import { Tree, formatFiles } from '@nx/devkit';
 import { validateInputs } from '../utils/validate-inputs';
+import { UiOptions } from './schema';
 
-export default async function (tree: Tree, options: UiOptions) {
+export const angularArchitectsDddUiGenerator = async (
+  tree: Tree,
+  options: UiOptions
+) => {
   validateInputs(options);
 
   const libName = `ui-${strings.dasherize(options.name)}`;
@@ -25,4 +28,6 @@ export default async function (tree: Tree, options: UiOptions) {
     standalone: options.standalone,
   });
   await formatFiles(tree);
-}
+};
+
+export default angularArchitectsDddUiGenerator;
