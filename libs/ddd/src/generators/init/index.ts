@@ -1,7 +1,10 @@
 import { Tree } from '@nx/devkit';
 import { updateDepConst } from '../utils/update-dep-const';
 
-export default async function (tree: Tree, schema: any) {
+export const angularArchitectsDddInitGenerator = async (
+  tree: Tree,
+  schema: any
+) => {
   updateDepConst(tree, (depConst) => {
     const jokerIndex = depConst.findIndex(
       (entry) =>
@@ -53,4 +56,6 @@ export default async function (tree: Tree, schema: any) {
       onlyDependOnLibsWithTags: ['domain:shared'],
     });
   });
-}
+};
+
+export default angularArchitectsDddInitGenerator;

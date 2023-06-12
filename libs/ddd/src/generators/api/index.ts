@@ -1,10 +1,13 @@
-import { Tree, formatFiles } from '@nx/devkit';
-import { libraryGenerator } from '@nx/angular/generators';
-import { ApiOptions } from './schema';
 import { strings } from '@angular-devkit/core';
+import { libraryGenerator } from '@nx/angular/generators';
+import { Tree, formatFiles } from '@nx/devkit';
 import { validateInputs } from '../utils/validate-inputs';
+import { ApiOptions } from './schema';
 
-export default async function (tree: Tree, options: ApiOptions) {
+export const angularArchitectsDddApiGenerator = async (
+  tree: Tree,
+  options: ApiOptions
+) => {
   validateInputs(options);
 
   const libName = options.name
@@ -33,4 +36,5 @@ export default async function (tree: Tree, options: ApiOptions) {
   );
 
   await formatFiles(tree);
-}
+};
+export default angularArchitectsDddApiGenerator;

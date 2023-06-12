@@ -1,23 +1,22 @@
+import { strings } from '@angular-devkit/core';
+import { applicationGenerator, libraryGenerator } from '@nx/angular/generators';
+import { insertNgModuleImport } from '@nx/angular/src/generators/utils';
 import {
   Tree,
-  formatFiles,
-  readWorkspaceConfiguration,
-  installPackagesTask,
-  generateFiles,
-  joinPathFragments,
-  readProjectConfiguration,
   addDependenciesToPackageJson,
+  formatFiles,
+  generateFiles,
+  installPackagesTask,
+  joinPathFragments,
   names,
+  readWorkspaceConfiguration,
 } from '@nx/devkit';
-import { libraryGenerator, applicationGenerator } from '@nx/angular/generators';
-import { strings } from '@angular-devkit/core';
-import { DomainOptions } from './schema';
-import { updateDepConst } from '../utils/update-dep-const';
 import { wrapAngularDevkitSchematic } from '@nx/devkit/ngcli-adapter';
 import { insertImport } from '@nx/js';
-import { insertNgModuleImport } from '@nx/angular/src/generators/utils';
 import * as ts from 'typescript';
 import { NGRX_VERSION } from '../utils/ngrx-version';
+import { updateDepConst } from '../utils/update-dep-const';
+import { DomainOptions } from './schema';
 
 function convertToStandaloneApp(
   tree: Tree,
@@ -49,7 +48,10 @@ function convertToStandaloneApp(
   );
 }
 
-export default async function (tree: Tree, options: DomainOptions) {
+export const angularArchitectsDddDomainGenerator = async (
+  tree: Tree,
+  options: DomainOptions
+) => {
   const appName = strings.dasherize(options.name);
   const appNameAndDirectory = options.appDirectory
     ? `${options.appDirectory}/${appName}`
@@ -116,7 +118,7 @@ export default async function (tree: Tree, options: DomainOptions) {
       directory: options.appDirectory,
       tags: `domain:${appName},type:app`,
       style: 'scss',
-      standalone: options.standalone
+      standalone: options.standalone,
     });
   }
 
@@ -168,7 +170,7 @@ export default async function (tree: Tree, options: DomainOptions) {
   return () => {
     installPackagesTask(tree);
   };
-}
+};
 
 function addNgrxDependencies(tree: Tree) {
   addDependenciesToPackageJson(
@@ -203,3 +205,4 @@ function addNgrxImportsToApp(tree: Tree, appModuleFilepath: string) {
 
   insertNgModuleImport(tree, appModuleFilepath, 'EffectsModule.forRoot()');
 }
+export default angularArchitectsDddDomainGenerator;

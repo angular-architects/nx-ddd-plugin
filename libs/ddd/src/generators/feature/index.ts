@@ -1,25 +1,28 @@
+import { strings } from '@angular-devkit/core';
+import { libraryGenerator } from '@nx/angular/generators';
 import {
   Tree,
   formatFiles,
-  installPackagesTask,
   generateFiles,
+  installPackagesTask,
   joinPathFragments,
   names,
 } from '@nx/devkit';
-import { libraryGenerator } from '@nx/angular/generators';
-import { FeatureOptions } from './schema';
-import { strings } from '@angular-devkit/core';
+import { addNgrxImportsToDomain } from '../utils/add-ngrx-imports-to-domain';
 import { addTsExport } from '../utils/add-ts-exports';
 import {
   addDeclarationWithExportToNgModule,
   addImportToNgModule,
   addImportToTsModule,
 } from '../utils/addToNgModule';
-import { addNgrxImportsToDomain } from '../utils/add-ngrx-imports-to-domain';
 import { fileContains } from '../utils/fileContains';
 import { getWorkspaceScope } from '../utils/get-workspace-scope';
+import { FeatureOptions } from './schema';
 
-export default async function (tree: Tree, options: FeatureOptions) {
+export const angularArchitectsDddFeatureGenerator = async (
+  tree: Tree,
+  options: FeatureOptions
+) => {
   options.app ??= options.domain;
   options.domainDirectory ??= '';
   options.entity ??= '';
@@ -175,7 +178,7 @@ export default async function (tree: Tree, options: FeatureOptions) {
   return () => {
     installPackagesTask(tree);
   };
-}
+};
 
 function updateProviders(
   tree: Tree,
@@ -326,3 +329,4 @@ function generate(
     );
   }
 }
+export default angularArchitectsDddFeatureGenerator;
