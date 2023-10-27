@@ -1,14 +1,16 @@
 import {
   Tree,
   formatFiles,
-  readWorkspaceConfiguration,
   installPackagesTask,
   generateFiles,
   joinPathFragments,
-  readProjectConfiguration,
   addDependenciesToPackageJson,
   names,
+  readNxJson,
 } from '@nx/devkit';
+
+import { readPackageJson } from '@nx/workspace'
+
 import { libraryGenerator, applicationGenerator } from '@nx/angular/generators';
 import { strings } from '@angular-devkit/core';
 import { DomainOptions } from './schema';
@@ -18,6 +20,8 @@ import { insertImport } from '@nx/js';
 import { insertNgModuleImport } from '@nx/angular/src/generators/utils';
 import * as ts from 'typescript';
 import { NGRX_VERSION } from '../utils/ngrx-version';
+import { getNpmScope } from '../utils/npm';
+import { deleteDefaultComponent } from '../utils/delete-default-component';
 
 function convertToStandaloneApp(
   tree: Tree,
@@ -120,13 +124,16 @@ export default async function (tree: Tree, options: DomainOptions) {
     });
   }
 
-  const wsConfig = readWorkspaceConfiguration(tree);
+  const wsConfig = readNxJson(tree);
+  const npmScope = getNpmScope(tree);
+  // const wsConfig = readWorkspaceConfiguration(tree);
+  
   if (options.addApp && options.standalone) {
     convertToStandaloneApp(tree, {
       name: options.name,
       ngrx: options.ngrx || false,
       srcRoot: appSrcFolder,
-      npmScope: wsConfig.npmScope,
+      npmScope: npmScope,
     });
   }
 
@@ -164,6 +171,13 @@ export default async function (tree: Tree, options: DomainOptions) {
     );
   }
 
+  deleteDefaultComponent(
+    tree,
+    libNameAndDirectory,
+    'domain',
+    libName
+  );
+  
   await formatFiles(tree);
   return () => {
     installPackagesTask(tree);

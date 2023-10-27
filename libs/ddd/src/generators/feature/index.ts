@@ -18,6 +18,7 @@ import {
 import { addNgrxImportsToDomain } from '../utils/add-ngrx-imports-to-domain';
 import { fileContains } from '../utils/fileContains';
 import { getWorkspaceScope } from '../utils/get-workspace-scope';
+import { deleteDefaultComponent } from '../utils/delete-default-component';
 
 export default async function (tree: Tree, options: FeatureOptions) {
   options.app ??= options.domain;
@@ -101,11 +102,13 @@ export default async function (tree: Tree, options: FeatureOptions) {
     );
   }
 
+  const dir = featureDirectory
+    ? `${domainNameAndDirectory}/${featureDirectory}`
+    : `${domainNameAndDirectory}`;
+
   await libraryGenerator(tree, {
     name: featureFolderName,
-    directory: featureDirectory
-      ? `${domainNameAndDirectory}/${featureDirectory}`
-      : `${domainNameAndDirectory}`,
+    directory: dir,
     tags: `domain:${domainName},type:feature`,
     prefix: domainNameAndDirectoryDasherized,
     publishable: options.type === 'publishable',
@@ -170,6 +173,13 @@ export default async function (tree: Tree, options: FeatureOptions) {
       entity: options.entity,
     });
   }
+
+  deleteDefaultComponent(
+    tree,
+    dir,
+    featureFolderName,
+    domainNameAndDirectoryDasherized
+  );
 
   await formatFiles(tree);
   return () => {

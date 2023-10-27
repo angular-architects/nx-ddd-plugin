@@ -1,7 +1,7 @@
 import { insertNgModuleProperty } from '@nx/angular/src/generators/utils';
 import { Tree } from '@nx/devkit';
-import { classify, dasherize } from '@nx/workspace/src/utils/strings';
-import { addImportToNgModule, addImportToTsModule } from './addToNgModule';
+import { classify, dasherize } from '@nx/devkit/src/utils/string-utils';
+import { addImportToTsModule } from './addToNgModule';
 import { fileContains } from './fileContains';
 
 /**

@@ -1,7 +1,6 @@
-import { Tree, readWorkspaceConfiguration } from '@nx/devkit';
+import { Tree } from '@nx/devkit';
+import { getNpmScope } from './npm';
 
 export function getWorkspaceScope(tree: Tree) {
-  const wsConfig = readWorkspaceConfiguration(tree);
-  const workspaceName = `@${wsConfig.npmScope}`;
-  return workspaceName;
+  return getNpmScope(tree);
 }

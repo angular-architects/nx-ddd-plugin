@@ -3,6 +3,7 @@ import { libraryGenerator } from '@nx/angular/generators';
 import { UtilOptions } from './schema';
 import { strings } from '@angular-devkit/core';
 import { validateInputs } from '../utils/validate-inputs';
+import { deleteDefaultComponent } from '../utils/delete-default-component';
 
 export default async function (tree: Tree, options: UtilOptions) {
   validateInputs(options);
@@ -24,6 +25,13 @@ export default async function (tree: Tree, options: UtilOptions) {
     importPath: options.importPath,
     standalone: options.standalone,
   });
+
+  deleteDefaultComponent(
+    tree,
+    libDirectory,
+    libName,
+    options.name
+  );
 
   await formatFiles(tree);
 }
