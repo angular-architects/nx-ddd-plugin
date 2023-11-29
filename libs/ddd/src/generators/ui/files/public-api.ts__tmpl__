@@ -1,0 +1,5 @@
+// directories
+export * from './testing/public-api';
+
+// files
+export * from './<%=fileName%>.component';

@@ -20,6 +20,16 @@
       "type": "string",
       "description": "Domain name, if the library belongs to a certain domain."
     },
+    "prefix": {
+      "type": "boolean",
+      "description": "Apply the \"ui-\" prefix?",
+      "default": true
+    },
+    "additionalPrefix": {
+      "type": "string",
+      "description": "Additional custom prefix for selectors and class names",
+      "default": "as"
+    },
     "directory": {
       "type": "string",
       "description": "Subpath of the library beneath the domain or shared folder."
@@ -40,8 +50,30 @@
     },
     "standalone": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "description": "Use standalone components?"
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "Create a flat library structure?"
+    },
+    "simpleName": {
+      "type": "boolean",
+      "default": true,
+      "description": "Don't include the directory in the name of the module or standalone component entry of the library."
+    },
+    "style": {
+      "type": "string",
+      "enum": [
+        "css",
+        "scss",
+        "sass",
+        "less",
+        "none"
+      ],
+      "description": "The file extension or preprocessor to use for style files",
+      "default": "scss"
     }
   },
   "required": [

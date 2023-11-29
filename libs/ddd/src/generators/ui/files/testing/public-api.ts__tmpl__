@@ -1,0 +1,1 @@
+export * from './<%=fileName%>.component.harness';
