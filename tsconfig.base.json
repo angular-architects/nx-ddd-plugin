@@ -28,7 +28,8 @@
       "@angular-architects/miles/domain": ["libs/miles/domain/src/index.ts"],
       "@angular-architects/miles/feature-manage": [
         "libs/miles/feature-manage/src/index.ts"
-      ]
+      ],
+      "miles/ui/test": ["libs/miles/ui/test/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

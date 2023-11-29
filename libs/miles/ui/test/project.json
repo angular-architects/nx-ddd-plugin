@@ -1,0 +1,44 @@
+{
+  "name": "miles-ui-test",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/miles/ui/test/src",
+  "prefix": "as",
+  "tags": ["domain:miles", "type:ui"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/miles/ui/test/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx eslint miles-ui-test", "nx stylelint miles-ui-test"]
+      }
+    },
+    "eslint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["undefined/**/*.ts", "undefined/**/*.html"]
+      }
+    },
+    "stylelint": {
+      "executor": "@nx/linter:stylelint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "formatter": "stylelint-codeframe-formatter",
+        "lintFilePatterns": ["undefined/**/*.css", "undefined/**/*.scss"]
+      }
+    }
+  }
+}
