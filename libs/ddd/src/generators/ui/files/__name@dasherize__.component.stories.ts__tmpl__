@@ -1,0 +1,40 @@
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { <%=className%>Component } from './<%=fileName%>.component';
+
+const Template: Story<<%=className%>Component> = (args: <%=className%>Component) => ({
+    props: args,
+    template: `<<%=selector%>></<%=selector%>>`
+});
+
+export const <%=classify(`${domain}${name.charAt(0).toUpperCase() + name.slice(1)}`)%> = Template.bind({});
+
+export default {
+    title: '<%=classify(domain)%> <%=classify(name)%>',
+    decorators: [
+        moduleMetadata({
+            imports: [
+                <%=className%>Component
+            ]
+        })
+    ],
+    PARAMETERS: {
+        docs: {
+            description: {
+                component: `The  <%=`${classify(domain)} ${classify(name)}` %> component is used to display a ‘Welcome’ message and the first name of the user.
+
+                ## Import
+                \`<%=className%>Component\` is a standalone component and can be imported directly from:
+                \`import { <%=className%>Component } from '<%=workspaceName%>/<%=dasherize(domain)%><%- (typeof directory !== 'undefined') ? '/' + directory : '' %>/<%=name%>';\`
+
+                ## Usage
+                The header component can then be used without further configuration in the template:
+
+                \`\`\`html
+                <<%=selector%>></<%=selector%>>
+                \`\`\`
+                `
+            }
+        },
+        layout: 'padded'
+    }
+} as Meta<<%=className%>Component>;

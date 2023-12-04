@@ -1,0 +1,40 @@
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { <%=className%>Component } from '../<%=fileName%>.component';
+
+import { <%=className%>Harness } from './<%=fileName%>.component.harness';
+
+@Component({
+    template: '<<%=selector%>></<%=selector%>>'
+})
+class TestHostComponent {
+}
+
+describe('<%=className%>Harness', () => {
+    let fixture: ComponentFixture<<%=className%>Component>;
+    let loader: HarnessLoader;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [ TestHostComponent ],
+            imports: [<%=className%>Component],
+        });
+
+        fixture = TestBed.createComponent(<%=className%>Component);
+        loader = TestbedHarnessEnvironment.loader(fixture);
+        fixture.detectChanges();
+    });
+
+    it('should create', async () => {
+            expect(await loader.getHarnessOrNull(<%=className%>Harness)).toBeInstanceOf(<%=className%>Harness);
+        });
+
+    it('should return the correct title', async () => {
+        const harness = await loader.getHarness(<%=className%>Harness);
+
+        expect(await harness.getTitle()).toEqual('John');
+    });
+});

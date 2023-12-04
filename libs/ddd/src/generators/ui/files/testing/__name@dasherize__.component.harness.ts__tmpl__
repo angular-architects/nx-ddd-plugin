@@ -1,0 +1,19 @@
+import { ContentContainerComponentHarness } from '@angular/cdk/testing';
+
+export class <%=className%>Harness extends ContentContainerComponentHarness {
+
+    public static readonly hostSelector = '<%=selector%>';
+
+    /**
+     * The title of the <%=classify(name)%>
+     */
+    private readonly _title = this.locatorFor('h1')();
+
+    /**
+     * Gets the title of the <%=classify(name)%>
+     */
+    public async getTitle(): Promise<string | null> {
+        return await (await this._title).text() ?? null;
+    }
+
+}
