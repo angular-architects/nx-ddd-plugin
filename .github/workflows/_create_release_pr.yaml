@@ -1,0 +1,82 @@
+name: Create a Github Release pull request
+
+on:
+  workflow_call:
+    inputs:
+      release-type:
+        required: true
+        type: string
+        description: "What type of project is this a release for?"
+      include-v-in-tag:
+        required: false
+        type: boolean
+        default: true
+        description: "Include 'v' in tag versions."
+      default-branch:
+        required: false
+        type: string
+        default: "main"
+        description: "Branch to open pull release PR against (detected by default)."
+      prerelease:
+        required: false
+        type: boolean
+        default: false
+        description: "If set, create releases that are pre-major or pre-release version marked as pre-release on Github."
+      extra-files:
+        required: false
+        type: string
+        default: ""
+        description: "A whitespace separated list of files to include in the release PR."
+      package-name:
+        required: false
+        type: string
+        default: ""
+        description: "The name of the package to release."
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    if: ${{ (!contains(github.actor, '[bot]')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔑 Fetch token from github app
+        uses: tibdex/github-app-token@v1
+        id: generate_token
+        with:
+          app_id: ${{ vars.GH_APP_ID }}
+          installation_id: ${{ vars.GH_APP_INSTALLATION_ID }}
+          private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      - name: Create Release PR
+        # https://github.com/google-github-actions/release-please-action
+        uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+          release-type: ${{ inputs.release-type }}
+          include-v-in-tag: ${{ inputs.include-v-in-tag }}
+          default-branch: ${{ inputs.default-branch }}
+          prerelease: ${{ inputs.prerelease }}
+          package-name: ${{ inputs.package-name }}
+          extra-files: |
+            ${{ inputs.extra-files }}
+          changelog-types: |
+            [
+              {"type":"feat","section":"Features"},
+              {"type":"feature","section":"Features"},
+              {"type":"fix","section":"Bug Fixes"},
+              {"type":"bugfix","section":"Bug Fixes"},
+              {"type":"chore","section":"Miscellaneous"},
+              {"type":"change","section":"Miscellaneous"},
+              {"type":"docs","section":"Docs"},
+              {"type":"doc","section":"Docs"},
+              {"type":"perf","section":"Miscellaneous"},
+              {"type":"refactor","section":"Miscellaneous"},
+              {"type":"revert","section":"Miscellaneous"},
+              {"type":"style","section":"Miscellaneous"},
+              {"type":"test","section":"Miscellaneous"},
+              {"type":"deps","section":"Dependencies"},
+              {"type":"build","section":"Build System"}
+            ]

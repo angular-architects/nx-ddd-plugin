@@ -1,0 +1,66 @@
+name: Commit Lint
+description: 'Linting commit messages.'
+
+inputs:
+  failOnErrors:
+    required: false
+    default: "true"
+    description: "Whether you want to fail on errors or not. Still outputs the results, just forces the action to pass even if errors are detected."
+  failOnWarnings:
+    required: false
+    default: "true"
+    description: "Whether you want to fail on warnings or not."
+  createPrComment:
+    required: false
+    default: "true"
+    description: "Whether to create a PR comment or not."
+
+runs:
+  using: composite
+  steps:
+    - name: Commitlint
+      uses: wagoid/commitlint-github-action@v5
+      id: lint
+      with:
+        configFile: './commitlint.config.js'
+        failOnErrors: ${{ inputs.failOnErrors  == 'true' }}  # cast string to boolean
+        failOnWarnings: ${{ inputs.failOnWarnings  == 'true' }}  # cast string to boolean
+        helpURL: https://adup-tech.atlassian.net/wiki/spaces/UA/pages/3509190661/Git+Commit+Message+Convention
+        commitDepth: 50
+    - name: Find Comment
+      uses: peter-evans/find-comment@v2
+      if: ${{ inputs.createPrComment == 'true' && always() }}
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: Commit linter errors/warnings
+    - name: Create or update comment
+      uses: peter-evans/create-or-update-comment@v3
+      if: ${{ inputs.createPrComment == 'true' && failure() }}
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          @${{ github.event.pull_request.user.login }}
+          ### Commit linter errors/warnings:
+
+          commit message: *"${{ fromJSON(steps.lint.outputs.results)[0].message }}"*
+
+          :warning:
+          > ${{ join(fromJSON(steps.lint.outputs.results)[0].errors, '<br>') }}
+
+          > ${{ join(fromJSON(steps.lint.outputs.results)[0].warnings, '<br>') }}
+
+          Please fix it!
+          see: [Commit message conventions](https://adup-tech.atlassian.net/wiki/spaces/UA/pages/3509190661/Git+Commit+Message+Convention)
+        edit-mode: replace
+    - name: Update comment
+      if: ${{ inputs.createPrComment == 'true' && steps.fc.outputs.comment-id != '' && steps.lint.outcome == 'success' }}
+      uses: peter-evans/create-or-update-comment@v3
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        body: |
+
+          ### Fixed!
+        reactions: +1

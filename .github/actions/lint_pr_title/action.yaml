@@ -1,0 +1,62 @@
+name: PR name Lint
+description: 'Linting the PR name.'
+
+inputs:
+  repoToken:
+    required: true
+    description: ""
+  createPrComment:
+    required: false
+    default: "true"
+    description: "Whether to create a PR comment or not."
+
+runs:
+  using: composite
+  steps:
+    - name: PR title lint
+      uses: morrisoncole/pr-lint-action@v1.7.0
+      if: ${{ always() && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'edited') }}
+      id: lint
+      with:
+        title-regex: "(?:(DRAFT|WIP)\\s)?(feat|fix|build|chore|ci|docs|perf|refactor|revert|style|test|deps){1}(\\([-a-zA-Z]+\\))?\\!?:\\s([A-Z]+-[0-9]+)?(?::\\s)?(.{4,})"
+        on-failed-regex-fail-action: true
+        on-failed-regex-request-changes: false
+        on-failed-regex-create-review: false
+        on-failed-regex-comment: "The PR title does not match this template: '<type>([optional scope])[!]: [optional ticket#] <description>'.<p>Regex: `%regex%`</p>"
+        on-succeeded-regex-dismiss-review-comment: "All issues with the PR title have been resolved."
+        repo-token: "${{ inputs.repoToken }}"
+    - name: Find Comment
+      uses: peter-evans/find-comment@v2
+      if: ${{ inputs.createPrComment == 'true' && always() }}
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: PR title linter errors
+    - name: Create or update comment
+      uses: peter-evans/create-or-update-comment@v3
+      if: ${{ inputs.createPrComment == 'true' && failure() }}
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          @${{ github.event.pull_request.user.login }}
+          ### PR title linter errors:
+
+          The pull request title does not follow the conventions.
+
+          PR title: *"${{ github.event.pull_request.title }}"*
+          Regex: `(?:(DRAFT|WIP)\\s)?(feat|fix|build|chore|ci|docs|perf|refactor|revert|style|test|deps){1}(\\([-a-zA-Z]+\\))?\\!?:\\s([A-Z]+-[0-9]+)?(?::\\s)?(.{4,})`
+
+          Please fix it!
+          see: [PR title conventions](https://adup-tech.atlassian.net/wiki/spaces/UA/pages/3540811779/Pull+Requests)
+        edit-mode: replace
+    - name: Update comment
+      if: ${{ inputs.createPrComment == 'true' && steps.fc.outputs.comment-id != '' && steps.lint.outcome == 'success' }}
+      uses: peter-evans/create-or-update-comment@v3
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        body: |
+
+          ### Fixed!
+        reactions: +1

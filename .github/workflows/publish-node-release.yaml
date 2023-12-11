@@ -1,0 +1,43 @@
+name: Publish package to GitHub Packages
+on:
+  release:
+    types: [published]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: 🔑 Fetch token from github app
+        uses: tibdex/github-app-token@v1
+        id: generate_token
+        with:
+          app_id: ${{ vars.GH_READ_APP_ID }}
+          installation_id: ${{ vars.GH_READ_APP_INSTALLATION_ID }}
+          private_key: ${{ secrets.GH_READ_APP_PRIVATE_KEY }}
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+          submodules: recursive
+      - name: source build.env file
+        id: build_env
+        uses: falti/dotenv-action@v1.0.4
+        with:
+          path: .github/build.env
+          keys-case: bypass
+      # Setup .npmrc file to publish to GitHub Packages
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.build_env.outputs.BUILD_NODE_VERSION || vars.BUILD_NODE_VERSION || "20.x" }}
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@adup-tech'
+      - name: Setup git config
+        shell: bash
+        run: |
+          git config --global url."https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/".insteadOf "git@github.com"
+      - run: npm ci
+      - run: npm run compile
+      - run: npm publish --tag=latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

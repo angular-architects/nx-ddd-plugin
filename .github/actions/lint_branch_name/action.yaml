@@ -1,0 +1,57 @@
+name: Branch name Lint
+description: 'Lint the Branch name.'
+
+inputs:
+  createPrComment:
+    required: false
+    default: "true"
+    description: "Whether to create a PR comment or not."
+
+runs:
+  using: composite
+  steps:
+    - name: Branch name lint
+      uses: lekterable/branchlint-action@2.0.0
+      id: lint
+      with:
+        allowed: |
+          /(feat|feature|fix|chore|refactor)/[A-Z]{3}-\d+/
+          /(feat|feature|fix|chore|dependabot|refactor)/.{3,}/
+          /release/[v]?\d+.\d+.\d+/
+          /release-please.+/
+        errorMessage: 'branch name does not follow the conventions'
+        startAfter: '2023-03-01 00:00:00'
+    - name: Find Comment
+      uses: peter-evans/find-comment@v2
+      if: ${{ inputs.createPrComment == 'true' && always() }}
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: Branch name linter error
+    - name: Create or update comment
+      uses: peter-evans/create-or-update-comment@v3
+      if: ${{ failure() && inputs.createPrComment == 'true' && steps.lint.outcome == 'failure' }}
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          @${{ github.event.pull_request.user.login }}
+          ### Branch name linter error:
+
+          Branch name does not follow the conventions.
+
+          branch name: *"${GITHUB_REF##*/}"*
+
+          Please fix it!
+          see: [Branch name conventions](https://adup-tech.atlassian.net/wiki/spaces/UA/pages/3518234639/Branches+and+Branch+Names)
+        edit-mode: replace
+    - name: Update comment
+      if: ${{ inputs.createPrComment == 'true' && steps.fc.outputs.comment-id != '' && steps.lint.outcome == 'success' }}
+      uses: peter-evans/create-or-update-comment@v3
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        body: |
+
+          ### Fixed!
+        reactions: +1

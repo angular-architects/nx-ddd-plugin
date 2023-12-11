@@ -1,0 +1,42 @@
+name: Pull request checks
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+    # By default, a workflow only runs when a pull_request's activity type is opened, synchronize, or reopened. We
+    # explicity override here so that PR titles are re-linted when the PR text content is edited.
+    #
+    # Possible values: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  pr-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Branch name lint
+        uses: adup-tech/nx-ddd-plugin/.github/actions/lint_branch_name@main
+        with:
+          createPrComment: "true"
+
+      - name: PR title lint
+        uses: adup-tech/nx-ddd-plugin/.github/actions/lint_pr_title@main
+        if: ${{ always() && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'edited') }}
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          createPrComment: "true"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        if: always()
+        with:
+          fetch-depth: 50
+      - name: Commit lint
+        uses: adup-tech/nx-ddd-plugin/.github/actions/lint_commit@main
+        if: always()
+        with:
+          failOnErrors: "true"
+          failOnWarnings: "true"
+          createPrComment: "true"

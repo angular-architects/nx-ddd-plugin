@@ -1,0 +1,19 @@
+name: JIRA Description
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  add-jira-description:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cakeinpanic/jira-description-action@v0.4.0
+        name: jira-description-action
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          jira-token: ${{ secrets.JIRA_TOKEN }}
+          jira-base-url: "https://adup-tech.atlassian.net"
+          use: "both"  # search for issue number in title and body
+          custom-issue-number-regexp: '(AUS|AF|UAS|REGREG|IS|SBTF|SBT)-\d+'
+          skip-branches: '^(release|main|master|release\/v\d+)$'
