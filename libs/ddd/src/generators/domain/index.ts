@@ -9,8 +9,6 @@ import {
   readNxJson,
 } from '@nx/devkit';
 
-import { readPackageJson } from '@nx/workspace'
-
 import { libraryGenerator, applicationGenerator } from '@nx/angular/generators';
 import { strings } from '@angular-devkit/core';
 import { DomainOptions } from './schema';
@@ -86,8 +84,8 @@ export default async function (tree: Tree, options: DomainOptions) {
   // }
 
   await libraryGenerator(tree, {
-    name: 'domain',
-    directory: libNameAndDirectory,
+    name: `libs/${libNameAndDirectory}/domain`,
+    // directory: libNameAndDirectory,
     tags: `domain:${libName},type:domain-logic`,
     prefix: libName,
     publishable: options.type === 'publishable',
@@ -116,8 +114,8 @@ export default async function (tree: Tree, options: DomainOptions) {
 
   if (options.addApp) {
     await applicationGenerator(tree, {
-      name: appName,
-      directory: options.appDirectory,
+      name: options.appDirectory ? `apps/${options.appDirectory}/${appName}` : `apps/${appName}`,
+      // directory: options.appDirectory,
       tags: `domain:${appName},type:app`,
       style: 'scss',
       standalone: options.standalone
@@ -167,15 +165,17 @@ export default async function (tree: Tree, options: DomainOptions) {
         ...options,
         ...names(options.name),
         tmpl: '',
-      }
+      },
     );
+
   }
 
   deleteDefaultComponent(
     tree,
     libNameAndDirectory,
     'domain',
-    libName
+    libName,
+    !options.ngrx
   );
   
   await formatFiles(tree);

@@ -19,12 +19,12 @@ export default async function (tree: Tree, options: ApiOptions) {
   const isPublishableLib = options.type === 'publishable';
 
   await libraryGenerator(tree, {
-    name: libName,
+    name: `libs/${libDirectory}/${libName}`,
     tags: `domain:${domain},domain:${domain}/${libName},type:api`,
     prefix: options.name,
     publishable: isPublishableLib,
     buildable: options.type === 'buildable',
-    directory: libDirectory,
+    // directory: libDirectory,
     importPath: options.importPath,
     standalone: options.standalone,
   });

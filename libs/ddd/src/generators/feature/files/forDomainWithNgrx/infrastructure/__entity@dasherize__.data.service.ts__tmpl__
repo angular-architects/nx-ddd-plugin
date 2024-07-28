@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {<%=classify(entity)%>} from '../entities/<%=dasherize(entity)%>';
@@ -6,8 +6,7 @@ import {<%=classify(entity)%>} from '../entities/<%=dasherize(entity)%>';
 @Injectable({ providedIn: 'root' })
 export class <%=classify(entity)%>DataService {
 
-    constructor(private http: HttpClient) {
-    }
+    private http = inject(HttpClient);
 
     load(): Observable<<%=classify(entity)%>[]> {
 

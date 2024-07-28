@@ -2,6 +2,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 
 export function provide<%=className%>Domain() {
+    // prettier-ignore
     return [
     ];
 }

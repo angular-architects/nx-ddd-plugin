@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; <% if (standalone) { %>
+import { Component, inject, OnInit } from '@angular/core'; <% if (standalone) { %>
 import { CommonModule } from '@angular/common';
 <% } %>import { <%=classify(name)%>Facade } from '<%=workspaceName%>/<%=dasherize(domain)%><%- domainDirectory ? '/' + domainDirectory : '' %>/domain';
 
@@ -10,13 +10,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./<%=dasherize(name)%>.component.scss']
 })
 export class <%=classify(name)%>Component implements OnInit {
-    
+
+    private <%=camelize(name)%>Facade = inject(<%=classify(name)%>Facade);
 <% if (entity) { %>    
     <%=camelize(entity)%>List$ = this.<%=camelize(name)%>Facade.<%=camelize(entity)%>List$;
 <% } %>
-
-    constructor(private <%=camelize(name)%>Facade: <%=classify(name)%>Facade) {
-    }
 
 <% if (entity) { %>    
     ngOnInit() {

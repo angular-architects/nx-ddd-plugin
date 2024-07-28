@@ -1,1 +1,1 @@
-export const NGRX_VERSION = '^16.0.0';
+export const NGRX_VERSION = '^18.0.0';

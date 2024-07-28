@@ -107,8 +107,8 @@ export default async function (tree: Tree, options: FeatureOptions) {
     : `${domainNameAndDirectory}`;
 
   await libraryGenerator(tree, {
-    name: featureFolderName,
-    directory: dir,
+    name: `libs/${dir}/${featureFolderName}`,
+    // directory: dir,
     tags: `domain:${domainName},type:feature`,
     prefix: domainNameAndDirectoryDasherized,
     publishable: options.type === 'publishable',
@@ -201,18 +201,12 @@ function updateProviders(
 
   addImportToTsModule(tree, {
     filePath: `${options.domainLibFolderPath}/providers.ts`,
-    importClassName: `${entityNames.constantName}_FEATURE_KEY`,
-    importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`,
-  });
-
-  addImportToTsModule(tree, {
-    filePath: `${options.domainLibFolderPath}/providers.ts`,
-    importClassName: `reducer`,
+    importClassName: `${entityNames.propertyName}Feature`,
     importPath: `./+state/${entityNames.fileName}/${entityNames.fileName}.reducer`,
   });
 
   const providersToAdd = `
-    provideState(${entityNames.constantName}_FEATURE_KEY, reducer),
+    provideState(${entityNames.propertyName}Feature),
     provideEffects([${entityNames.className}Effects]),
 ];`;
 
