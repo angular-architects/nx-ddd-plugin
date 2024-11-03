@@ -1,6 +1,6 @@
 {
   "name": "@angular-architects/ddd",
-  "version": "17.0.4",
+  "version": "17.0.5",
   "license": "MIT",
   "author": "Manfred Steyer",
   "description": "Nx plugin for structuring a monorepo with domains and layers",
