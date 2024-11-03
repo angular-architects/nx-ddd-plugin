@@ -6,7 +6,8 @@
     "ng": "nx",
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "build-pack": "nx b ddd && npm pack dist/libs/ddd"
   },
   "private": true,
   "dependencies": {

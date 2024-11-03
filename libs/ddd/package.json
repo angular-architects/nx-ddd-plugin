@@ -8,11 +8,18 @@
     "type": "github",
     "url": "https://github.com/angular-architects/nx-ddd-plugin"
   },
+  "engines": {
+    "node": ">= 18",
+    "npm": ">= 9",
+    "yarn": "^1.22.17"
+  },
   "dependencies": {
-    "@ngrx/schematics": "^18.0.0"
+    "@ngrx/schematics": "^17.0.0",
+    "tslib": "^2.3.1"
   },
   "peerDependencies": {
-    "@nx/angular": "^19.0.0"
+    "@angular/core": "^17.0.0",
+    "@nx/angular": ">=18.0.0 <19.8.0"
   },
   "main": "src/index.js",
   "schematics": "./collection.json",
