@@ -14,9 +14,9 @@
     "yarn": "^1.22.17"
   },
   "peerDependencies": {
-    "@angular/core": "^17.0.0",
-    "@ngrx/schematics": "^17.0.0",
-    "@nx/angular": ">=17.1.0 <20.0.0"
+    "@angular/core": "^18.0.0",
+    "@ngrx/schematics": "^18.0.0",
+    "@nx/angular": ">=19.1.0 <20.0.0"
   },
   "main": "src/index.js",
   "schematics": "./collection.json",
