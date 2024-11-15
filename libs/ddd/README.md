@@ -26,31 +26,37 @@ The generated access restrictions prevent unwanted access between libraries resp
 Add this plugin to a Nx workspace:
 
 ```
-npm i @angular-architects/ddd
-ng g @angular-architects/ddd:init
+npm i -D @angular-architects/ddd
+nx g @angular-architects/ddd:init
 ```
 
-Instead, you can also use ng add, however, Nx currently emits a warning when using ng add:
+Instead of `init` You can also use `ng-add`:
 
 ```
-nx add @angular-architects/ddd
+npx nx g @angular-architects/ddd:ng-add
 ```
 
 Add domains and features manually:
 
 ```
-ng g @angular-architects/ddd:domain booking --addApp
-ng g @angular-architects/ddd:domain boarding --addApp
-ng g @angular-architects/ddd:feature search --domain booking --entity flight
-ng g @angular-architects/ddd:feature cancel --domain booking
-ng g @angular-architects/ddd:feature manage --domain boarding
+nx g @angular-architects/ddd:domain booking --addApp
+nx g @angular-architects/ddd:domain boarding --addApp
+nx g @angular-architects/ddd:feature search --domain booking --entity flight
+nx g @angular-architects/ddd:feature cancel --domain booking
+nx g @angular-architects/ddd:feature manage --domain boarding
+```
+
+To get a list of generators, you can use:
+
+```
+nx list @angular-architects/ddd
 ```
 
 For NGRX support, just add the `--ngrx` switch:
 
 ```
-ng g @angular-architects/ddd:domain luggage --addApp --ngrx
-ng g @angular-architects/ddd:feature checkin --domain luggage --entity luggage-list --ngrx
+nx g @angular-architects/ddd:domain luggage --addApp --ngrx
+nx g @angular-architects/ddd:feature checkin --domain luggage --entity luggage-list --ngrx
 [...]
 ```
 
@@ -59,7 +65,7 @@ This example assumes that you have an app `flight-app` in place.
 These schematics also wire up the individual libs. To see the result, create a dependency graph:
 
 ```
-npm run dep-graph
+nx graph
 ```
 
 ![dependency graph](https://github.com/angular-architects/nx-ddd-plugin/blob/master/libs/ddd/assets/ddd.png?raw=true)
@@ -79,9 +85,9 @@ You don't need any TypeScript or Angular imports. The plugin already took care a
 All generators have a switch ``--standalone`` to support Standalone Components: 
 
 ```
-ng g @angular-architects/ddd:domain booking --addApp --standalone
+nx g @angular-architects/ddd:domain booking --addApp --standalone
 
-ng g @angular-architects/ddd:feature search --domain booking --entity flight --standalone
+nx g @angular-architects/ddd:feature search --domain booking --entity flight --standalone
 ```
 
 Don't mix Standalone Components and traditional ones within the same domain.
