@@ -54,40 +54,39 @@ function convertToStandaloneApp(
 export default async function (tree: Tree, options: DomainOptions) {
   const appName = strings.dasherize(options.name);
   const appNameAndDirectory = options.appDirectory
-    ? `${options.appDirectory}/${appName}`
-    : appName;
-  const appNameAndDirectoryDasherized = strings
-    .dasherize(appNameAndDirectory)
+    ? `apps/${options.appDirectory}/${appName}`
+    : `apps/${appName}`;
+  const appNameSlug = strings
+    .dasherize(appName)
     .split('/')
     .join('-');
-  const appFolderPath = `apps/${appNameAndDirectory}`;
+  const appFolderPath = `${appNameAndDirectory}`;
   const appSrcFolder = `${appFolderPath}/src`;
   const appModuleFolder = `${appFolderPath}/src/app`;
   const appModuleFilepath = `${appModuleFolder}/app.module.ts`;
 
-  const libName = strings.dasherize(options.name);
-  const libNameAndDirectory = options.directory
-    ? `${options.directory}/${libName}`
-    : libName;
-  const libNameAndDirectoryDasherized = strings
-    .dasherize(libNameAndDirectory)
-    .split('/')
-    .join('-');
-  const libFolderPath = `libs/${libNameAndDirectory}`;
-  const libLibFolder = `${libFolderPath}/domain/src/lib`;
-  const libSrcFolder = `${libFolderPath}/domain/src`;
+  // additions for Nx20 by LXT
+  const domainName = strings.dasherize(options.name);
+  const domainNameAndDirectory = options.directory
+    ? `${options.directory}/${domainName}`
+    : domainName;
 
-  // if (options.ngrx && !options.addApp) {
-  //   throw new Error(
-  //     `The 'ngrx' option may only be used when the 'addApp' option is used.`
-  //   );
-  // }
+  const finalName = domainName + '-domain';
+  const finalDirectory = `libs/${domainNameAndDirectory}/domain`;
+  const libSrcFolder = `${finalDirectory}/src`;
+  const libLibFolder = `${libSrcFolder}/lib`;
+
+  /*if (options.ngrx && !options.addApp) {
+    throw new Error(
+      `The 'ngrx' option may only be used when the 'addApp' option is used.`
+    );
+  }*/
 
   await libraryGenerator(tree, {
-    name: `libs/${libNameAndDirectory}/domain`,
-    // directory: libNameAndDirectory,
-    tags: `domain:${libName},type:domain-logic`,
-    prefix: libName,
+    name: finalName,
+    prefix: finalName,
+    directory: finalDirectory,
+    tags: `domain:${domainName},type:domain-logic`,
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
     importPath: options.importPath,
@@ -96,8 +95,8 @@ export default async function (tree: Tree, options: DomainOptions) {
 
   updateDepConst(tree, (depConst) => {
     depConst.push({
-      sourceTag: `domain:${libName}`,
-      onlyDependOnLibsWithTags: [`domain:${libName}`, 'domain:shared'],
+      sourceTag: `domain:${domainName}`,
+      onlyDependOnLibsWithTags: [`domain:${domainName}`, 'domain:shared'],
     });
   });
 
@@ -114,8 +113,8 @@ export default async function (tree: Tree, options: DomainOptions) {
 
   if (options.addApp) {
     await applicationGenerator(tree, {
-      name: options.appDirectory ? `apps/${options.appDirectory}/${appName}` : `apps/${appName}`,
-      // directory: options.appDirectory,
+      name: appName,
+      directory: appNameAndDirectory,
       tags: `domain:${appName},type:app`,
       style: 'scss',
       standalone: options.standalone
@@ -125,7 +124,7 @@ export default async function (tree: Tree, options: DomainOptions) {
   const wsConfig = readNxJson(tree);
   const npmScope = getNpmScope(tree);
   // const wsConfig = readWorkspaceConfiguration(tree);
-  
+
   if (options.addApp && options.standalone) {
     convertToStandaloneApp(tree, {
       name: options.name,
@@ -146,7 +145,7 @@ export default async function (tree: Tree, options: DomainOptions) {
     );
 
     await generateStore(tree, {
-      project: appNameAndDirectoryDasherized,
+      project: appNameSlug,
       root: true,
       minimal: true,
       module: 'app.module.ts',
@@ -170,14 +169,14 @@ export default async function (tree: Tree, options: DomainOptions) {
 
   }
 
+  // fixed by LXT
   deleteDefaultComponent(
     tree,
-    libNameAndDirectory,
-    'domain',
-    libName,
+    finalDirectory,
+    finalName,
     !options.ngrx
   );
-  
+
   await formatFiles(tree);
   return () => {
     installPackagesTask(tree);

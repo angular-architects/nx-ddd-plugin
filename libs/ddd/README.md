@@ -86,6 +86,8 @@ ng g @angular-architects/ddd:feature search --domain booking --entity flight --s
 
 Don't mix Standalone Components and traditional ones within the same domain.
 
+**Since version 19**, standalone **defaults to true**.
+
 ## Generated Structure
 
 The included schematics generate a folder for each domain. This folder contains feature libs as well as a library with the domain logic:

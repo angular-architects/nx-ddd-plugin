@@ -56,9 +56,9 @@ export default async function (tree: Tree, options: FeatureOptions) {
   const appDirectoryAndName = appDirectory
     ? `${appDirectory}/${appName}`
     : appName;
-  const appDirectoryAndNameDasherized = `${appDirectoryAndName}`
+  /*const appDirectoryAndNameDasherized = `${appDirectoryAndName}`
     .split('/')
-    .join('-');
+    .join('-');*/
   const domainNameAndDirectoryPath = `libs/${domainNameAndDirectory}`;
   const domainFolderPath = `${domainNameAndDirectoryPath}/domain`;
   const domainLibFolderPath = `${domainFolderPath}/src/lib`;
@@ -80,7 +80,7 @@ export default async function (tree: Tree, options: FeatureOptions) {
   const featureModuleClassName = strings.classify(
     `${domainNameAndDirectoryDasherized}-${featureFolderName}Module`
   );
-  const featureImportPath = `${workspaceName}/${domainNameAndDirectory}/${featureFolderName}`;
+  const featureImportPath = `${workspaceName}/${featureFolderName}`; // /${domainNameAndDirectory}/ removed by LXT
   const featureIndexPath = `${domainNameAndDirectoryPath}/${featureDirectoryAndFolderName}/src/index.ts`;
   const entityName = options.entity ? strings.dasherize(options.entity) : '';
   const featureComponentImportPath = `./${featureDirectoryAndNameDasherized}.component`;
@@ -102,15 +102,17 @@ export default async function (tree: Tree, options: FeatureOptions) {
     );
   }
 
-  const dir = featureDirectory
-    ? `${domainNameAndDirectory}/${featureDirectory}`
-    : `${domainNameAndDirectory}`;
+  // additions for Nx20 by LXT
+  const finalName = domainName + '-' + featureFolderName;
+  const finalDirectory = featureDirectory
+    ? `libs/${domainNameAndDirectory}/${featureDirectory}`
+    : `libs/${domainNameAndDirectory}/${featureFolderName}`;
 
   await libraryGenerator(tree, {
-    name: `libs/${dir}/${featureFolderName}`,
-    // directory: dir,
+    name: finalName,
+    prefix: finalName,
+    directory: finalDirectory,
     tags: `domain:${domainName},type:feature`,
-    prefix: domainNameAndDirectoryDasherized,
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
     importPath: options.importPath,
@@ -176,9 +178,8 @@ export default async function (tree: Tree, options: FeatureOptions) {
 
   deleteDefaultComponent(
     tree,
-    dir,
-    featureFolderName,
-    domainNameAndDirectoryDasherized
+    finalDirectory,
+    finalName
   );
 
   await formatFiles(tree);

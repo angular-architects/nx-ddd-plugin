@@ -8,36 +8,34 @@ import { deleteDefaultComponent } from '../utils/delete-default-component';
 export default async function (tree: Tree, options: ApiOptions) {
   validateInputs(options);
 
-  const libName = options.name
-    ? `api-${strings.dasherize(options.name)}`
-    : 'api';
-
-  const domain = options.shared ? 'shared' : options.domain;
-  const libDirectory = options.directory
-    ? `${domain}/${options.directory}`
-    : domain;
+  const libName = options.name ? `api-${strings.dasherize(options.name)}` : 'api';
+  const libDirectory = options.directory ? strings.dasherize(options.directory) : libName;
+  const domainName = options.shared ? 'shared' : options.domain;
   const isPublishableLib = options.type === 'publishable';
 
+  // additions for Nx20 by LXT
+  const finalName = domainName + '-' + libName;
+  const finalDirectory = `libs/${domainName}/${libDirectory}`;
+
   await libraryGenerator(tree, {
-    name: `libs/${libDirectory}/${libName}`,
-    tags: `domain:${domain},domain:${domain}/${libName},type:api`,
-    prefix: options.name,
+    name: finalName,
+    prefix: finalName,
+    directory: finalDirectory,
+    tags: `domain:${domainName},domain:${domainName}/${libName},type:api`,
     publishable: isPublishableLib,
     buildable: options.type === 'buildable',
-    // directory: libDirectory,
     importPath: options.importPath,
     standalone: options.standalone,
   });
 
   deleteDefaultComponent(
     tree,
-    libDirectory,
-    libName,
-    options.name
+    finalDirectory,
+    finalName
   );
 
   console.info(
-    `\nHINT: Don\'t forget to extend the rules in your .eslintrc to allow selected domains to access this API.\nFor this, add the tag domain:${domain}/${libName} to the respective domains' rule sets.\n `
+    `\nHINT: Don\'t forget to extend the rules in your "eslint.config.js" to allow selected domains to access this API.\nFor this, add the tag domain:${domainName}/${libName} to the respective domains' rule sets.\n `
   );
 
   await formatFiles(tree);

@@ -9,28 +9,29 @@ export default async function (tree: Tree, options: UiOptions) {
   validateInputs(options);
 
   const libName = `ui-${strings.dasherize(options.name)}`;
-  const domain = options.shared ? 'shared' : options.domain;
-  const libDirectory = options.directory
-    ? `${domain}/${options.directory}`
-    : domain;
+  const libDirectory = options.directory ? strings.dasherize(options.directory) : libName;
+  const domainName = options.shared ? 'shared' : options.domain;
   const isPublishableLib = options.type === 'publishable';
 
+  // additions for Nx20 by LXT
+  const finalName = domainName + '-' + libName;
+  const finalDirectory = `libs/${domainName}/${libDirectory}`;
+
   await libraryGenerator(tree, {
-    name: `libs/${libDirectory}/${libName}`,
-    tags: `domain:${domain},type:ui`,
-    prefix: options.name,
+    name: finalName,
+    prefix: finalName,
+    directory: finalDirectory,
+    tags: `domain:${domainName},type:ui`,
     publishable: isPublishableLib,
     buildable: options.type === 'buildable',
-    // directory: libDirectory,
     importPath: options.importPath,
     standalone: options.standalone,
   });
 
   deleteDefaultComponent(
     tree,
-    libDirectory,
-    libName,
-    options.name
+    finalDirectory,
+    finalName
   );
 
   await formatFiles(tree);
