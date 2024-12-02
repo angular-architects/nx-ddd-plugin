@@ -13,6 +13,9 @@
     "npm": ">=9",
     "yarn": "^1.22.17"
   },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  },
   "optionalDependencies": {
     "@ngrx/schematics": "^18.0.0"
   },
