@@ -14,10 +14,10 @@
     "yarn": "^1.22.17"
   },
   "optionalDependencies": {
-    "@ngrx/schematics": "^18.0.0"
+    "@ngrx/schematics": "^19.0.0"
   },
   "peerDependencies": {
-    "@angular/core": "^18.0.0",
+    "@angular/core": "^19.0.0",
     "@nx/angular": ">=20.0.0"
   },
   "main": "src/index.js",
