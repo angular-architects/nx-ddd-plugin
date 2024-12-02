@@ -24,7 +24,6 @@
     "@ngrx/entity": "16.0.0",
     "@ngrx/store": "16.0.0",
     "@ngrx/store-devtools": "16.0.0",
-    "@nrwl/schematics": "^8.12.11",
     "@nx/angular": "16.7.4",
     "@nx/plugin": "16.7.4",
     "@phenomnomnominal/tsquery": "^5.0.1",
