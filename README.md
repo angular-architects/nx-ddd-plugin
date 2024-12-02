@@ -158,4 +158,4 @@ see https://github.com/angular-architects/ddd-demo
 
 ## Get in touch with authors
 
-- [ManfredSteyer on X](https://x.com/ManfredSteyer), [LXT on X](https://x.com/LXT)
+- [ManfredSteyer on X](https://x.com/ManfredSteyer), [LX_T on X](https://x.com/LX_T)
