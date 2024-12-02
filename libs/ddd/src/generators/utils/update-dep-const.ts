@@ -17,9 +17,14 @@ export function updateDepConst(
       filePath = '.eslintrc';
       rule = '@nx/enforce-module-boundaries';
       console.info('Did not find .eslintrc.json but found .eslintrc');
+    } else if (host.exists('eslint.config.js')) {
+      console.info(
+        'ESLint flat config will be supported in next release!'
+      );
+      return;
     } else {
       console.info(
-        'Cannot add linting rules: linting config file does not exist'
+        'Cannot add linting rules: ESLint config file not found'
       );
       return;
     }

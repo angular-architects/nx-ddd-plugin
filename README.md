@@ -1,26 +1,26 @@
-# @angular-architects/ddd &ndash; DDD Plugin for Angular Nx Monorepos
+# DDD Plugin for Angular Nx Monorepos
 
 ## Versions
 
 The package versions are aligned with the _Angular_ version.
 
-* for **Nx < 19 and NG 17** use _v17.0.5_.
-* for **Nx < 20 and NG 18** use _v18.0.1_.
-* for **Nx >= 20 and NG 18** use _v18.1.0_.
-* for **Nx >= 20 and NG 19** use _v19.0.2_.
+* for **Nx < v19** and **NG v17** use _v17.0.5_.
+* for **Nx < v20** and **NG v18** use _v18.0.1_.
+* for **Nx >= v20** and **NG v18** use _v18.1.1_.
+* for **Nx >= v20** and **NG v19** use _v19.0.5_.
 
 **Breaking change** in v18.1.0:
 
-The naming of the **Nx** `includePaths` has changed to only use one "/" (due to **npm** restrictions).
+The naming of the **Nx** `includePaths` has changed to only use one "/".
 
-Until v18.0.1, the generated `includePaths` were like this, which is illegal in **npm**:
+Until _v18.0.1_, the generated `includePaths` were like this, which is illegal in **npm**:
 
 ```json
   "@org/booking/domain": ["libs/booking/domain/src/index.ts"],
   "@org/booking/feature-test": ["libs/booking/feature-test/src/index.ts"]
 ```
 
-Starting with v18.1.0, the generated `includePaths` are using dashes instead:
+Starting with _v18.1.0_, the generated `includePaths` are using dashes instead:
 
 ```json
   "@org/booking-domain": ["libs/booking/domain/src/index.ts"],
