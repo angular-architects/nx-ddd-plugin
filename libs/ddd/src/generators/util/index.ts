@@ -4,9 +4,12 @@ import { UtilOptions } from './schema';
 import { strings } from '@angular-devkit/core';
 import { validateInputs } from '../utils/validate-inputs';
 import { deleteDefaultComponent } from '../utils/delete-default-component';
+import { getWorkspaceScope } from '../utils/get-workspace-scope';
 
 export default async function (tree: Tree, options: UtilOptions) {
   validateInputs(options);
+
+  const workspaceName = getWorkspaceScope(tree);
 
   const libName = `util-${strings.dasherize(options.name)}`;
   const libDirectory = options.directory ? strings.dasherize(options.directory) : libName;
@@ -17,14 +20,17 @@ export default async function (tree: Tree, options: UtilOptions) {
   const finalName = domainName + '-' + libName;
   const finalDirectory = `libs/${domainName}/${libDirectory}`;
 
+  const prefix = strings.dasherize(finalName).split('/').join('-');
+  const importPath = `${workspaceName}/${domainName}/${libDirectory}`;
+
   await libraryGenerator(tree, {
     name: finalName,
-    prefix: finalName,
+    prefix: prefix,
     directory: finalDirectory,
     tags: `domain:${domainName},type:util`,
     publishable: isPublishableLib,
     buildable: options.type === 'buildable',
-    importPath: options.importPath,
+    importPath: options.importPath ?? importPath,
     standalone: options.standalone,
   });
 
