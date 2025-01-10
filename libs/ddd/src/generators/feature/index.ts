@@ -108,14 +108,21 @@ export default async function (tree: Tree, options: FeatureOptions) {
     ? `libs/${domainNameAndDirectory}/${featureDirectory}`
     : `libs/${domainNameAndDirectory}/${featureFolderName}`;
 
+  const prefix = strings
+    .dasherize(finalName)
+    .split('/')
+    .join('-');
+
+  const importPath = `${workspaceName}/${domainNameAndDirectory}/${featureFolderName}`;
+
   await libraryGenerator(tree, {
     name: finalName,
-    prefix: finalName,
+    prefix: prefix,
     directory: finalDirectory,
     tags: `domain:${domainName},type:feature`,
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
-    importPath: options.importPath,
+    importPath: options.importPath ?? importPath,
     standalone: options.standalone,
   });
 
@@ -279,6 +286,9 @@ function generate(
     featureLibFolderPath: string;
   }
 ) {
+
+  const flatDomain = strings.dasherize(options.domain).split('/').join('-');
+
   const tmpl = '';
   const params = {
     ...strings,
@@ -290,6 +300,7 @@ function generate(
     domainLibFolderPath,
     featureLibFolderPath,
     tmpl,
+    flatDomain
   };
 
   if (options.ngrx && entityName) {

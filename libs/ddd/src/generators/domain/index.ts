@@ -52,6 +52,8 @@ function convertToStandaloneApp(
 }
 
 export default async function (tree: Tree, options: DomainOptions) {
+  const npmScope = getNpmScope(tree);
+
   const appName = strings.dasherize(options.name);
   const appNameAndDirectory = options.appDirectory
     ? `apps/${options.appDirectory}/${appName}`
@@ -82,14 +84,21 @@ export default async function (tree: Tree, options: DomainOptions) {
     );
   }*/
 
+  const prefix = strings
+    .dasherize(finalName)
+    .split('/')
+    .join('-');
+
+  const importPath = `${npmScope}/${domainNameAndDirectory}/domain`;
+
   await libraryGenerator(tree, {
     name: finalName,
-    prefix: finalName,
+    prefix: prefix,
     directory: finalDirectory,
     tags: `domain:${domainName},type:domain-logic`,
     publishable: options.type === 'publishable',
     buildable: options.type === 'buildable',
-    importPath: options.importPath,
+    importPath: options.importPath ?? importPath,
     standalone: options.standalone,
   });
 
@@ -122,7 +131,6 @@ export default async function (tree: Tree, options: DomainOptions) {
   }
 
   const wsConfig = readNxJson(tree);
-  const npmScope = getNpmScope(tree);
   // const wsConfig = readWorkspaceConfiguration(tree);
 
   if (options.addApp && options.standalone) {

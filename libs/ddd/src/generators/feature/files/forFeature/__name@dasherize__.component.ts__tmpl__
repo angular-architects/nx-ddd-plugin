@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 @Component({ <% if (standalone) { %>
   standalone: true,
   imports: [CommonModule],
-  <% } %>selector: '<%=dasherize(domain)%>-<%=dasherize(name)%>',
+  <% } %>selector: '<%=dasherize(flatDomain)%>-feature-<%=dasherize(name)%>',
   templateUrl: './<%=dasherize(name)%>.component.html',
   styleUrls: ['./<%=dasherize(name)%>.component.scss']
 })

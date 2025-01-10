@@ -1,4 +1,4 @@
-import { Tree } from '@nx/devkit';
+import { formatFiles, Tree } from '@nx/devkit';
 import { updateDepConst } from '../utils/update-dep-const';
 
 export default async function (tree: Tree, schema: any) {
@@ -53,4 +53,6 @@ export default async function (tree: Tree, schema: any) {
       onlyDependOnLibsWithTags: ['domain:shared'],
     });
   });
+
+    await formatFiles(tree);
 }
