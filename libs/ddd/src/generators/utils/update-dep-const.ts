@@ -25,8 +25,11 @@ export function updateDepConst(
       filePath = 'eslint.config.cjs';
       console.info('Found .eslintrc');
       isJson = false;
-    }  
-    else {
+    } else if (host.exists('eslint.config.mjs')) {
+      filePath = 'eslint.config.mjs';
+      console.info('Found .eslintrc');
+      isJson = false;
+    } else {
       console.info(
         'Cannot add linting rules: linting config file does not exist'
       );
