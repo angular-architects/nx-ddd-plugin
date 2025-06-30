@@ -108,9 +108,9 @@ You don't need any TypeScript or Angular imports. The plugin already took care a
 All generators have a switch ``--standalone`` to support Standalone Components:
 
 ```
-ng g @angular-architects/ddd:domain booking --addApp --standalone
+nx g @angular-architects/ddd:domain booking --addApp --standalone
 
-ng g @angular-architects/ddd:feature search --domain booking --entity flight --standalone
+nx g @angular-architects/ddd:feature search --domain booking --entity flight --standalone
 ```
 
 Don't mix Standalone Components and traditional ones within the same domain.
