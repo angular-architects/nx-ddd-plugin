@@ -9,7 +9,7 @@
     "url": "https://github.com/angular-architects/nx-ddd-plugin"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=20.19.0",
     "npm": ">=9",
     "yarn": "^1.22.17"
   },
@@ -17,11 +17,11 @@
     "tslib": "^2.3.1"
   },
   "optionalDependencies": {
-    "@ngrx/schematics": "^19.0.0"
+    "@ngrx/schematics": "^20.0.0"
   },
   "peerDependencies": {
-    "@angular/core": "^19.0.0",
-    "@nx/angular": ">=20.0.0"
+    "@angular/core": "^20.0.0",
+    "@nx/angular": ">=21.2.0"
   },
   "main": "src/index.js",
   "schematics": "./collection.json",
