@@ -29,7 +29,7 @@ Starting with v18.1.0, the generated `includePaths` are using dashes instead:
 
 ## About
 
-This plugin installs some schematics which automate slicing your Nx workspace into domains and layers according to Nrwl's best practices and our ideas about [client-side DDD with Angular](https://www.softwarearchitekt.at/aktuelles/sustainable-angular-architectures-1/):
+This plugin installs some schematics which automate slicing your Nx workspace into domains and layers according to Nrwl's best practices and our ideas about [client-side DDD with Angular](- [Blog: All about DDD for Angular & Frontend Architectures](https://www.angulararchitects.io/blog/all-about-ddd-for-frontend-architectures-with-angular-co/)):
 
 ![domains and layers](https://github.com/angular-architects/nx-ddd-plugin/blob/master/libs/ddd/assets/ddd.png?raw=true)
 
@@ -145,6 +145,7 @@ see https://github.com/angular-architects/ddd-demo
 
 ## Resources
 
+- [Blog: All about DDD for Angular & Frontend Architectures](https://www.angulararchitects.io/blog/all-about-ddd-for-frontend-architectures-with-angular-co/)
 - [Nx](https://nx.dev/web)
 - [Nrwl's eBook about monorepos and best practices](https://go.nrwl.io/angular-enterprise-monorepo-patterns-new-book)
 - [Recording of session about this architecture](https://www.youtube.com/watch?v=94HFD391zkE&t=1s)
