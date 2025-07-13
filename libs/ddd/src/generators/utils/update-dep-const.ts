@@ -4,7 +4,6 @@ import { checkRuleExists } from './check-rule-exists';
 const allowAll = /\s*\{\s*sourceTag:\s*'\*',\s*onlyDependOnLibsWithTags:\s*\['\*'\],?\s*\}\s*,?/;
 const depConstraints = /depConstraints:\s*\[\s*/;
 
-
 export function updateDepConst(
   host: Tree,
   update: (depConst: Array<object>) => void
@@ -23,12 +22,20 @@ export function updateDepConst(
       console.info('Found .eslintrc');
     } else if (host.exists('eslint.config.cjs')) {
       filePath = 'eslint.config.cjs';
-      console.info('Found .eslintrc');
+      console.info('Found eslint.config.cjs');
       isJson = false;
-    }  
-    else {
+    } else if (host.exists('eslint.config.mjs')) {
+      filePath = 'eslint.config.mjs';
+      console.info('Found eslint.config.mjs');
+      isJson = false;
+    } else if (host.exists('eslint.config.js')) {
       console.info(
-        'Cannot add linting rules: linting config file does not exist'
+        'ESLint flat config will be supported in next release!'
+      );
+      return;
+    } else {
+      console.info(
+        'Cannot add linting rules: ESLint config file not found'
       );
       return;
     }
@@ -73,6 +80,5 @@ function trim(str: string) {
   if (str.endsWith(']')) {
     str = str.substring(0, str.length-1);
   }
-  
   return str.trim();
 }
