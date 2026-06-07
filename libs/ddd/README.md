@@ -10,6 +10,7 @@ The package versions are aligned with the _Angular_ version.
 * for **Nx >= v20** and **NG v19** use _v19.0.7_.
 * for **Nx >= v21.2** and **NG v20** use _v20.0.1_.
 * for **Nx >= v21.2** (Nx v21-22) and **NG v21** use _v21.0.0_.
+* for **Nx >= v21.7** (Nx v21-23) and **NG v22** use _v22.0.0_.
 
 **Breaking change** in v18.1.0:
 
